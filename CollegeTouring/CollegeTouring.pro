@@ -13,8 +13,8 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h \
-    HashMap.h
+    OrderedMap.h \
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui

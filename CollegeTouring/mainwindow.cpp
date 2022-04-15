@@ -1,22 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "HashMap.h"
+#include "OrderedMap.h"
 #include <QString>
 #include <QDebug>
 
-//Custom hash object being passed into the map
-struct QStringCustomHash
+//Custom comparator class being passed into the map
+struct QStringComparator
 {
-    int operator() (const QString &str) const
+    bool operator() (const QString &lstr, const QString &rstr) const
     {
-        int finalHashValue = 0;
-        for(int index = 0; index< str.length(); index++)
-        {
-            //Calculates hash value based on numeric representation
-            //of the character multiplied by the index
-            finalHashValue += str[index].toLatin1() * (index+1);
-        }
-        return finalHashValue;
+        return lstr < rstr;
     }
 };
 
@@ -26,30 +19,32 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //Testing hashmap
-    //Type Param1: Key, TypeParam2: Value, TypeParam3: Hash
-    HashMap<QString,double,QStringCustomHash> map;
-    map.put("Saddleback",2.0);
+    //Testing orderedmap
+    OrderedMap<QString,int> map;
+
+    map["Saddleback"] = 15;
+    map["Oceanside"] = 11;
+    map["Sacremento"] = 28;
+    map["Riverside"] = 44;
+    map["Riverside"] = 99;
 
     qDebug() << map["Saddleback"];
-
-    //Testing subscript operator
-    map["Oceanside"] = 15.5;
-    map["Saddleback"] = 10.0;
-
     qDebug() << map["Oceanside"];
-    qDebug() << map["Saddleback"];
+    qDebug() << map["Sacremento"];
+    qDebug() << map["Riverside"];
 
-    //Testing copy constructor
-    HashMap<QString,double,QStringCustomHash> map2 = map;
+    qDebug() << "Testing copy constructor";
+    OrderedMap<QString,int> map2 = map;
 
-    qDebug() << map2["Oceanside"];
     qDebug() << map2["Saddleback"];
-
-    map2["Oceanside"] = 33.3;
-
-    qDebug() << map["Oceanside"];
     qDebug() << map2["Oceanside"];
+    qDebug() << map2["Sacremento"];
+    qDebug() << map2["Riverside"];
+    qDebug() << "===";
+    map["Riverside"] = 19;
+
+    qDebug() << map["Riverside"];
+    qDebug() << map2["Riverside"];
 
 }
 
