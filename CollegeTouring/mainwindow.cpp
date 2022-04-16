@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "OrderedMap.h"
+#include "orderedmap.h"
 #include <QString>
 #include <QDebug>
 
@@ -19,32 +19,73 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //Testing orderedmap
     OrderedMap<QString,int> map;
 
-    map["Saddleback"] = 15;
-    map["Oceanside"] = 11;
-    map["Sacremento"] = 28;
-    map["Riverside"] = 44;
-    map["Riverside"] = 99;
+    //Testing insertions
+    map.insert("California",18);
+    map.insert("Oregon",20);
+    map.insert("Washington",37);
+    map.insert("Nevada",42);
+    map.insert("Colorado",51);
+    map.insert("Arizona",63);
+    map.insert("Texas",77);
+    map.insert("Hawaii",89);
 
-    qDebug() << map["Saddleback"];
-    qDebug() << map["Oceanside"];
-    qDebug() << map["Sacremento"];
-    qDebug() << map["Riverside"];
 
-    qDebug() << "Testing copy constructor";
-    OrderedMap<QString,int> map2 = map;
+    //Testing iterators
+    for(auto iterator = map.begin(); iterator != map.end(); iterator++)
+    {
+        qDebug() << iterator->key << " | " << iterator->value;
+    }
 
-    qDebug() << map2["Saddleback"];
-    qDebug() << map2["Oceanside"];
-    qDebug() << map2["Sacremento"];
-    qDebug() << map2["Riverside"];
-    qDebug() << "===";
-    map["Riverside"] = 19;
+    //Testing Find with existing key
+    qDebug() << "Find: " << (map.find("Texas") != nullptr);
 
-    qDebug() << map["Riverside"];
-    qDebug() << map2["Riverside"];
+    //Testing erasing and size
+    qDebug() << map.size();
+    map.erase("Texas");
+    //Testing erasing and size with invalid key
+    qDebug() << map.size();
+    map.erase("Florida");
+    qDebug() << map.size();
+
+    //Testing find on invalid key
+    qDebug() << "Find: " << (map.find("Texas") != nullptr);
+
+    //Testing iterators
+    for(auto iterator = map.begin(); iterator != map.end(); iterator++)
+    {
+        qDebug() << iterator->key << " | " << iterator->value;
+    }
+
+    //Testing clear
+    map.clear();
+    qDebug() << map.size();
+    qDebug() << map.empty();
+
+    //Testing subscript operator + insert to override an existing key
+    map["Ohio"] = 33;
+    map["Idaho"] = 23;
+    map["Virginia"] = 55;
+    map.insert("Virginia",18);
+
+    //Testing .at
+    qDebug() << map.at("Ohio");
+    qDebug() << map.at("Idaho");
+    qDebug() << map.at("Virginia");
+
+    qDebug() << map.size();
+    qDebug() << map.empty();
+
+    if(map.contains("Texas"))
+    {
+        qDebug() << map.at("Texas");
+    }
+
+    if(map.contains("Virginia"))
+    {
+        qDebug() << map.at("Virginia");
+    }
 
 }
 

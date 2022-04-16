@@ -23,33 +23,34 @@ class OrderedMap
 {
 public:
 
-    struct entry
+    struct Entry
     {
-        entry() : key{KeyType()}, value{ValueType()} {}
-        entry(const KeyType& key, const ValueType& value) : key{key}, value{value} {}
+        Entry() : key{KeyType()}, value{ValueType()} {}
+        Entry(const KeyType& key, const ValueType& value) : key{key}, value{value} {}
 
         KeyType key;
         ValueType value;
     };
 
-    // Type alias for iterator as defined by entry*
-    using iterator = entry*;
+    // Type alias for iterator as defined by Entry*
+    using iterator = Entry*;
 
 
-    OrderedMap() : array{std::vector<entry>()}, LessThan{LessThanComparator()}, count{0} {}
+    OrderedMap() : array{std::vector<Entry>()}, LessThan{LessThanComparator()}, count{0} {}
+
 
     //! Allows for access of a particular value
     /*!
         \param KeyType key
         \return Reference to the value with the corresponding key.
     */
-    ValueType& operator[] (const KeyType& key)
+    ValueType& operator[](const KeyType& key)
     {
         int searchIndex = search(key);
 
         if(searchIndex != -1)
         {
-            return array[searchIndex].value;
+            return this->array[searchIndex].value;
         }
         else
         {
@@ -59,7 +60,7 @@ public:
     }
 
     //! Member function that returns a constant reference to a particular value
-    /*!
+    /*! (Does not throw exception if key doesn't exist, returns a defaulted constructed value)
         \param KeyType key
         \return Constant reference to the value with the corresponding key.
     */
@@ -69,12 +70,31 @@ public:
 
         if(searchIndex != -1)
         {
-            return array[searchIndex].value;
+            return this->array[searchIndex].value;
+        }
+        else
+        {
+            qDebug() << "OrderedMap::at()const Key does not exist";
+            return ValueType();
+        }
+    }
+
+    //! Member function that returns a reference to a particular value
+    /*! (Does not throw exception if key doesn't exist, manual check required)
+        \param KeyType key
+        \return Reference to the value with the corresponding key.
+    */
+    ValueType& at(const KeyType& key)
+    {
+        int searchIndex = search(key);
+
+        if(searchIndex != -1)
+        {
+            return this->array[searchIndex].value;
         }
         else
         {
             qDebug() << "OrderedMap::at() Key does not exist";
-            return ValueType();
         }
     }
 
@@ -91,22 +111,22 @@ public:
         if(searchIndex != -1)
         {
             //Change value at the index if the key already exists
-            array[searchIndex].value = value;
-            return &array[searchIndex];
+            this->array[searchIndex].value = value;
+            return &(this->array[searchIndex]);
         }
         else
         {
             //Insertion into correct key position (O(n) worse case)
             int traverseIndex = 0;
-            while(traverseIndex < count && LessThan(array[traverseIndex].key, key))
+            while(traverseIndex < this->count && this->LessThan(this->array[traverseIndex].key, key))
             {
                 traverseIndex++;
             }
 
-            array.insert(array.begin() + traverseIndex, entry(key,value));
-            count++;
+            this->array.insert(this->array.begin() + traverseIndex, Entry(key, value));
+            this->count++;
 
-            return &array[traverseIndex];
+            return &(this->array[traverseIndex]);
         }
     }
 
@@ -120,14 +140,50 @@ public:
 
         if(searchIndex != -1)
         {
-            array.erase(array.begin() + searchIndex);
-            count--;
+            this->array.erase(this->array.begin() + searchIndex);
+            this->count--;
         }
         else
         {
             qDebug() << "OrderedMap::erase() Key does not exist.";
         }
     }
+
+
+    //! A member function that checks the map and returns whether or not it contains the key
+    /*!
+        \param KeyType key
+    */
+    bool contains(const KeyType& key) const
+    {
+        return search(key) != -1;
+    }
+
+    //! A member function removes all of the values
+    void clear()
+    {
+        this->array.clear();
+        this->count = 0;
+    }
+
+    //! A member function that returns whether or not the map is empty
+    /*!
+        \return Boolean true/false
+    */
+    bool empty() const
+    {
+        return this->count == 0;
+    }
+
+    //! A member function that returns the size of the map
+    /*!
+        \return int size
+    */
+    int size() const
+    {
+        return this->count;
+    }
+
 
     //! A member function that returns an iterator to the pair with an associated key
     /*!
@@ -140,7 +196,7 @@ public:
 
         if(searchIndex != -1)
         {
-            return &array[searchIndex];
+            return &(this->array[searchIndex]);
         }
         else
         {
@@ -148,74 +204,55 @@ public:
         }
     }
 
-    //! A member function removes all of the values
-    void clear()
-    {
-        array.clear();
-        count = 0;
-    }
-
-    //! A member function that returns whether or not the map is empty
+    //! A member function that returns an iterator to the beginning Entry of the map
     /*!
-        \return Boolean true/false
+        \return iterator
     */
-    bool empty() const
-    {
-        return count == 0;
-    }
-
-    //! A member function that returns the size of the map
-    /*!
-        \return int size
-    */
-    int size() const
-    {
-        return count;
-    }
-
-    //Iterator that points to the beginning of the map
     iterator begin()
     {
-        if(count == 0)
+        if(this->count == 0)
         {
             return nullptr;
         }
         else
         {
-            return &array[0];
+            return &(this->array[0]);
         }
     }
 
-    //Iterator that points to the end of the map
+    //! A member function that returns an iterator to the beginning Entry of the map
+    /*!
+        \return iterator
+    */
     iterator end()
     {
-        if(count == 0)
+        if(this->count == 0)
         {
             return nullptr;
         }
         else
         {
-            return &array[count]; // One past last index
+            return &(this->array[this->count]); // One past last index
         }
     }
 
 protected:
 
-    //Performs binary search
+    //Performs binary search (O(logn))
     int search(const KeyType& key) const
     {
         int lowIndex = 0;
-        int highIndex = count - 1;
+        int highIndex = this->count - 1;
         int midIndex;
 
-        while(lowIndex <= highIndex && count != 0)
+        while(lowIndex <= highIndex && this->count != 0)
         {
             midIndex = (highIndex + lowIndex) / 2;
-            if(array[midIndex].key == key) //Requires equality comparable key
+            if(this->array[midIndex].key == key) //Requires equality comparable key
             {
                 return midIndex;
             }
-            else if(LessThan(key, array[midIndex].key))
+            else if(this->LessThan(key, this->array[midIndex].key))
             {
                 highIndex = midIndex - 1;
             }
@@ -229,7 +266,7 @@ protected:
     }
 
 private:
-    std::vector<entry> array;
+    std::vector<Entry> array;
     LessThanComparator LessThan;
     int count;
 };
