@@ -31,10 +31,17 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     // change the path to where you store the .csv file (currently included in project)
-    std::string path = "D:/source/repos/Qt_Projects/MAIN_CollegeTouring/CS_Project2_TheApplicants/CollegeTouring/Distances.csv";
+    //std::string path = "D:/source/repos/Qt_Projects/MAIN_CollegeTouring/CS_Project2_TheApplicants/CollegeTouring/Distances.csv";
     // test parser
-    DBColleges db;
-    db.readEntries(path);
+
+    DBColleges::getInstance().loadFromDatabase(); //Try to load from the database first
+    if(DBColleges::getInstance().collegeMap.empty()) //If the database is empty, run the loadfile function
+    {
+        DBColleges::getInstance().loadFileEntries();
+    }
+    DBColleges::getInstance().saveColleges();
+    DBColleges::getInstance().saveDistances();
+
     //printColleges(db.collegeVector);
 
 }

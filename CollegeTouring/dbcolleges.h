@@ -1,7 +1,7 @@
 #ifndef DBCOLLEGES_H
 #define DBCOLLEGES_H
 #include <QObject>
-//#include <QSqlDatabase>
+#include <QSqlDatabase>
 //#include <QSqlError>
 #include <QString>
 #include <QVector>
@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "orderedmap.h"
 
 
 struct SouvenirItem
@@ -44,13 +45,33 @@ class DBColleges
 {
 private:
 
-    QVector<std::string> line;          // This is the line that has been read in from readLine
-
-public:
     // Make the constructor private so this is a singleton.
     DBColleges();
+
+    //Should the destructor also be placed in private so that we won't have unwanted destruction?
     ~DBColleges();
-    QVector<College> collegeVector;     // list of colleges that are parsed in
+
+    //QVector<std::string> line;          // This is the line that has been read in from readLine
+
+    QSqlDatabase database; // Will be set during construction
+
+public:
+
+    //Deletes these operations to not allow the user to use them.
+    DBColleges(const DBColleges&) = delete;
+    DBColleges(DBColleges&&) = delete;
+    DBColleges& operator=(const DBColleges&) = delete;
+    DBColleges& operator=(DBColleges&&) = delete;
+
+    //I am unsure whether or not the instance should be a static object or pointer, but for now its returning a reference
+    static DBColleges& getInstance()
+    {
+        static DBColleges instance;
+        return instance;
+    }
+
+    OrderedMap<QString,College> collegeMap;     // list of colleges that are parsed in
+
 
     /*!
      * \brief readLine
@@ -68,6 +89,40 @@ public:
     void loadFileEntries();
 
 
+    /*!
+     * \brief loadFromDatabase
+     *
+     * Will load data from the sqlite database into collegeMap
+     */
+    void loadFromDatabase();
+
+    /*!
+     * \brief saveColleges
+     *
+     * Saves college information from collegeMap into the sqlite database
+     */
+    void saveColleges();
+
+    /*!
+     * \brief saveDistances
+     *
+     * Saves distances information from collegeMap into the sqlite database
+     */
+    void saveDistances();
+
+    /*!
+     * \brief saveSouvenirs
+     *
+     * Saves souvenir information from collegeMap into the sqlite database
+     */
+    void saveSouvenirs();
+
+    /*!
+     * \brief saveSouvenirs
+     *
+     * Saves all data from the collegeMap to the sqlite database
+     */
+    void saveToDatabase();
 
 };
 

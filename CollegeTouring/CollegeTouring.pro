@@ -17,6 +17,7 @@ SOURCES += \
 HEADERS += \
     college_list.h \
     dbcolleges.h \
+    orderedmap.h \
     mainwindow.h
 
 FORMS += \

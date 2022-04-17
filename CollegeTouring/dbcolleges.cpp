@@ -11,12 +11,39 @@
 
 DBColleges::DBColleges()
 {
+    this->database = QSqlDatabase::addDatabase("QSQLITE","collegedata.sqlite");
+    this->database.setDatabaseName("collegedata.sqlite");
 
+    if(this->database.open())
+    {
+        qDebug() << "DBColleges::DBColleges() Database connection successfully established.";
+
+
+        QSqlQuery query(this->database);
+
+        //Specifies the table headers for COLLEGES table. (Can be used for the vertices in a graph)
+        query.exec("CREATE TABLE IF NOT EXISTS colleges ( College varchar(255), State varchar(255), Undergrads int )");
+
+        //Specifies the table headers for SOUVENIRS table.
+        query.exec("CREATE TABLE IF NOT EXISTS souvenirs ( College varchar(255), ItemName varchar(255), Price numeric )");
+
+        //Specifies the table headers for DISTANCES table. (Can be used for the edges in a graph)
+        query.exec("CREATE TABLE IF NOT EXISTS distances ( StartingCollege varchar(255), EndingCollege varchar(255), Distance numeric )");
+    }
+    else
+    {
+        qDebug() << "DBColleges::DBColleges() Database connection unsucessful.";
+    }
 }
 
 DBColleges::~DBColleges()
 {
-
+    if(this->database.isOpen())
+    {
+        this->database.close();
+        this->database.removeDatabase("collegedata.sqlite");
+        qDebug() << "DBColleges::~DBColleges() Database connection removed.";
+    }
 }
 
 
@@ -162,16 +189,16 @@ void DBColleges::readEntries(const std::string& path)
                 i++;    // i = 1, skip the first entry since we already are on the new college still
 
                 nameInput = QString::fromStdString(line.at(i));    // Insert end college name
-                this->collegeVector[j].endingColleges.push_back(nameInput);
+                this->collegeMap[newCollege.name].endingColleges.push_back(nameInput);
                 i++;    // i = 2
 
-                this->collegeVector[j].distances.push_back(std::stoi(line.at(i)));  // Insert distance to end college
+                this->collegeMap[newCollege.name].distances.push_back(std::stoi(line.at(i)));  // Insert distance to end college
                 i++;    // i = 3
             }
         }
         else // Else we are inputting a new college
         {
-            if (this->collegeVector.size() > 0) // if we have more than 1 entry
+            if (this->collegeMap.size() > 0) // if we have more than 1 entry
             {
                 j++;
             }
@@ -201,7 +228,7 @@ void DBColleges::readEntries(const std::string& path)
                             // be an empty value and make size 1 larger than actual entries
 
             }
-            this->collegeVector.push_back(newCollege);  // Push new college into program vector
+            this->collegeMap.insert(newCollege.name,newCollege);  // Push new college into program map
         }
     }
     csvfile.close();
@@ -216,4 +243,110 @@ void DBColleges::loadFileEntries()
     {
             DBColleges::readEntries(path);
     }
+}
+
+void DBColleges::loadFromDatabase()
+{
+    QSqlQuery collegesQuery(this->database);
+    QSqlQuery distancesQuery(this->database);
+    QSqlQuery souvenirsQuery(this->database);
+
+    if(collegesQuery.exec("SELECT * FROM colleges"))
+    {
+        while(collegesQuery.next())
+        {
+            College newCollege;
+            newCollege.name = collegesQuery.value(0).toString();    //Column1(College) = college name
+            newCollege.state = collegesQuery.value(1).toString();   //Column2(State) = state name
+            newCollege.undergrads = collegesQuery.value(2).toInt(); //Column3(Undergrads) = undergrad number
+
+            //Reads from the DISTANCES table and inserts endingColleges & distances into their respective vectors
+            if (distancesQuery.exec("SELECT * FROM distances WHERE StartingCollege = '" + newCollege.name + "'"))
+            {
+                while(distancesQuery.next())
+                {
+                    newCollege.endingColleges.push_back(distancesQuery.value(1).toString()); //Column2(EndingCollege) = ending college name
+                    newCollege.distances.push_back(distancesQuery.value(2).toDouble());      //Column3(Distance) = distance to ending college
+                }
+            }
+
+            //Reads from the SOUVENIRS table and inserts the souvenirs into the vector
+            if(souvenirsQuery.exec("SELECT * FROM souvenirs WHERE College = '" + newCollege.name + "'"))
+            {
+                while(souvenirsQuery.next())
+                {
+                    SouvenirItem souvenir;
+                    souvenir.name = souvenirsQuery.value(1).toString();  //Column2(ItemName) = souvenir item name
+                    souvenir.price = souvenirsQuery.value(2).toDouble(); //Column3(Price) = souvenir item price
+
+                    newCollege.souvenirs.push_back(souvenir);
+                }
+            }
+
+            this->collegeMap.insert(newCollege.name,newCollege); // Push new college into program map
+        }
+    }
+}
+
+void DBColleges::saveColleges()
+{
+    QSqlQuery query(this->database);
+
+    //Clears the entries in COLLEGES table first.
+    query.exec("DELETE FROM colleges");
+
+    for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
+    {
+        query.exec("INSERT INTO colleges VALUES ( '" +
+                   iterator->value.name + "', " +                       //Column1(College) = college name
+                   " '" + iterator->value.state + "', " +               //Column2(State) = state name
+                   QString::number(iterator->value.undergrads) + " )"); //Column3(Undergrads) = undergrad number
+    }
+}
+
+void DBColleges::saveDistances()
+{
+    QSqlQuery query(this->database);
+
+    //Clears the entries in DISTANCES table first.
+    query.exec("DELETE FROM distances");
+
+    for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
+    {
+        for(int index = 0; index < iterator->value.endingColleges.size(); index++)
+        {
+            query.exec("INSERT INTO distances VALUES ( '" +
+                       iterator->value.name + "', " +                             //Column1(StartingCollege) = starting college name
+                       " '" + iterator->value.endingColleges[index] + "', " +     //Column2(EndingCollege) = ending college name
+                       QString::number(iterator->value.distances[index]) + " )"); //Column3(Distance) = distance to ending college
+        }
+    }
+}
+
+void DBColleges::saveSouvenirs()
+{
+    QSqlQuery query(this->database);
+
+    //Clears the entries in SOUVENIRS table first.
+    query.exec("DELETE FROM souvenirs");
+
+    for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
+    {
+        for(int index = 0; index < iterator->value.souvenirs.size(); index++)
+        {
+            SouvenirItem souvenir = iterator->value.souvenirs[index];
+
+            query.exec("INSERT INTO souvenirs VALUES ( '" +
+                       iterator->value.name + "', " +           //Column1(College) = college name that the souvenir item belongs to
+                       " '" + souvenir.name + "', " +           //Column2(ItemName) = souvenir item name
+                       QString::number(souvenir.price) + " )"); //Column3(Price) = souvenir item price
+        }
+    }
+}
+
+void DBColleges::saveToDatabase()
+{
+    DBColleges::saveColleges();
+    DBColleges::saveDistances();
+    DBColleges::saveSouvenirs();
 }
