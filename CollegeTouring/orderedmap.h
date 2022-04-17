@@ -33,7 +33,7 @@ public:
     };
 
     // Type alias for iterator as defined by Entry*
-    using iterator = Entry*;
+    using iterator = typename std::vector<Entry>::iterator;
 
 
     OrderedMap() : array{std::vector<Entry>()}, LessThan{LessThanComparator()}, count{0} {}
@@ -112,7 +112,7 @@ public:
         {
             //Change value at the index if the key already exists
             this->array[searchIndex].value = value;
-            return &(this->array[searchIndex]);
+            return this->array.begin() + searchIndex;
         }
         else
         {
@@ -126,7 +126,7 @@ public:
             this->array.insert(this->array.begin() + traverseIndex, Entry(key, value));
             this->count++;
 
-            return &(this->array[traverseIndex]);
+            return this->array.begin() + traverseIndex;
         }
     }
 
@@ -196,11 +196,11 @@ public:
 
         if(searchIndex != -1)
         {
-            return &(this->array[searchIndex]);
+            return this->array.begin() + searchIndex;
         }
         else
         {
-            return nullptr;
+            return this->array.end();
         }
     }
 
@@ -210,14 +210,7 @@ public:
     */
     iterator begin()
     {
-        if(this->count == 0)
-        {
-            return nullptr;
-        }
-        else
-        {
-            return &(this->array[0]);
-        }
+        return this->array.begin();
     }
 
     //! A member function that returns an iterator to the beginning Entry of the map
@@ -226,14 +219,7 @@ public:
     */
     iterator end()
     {
-        if(this->count == 0)
-        {
-            return nullptr;
-        }
-        else
-        {
-            return &(this->array[this->count]); // One past last index
-        }
+        this->array.end();
     }
 
 protected:
