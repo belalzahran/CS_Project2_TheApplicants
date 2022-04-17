@@ -219,7 +219,7 @@ public:
     */
     iterator end()
     {
-        this->array.end();
+       return this->array.end();
     }
 
 protected:
