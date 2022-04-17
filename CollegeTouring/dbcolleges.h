@@ -26,7 +26,7 @@ struct College
     // The way we will be storing these will make it so that each idx for endingCollege
     // will correspond to the idx of each distance
     // ex: endingColleges[0] will have a distance stored in distances[0]
-    QVector<College> endingColleges;    // list of destination colleges
+    QVector<QString> endingColleges;    // list of destination colleges
     QVector<double> distances;          // list of destination distances
 
     QVector<SouvenirItem> souvenirs;    // list of souvenir items
@@ -43,14 +43,14 @@ struct College
 class DBColleges
 {
 private:
-    // Make the constructor private so this is a singleton.
-    DBColleges(QString dbPath);
-    ~DBColleges();
 
     QVector<std::string> line;          // This is the line that has been read in from readLine
-    QVector<College> collegeVector;     // list of colleges that are parsed in
 
 public:
+    // Make the constructor private so this is a singleton.
+    DBColleges();
+    ~DBColleges();
+    QVector<College> collegeVector;     // list of colleges that are parsed in
 
     /*!
      * \brief readLine
