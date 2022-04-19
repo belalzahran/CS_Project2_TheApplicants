@@ -26,7 +26,7 @@ void CollegeList::displayColleges(SortType sort)
 
     if(sort == ALPHABETICAL)
     {
-        for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+        for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
         {
             displayedColleges.push_back(iterator->value);
         }
@@ -36,12 +36,12 @@ void CollegeList::displayColleges(SortType sort)
         OrderedMap<QString,College> stateSorting;
 
         //Inserts colleges into another ordered map with the states as part of the key in order to sort it.
-        for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+        for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
         {
             stateSorting.insert(QString(iterator->value.state).replace(" ", "") + iterator->value.name, iterator->value);
         }
 
-        for(auto iterator = stateSorting.begin(); iterator != stateSorting.end(); iterator++)
+        for(auto iterator = stateSorting.cbegin(); iterator != stateSorting.cend(); iterator++)
         {
             displayedColleges.push_back(iterator->value);
         }

@@ -10,7 +10,10 @@ int main(int argc, char *argv[])
     DBColleges::getInstance().loadFromDatabase(); //Try to load from the database first
     if(DBColleges::getInstance().collegeMap.empty()) //If the database is empty, run the loadfile function
     {
-        DBColleges::getInstance().loadFileEntries(); //Be sure to select Distances.csv
+        qDebug() << "Prompting for Distances.csv file";
+        DBColleges::getInstance().loadCollegeEntries(); //Be sure to select Distances.csv
+        qDebug() << "Prompting for Souvenirs.csv file";
+        DBColleges::getInstance().loadSouvenirEntries();//Be sure to select Souvenirs.csv
     }
 
     MainWindow w;

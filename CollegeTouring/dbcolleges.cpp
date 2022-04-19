@@ -54,6 +54,7 @@ void DBColleges::readLine(std::istream& file, std::vector<std::string>& line)
     std::string entry = "";         // current entry we are reading (before next ',')
     bool inquotes = false;          // If the entry contains quotes
     bool quoteFound = false;        // If a quote was found inside of a quoted entry
+   // bool dollarSign = false;
     bool carraigeReturn = false;    // If a carraige return was found
     bool newLine = false;           // Once line is finished, return
 
@@ -95,6 +96,16 @@ void DBColleges::readLine(std::istream& file, std::vector<std::string>& line)
                 else
                 {
                     carraigeReturn = true;
+                }
+                break;
+            case '$':
+                if (inquotes)
+                {
+                    entry += '$';
+                }
+                else
+                {
+                    entry = "";  // Don't add the dollar sign;
                 }
                 break;
             case '\n':
@@ -231,7 +242,63 @@ void DBColleges::readEntries(const std::string& path)
     csvfile.close();
 }
 
-void DBColleges::loadFileEntries()
+void DBColleges::readSouvenirs(const std::string& path){
+
+    std::vector<std::string> line;          // This is the line that has been read in from readLine
+
+    std::ifstream csvfile;
+    csvfile.open(path);
+
+    // Check if file is actually open. If not, throw debug message and return
+    if(!csvfile.is_open())
+    {
+        qDebug() << "Could not open specified csv file for reading souvenirs.";
+        csvfile.close();
+        return;
+    }
+    else
+    {
+        qDebug() << "File successfully opened to read in souvenirs.";
+    }
+
+    QString nameInput;
+    std::string priceInput;
+    QString currentCollege;
+    while(!csvfile.eof())
+    {
+        int i = 0;
+        nameInput = "";
+        priceInput = "";
+        line.clear();       // Clear the list of data from the current line so we can read the next one
+
+        this->readLine(csvfile, line);
+        //int j = 0;
+        if (line.at(0) == ""){
+            while (i < 3)   // If we're only reading in the next distance, we're only reading in [1], and [2] of the line
+            {
+                SouvenirItem newsouvenir;
+                i++;    // i = 1, skip the first entry since we already are on the new college still
+
+                nameInput = QString::fromStdString(line.at(i));    // Insert Souvenir item name
+                i++;    // i = 2
+
+                priceInput = line.at(i);    // Read item price
+                newsouvenir.name = nameInput;
+                newsouvenir.price = std::stod(priceInput);
+                this->collegeMap[currentCollege].souvenirs.push_back(newsouvenir);
+                i++;    // i = 3
+            }   // If line.at(0) reads a college, then we will start reading in the souvenirs.
+        }
+        else
+        {
+            currentCollege = QString::fromStdString(line.at(0));
+        }
+    }
+
+    csvfile.close();
+}
+
+void DBColleges::loadCollegeEntries()
 {
     QString file = QFileDialog::getOpenFileName();
     std::string path = file.toStdString();
@@ -239,6 +306,16 @@ void DBColleges::loadFileEntries()
     if (!file.trimmed().isEmpty())
     {
             DBColleges::readEntries(path);
+    }
+}
+void DBColleges::loadSouvenirEntries()
+{
+    QString file = QFileDialog::getOpenFileName();
+    std::string path = file.toStdString();
+
+    if (!file.trimmed().isEmpty())
+    {
+            DBColleges::readSouvenirs(path);
     }
 }
 
@@ -293,7 +370,7 @@ void DBColleges::saveColleges()
     //Clears the entries in COLLEGES table first.
     query.exec("DELETE FROM colleges");
 
-    for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
+    for(auto iterator = this->collegeMap.cbegin(); iterator != this->collegeMap.cend(); iterator++)
     {
         query.exec("INSERT INTO colleges VALUES ( '" +
                    iterator->value.name + "', " +                       //Column1(College) = college name
@@ -309,9 +386,9 @@ void DBColleges::saveDistances()
     //Clears the entries in DISTANCES table first.
     query.exec("DELETE FROM distances");
 
-    for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
+    for(auto iterator = this->collegeMap.cbegin(); iterator != this->collegeMap.cend(); iterator++)
     {
-        for(auto iterator2 = iterator->value.distances.begin(); iterator2 != iterator->value.distances.end(); iterator2++)
+        for(auto iterator2 = iterator->value.distances.cbegin(); iterator2 != iterator->value.distances.cend(); iterator2++)
         {
             query.exec("INSERT INTO distances VALUES ( '" +
                        iterator->value.name + "', " +             //Column1(StartingCollege) = starting college name
@@ -328,7 +405,7 @@ void DBColleges::saveSouvenirs()
     //Clears the entries in SOUVENIRS table first.
     query.exec("DELETE FROM souvenirs");
 
-    for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
+    for(auto iterator = this->collegeMap.cbegin(); iterator != this->collegeMap.cend(); iterator++)
     {
         for(int index = 0; index < iterator->value.souvenirs.size(); index++)
         {

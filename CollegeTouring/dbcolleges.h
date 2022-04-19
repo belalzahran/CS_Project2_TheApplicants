@@ -83,7 +83,11 @@ public:
     void readEntries(const std::string& path);
 
 
-    void loadFileEntries();
+    void readSouvenirs(const std::string& path);
+
+
+    void loadSouvenirEntries();
+    void loadCollegeEntries();
 
 
     /*!
