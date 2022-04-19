@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>746</width>
+    <height>552</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,14 +20,53 @@
       <property name="currentIndex">
        <number>1</number>
       </property>
-      <widget class="CollegeList" name="tab_1">
+      <property name="movable">
+       <bool>false</bool>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Main Menu</string>
+       </attribute>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>590</x>
+          <y>20</y>
+          <width>121</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Admin Log in</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label">
+        <property name="geometry">
+         <rect>
+          <x>260</x>
+          <y>110</y>
+          <width>251</width>
+          <height>91</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:28pt; font-weight:700;&quot;&gt;College Tours&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="CollegeList" name="">
        <attribute name="title">
         <string>College List</string>
        </attribute>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="displaySouvenirs" name="tab_3">
        <attribute name="title">
-        <string>Trip Planning</string>
+        <string>Display Souvenirs</string>
+       </attribute>
+      </widget>
+      <widget class="TripPlanner" name="tab_2">
+       <attribute name="title">
+        <string>Trip Planner</string>
        </attribute>
       </widget>
      </widget>
@@ -39,8 +78,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>21</height>
+     <width>746</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>
@@ -50,7 +89,19 @@
   <customwidget>
    <class>CollegeList</class>
    <extends>QWidget</extends>
-   <header>college_list.h</header>
+   <header location="global">college_list.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>displaySouvenirs</class>
+   <extends>QWidget</extends>
+   <header>displaysouvenirs.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TripPlanner</class>
+   <extends>QWidget</extends>
+   <header>tripplanner.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
