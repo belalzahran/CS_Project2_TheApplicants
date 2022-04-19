@@ -24,11 +24,8 @@ struct College
     QString state;
     int undergrads;
 
-    // The way we will be storing these will make it so that each idx for endingCollege
-    // will correspond to the idx of each distance
-    // ex: endingColleges[0] will have a distance stored in distances[0]
-    QVector<QString> endingColleges;    // list of destination colleges
-    QVector<double> distances;          // list of destination distances
+    //The key is the ending college name, and the value is the actual distance
+    OrderedMap<QString,double> distances;
 
     QVector<SouvenirItem> souvenirs;    // list of souvenir items
 };

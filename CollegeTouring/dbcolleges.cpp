@@ -189,10 +189,9 @@ void DBColleges::readEntries(const std::string& path)
                 i++;    // i = 1, skip the first entry since we already are on the new college still
 
                 nameInput = QString::fromStdString(line.at(i));    // Insert end college name
-                this->collegeMap[newCollege.name].endingColleges.push_back(nameInput);
                 i++;    // i = 2
 
-                this->collegeMap[newCollege.name].distances.push_back(std::stoi(line.at(i)));  // Insert distance to end college
+                this->collegeMap[newCollege.name].distances.insert(nameInput,std::stoi(line.at(i)));
                 i++;    // i = 3
             }
         }
@@ -204,7 +203,6 @@ void DBColleges::readEntries(const std::string& path)
             }
             // Clear the existing distances and ending colleges from previous entry
             newCollege.distances.clear();
-            newCollege.endingColleges.clear();
 
             while(i < line.size())
             {
@@ -213,10 +211,9 @@ void DBColleges::readEntries(const std::string& path)
                 i++;    // i = 1
 
                 nameInput = QString::fromStdString(line.at(i));    // Should be second entry
-                newCollege.endingColleges.push_back(nameInput);
                 i++;    // i = 2
 
-                newCollege.distances.push_back(std::stoi(line.at(i)));  // Third entry
+                newCollege.distances.insert(nameInput,std::stoi(line.at(i)));
                 i++;    // i = 3
 
                 stateInput = QString::fromStdString(line.at(i));    // Fourth entry
@@ -265,8 +262,9 @@ void DBColleges::loadFromDatabase()
             {
                 while(distancesQuery.next())
                 {
-                    newCollege.endingColleges.push_back(distancesQuery.value(1).toString()); //Column2(EndingCollege) = ending college name
-                    newCollege.distances.push_back(distancesQuery.value(2).toDouble());      //Column3(Distance) = distance to ending college
+                    //Column2(EndingCollege) = ending college name
+                    //Column3(Distance) = distance to ending college
+                    newCollege.distances.insert(distancesQuery.value(1).toString(), distancesQuery.value(2).toDouble());
                 }
             }
 
@@ -313,12 +311,12 @@ void DBColleges::saveDistances()
 
     for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
     {
-        for(int index = 0; index < iterator->value.endingColleges.size(); index++)
+        for(auto iterator2 = iterator->value.distances.begin(); iterator2 != iterator->value.distances.end(); iterator2++)
         {
             query.exec("INSERT INTO distances VALUES ( '" +
-                       iterator->value.name + "', " +                             //Column1(StartingCollege) = starting college name
-                       " '" + iterator->value.endingColleges[index] + "', " +     //Column2(EndingCollege) = ending college name
-                       QString::number(iterator->value.distances[index]) + " )"); //Column3(Distance) = distance to ending college
+                       iterator->value.name + "', " +             //Column1(StartingCollege) = starting college name
+                       " '" + iterator2->key + "', " +            //Column2(EndingCollege) = ending college name
+                       QString::number(iterator2->value) + " )"); //Column3(Distance) = distance to ending college
         }
     }
 }
