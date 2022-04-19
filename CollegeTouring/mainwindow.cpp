@@ -30,14 +30,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
     //This process only needs to be run once when the program first starts.
-    DBColleges::getInstance().loadFromDatabase(); //Try to load from the database first
-    if(DBColleges::getInstance().collegeMap.empty()) //If the database is empty, run the loadfile function
+    if(DBColleges::getInstance().collegeMap.empty())
     {
-        DBColleges::getInstance().loadFileEntries();
+        DBColleges::getInstance().loadFromDatabase(); //Try to load from the database first
+        if(DBColleges::getInstance().collegeMap.empty()) //If the database is empty, run the loadfile function
+        {
+            DBColleges::getInstance().loadFileEntries();
+        }
     }
-
 
     //Returns the college struct with the key Arizona State University
     //DBColleges::getInstance().collegeMap.at("Arizona State University");
@@ -46,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent)
     //Iterates through collegeMap. It can be obtained with DBColleges::getInstance().collegeMap
     for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
     {
-        qDebug() << iterator->value.name; //Value is the college struct.
+        //qDebug() << iterator->value.name; //Value is the college struct.
     }
 
 

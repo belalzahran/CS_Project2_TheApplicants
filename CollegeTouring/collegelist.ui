@@ -26,6 +26,11 @@
        <string>State</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>Undergrads</string>
+      </property>
+     </column>
     </widget>
    </item>
    <item row="2" column="1">
