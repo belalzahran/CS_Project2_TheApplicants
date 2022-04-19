@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "dbcolleges.h"
 #include <iomanip>
-
+#include "admin.h"
 //void printColleges(QVector<College>& collegeVector)
 //{
 //    for (int i = 0; i < collegeVector.size(); i++)
@@ -66,5 +66,10 @@ MainWindow::~MainWindow()
 {
     delete ui;
 
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
 }
 

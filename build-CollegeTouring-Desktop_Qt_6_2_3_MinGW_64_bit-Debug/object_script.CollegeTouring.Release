@@ -1,0 +1,12 @@
+release/admin.o
+release/college_list.o
+release/dbcolleges.o
+release/displaysouvenirs.o
+release/main.o
+release/mainwindow.o
+release/tripplanner.o
+release/moc_admin.o
+release/moc_college_list.o
+release/moc_displaysouvenirs.o
+release/moc_mainwindow.o
+release/moc_tripplanner.o
