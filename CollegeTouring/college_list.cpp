@@ -1,5 +1,6 @@
 #include "college_list.h"
 #include "ui_collegelist.h"
+#include "dbcolleges.h"
 
 CollegeList::CollegeList(QWidget *parent) :
     QWidget(parent),
@@ -8,7 +9,10 @@ CollegeList::CollegeList(QWidget *parent) :
     ui->setupUi(this);
 
 
-//QObject::connect(this->ui->loadEntriesButton, SIGNAL(clicked()), this, SLOT(onCellDoubleClicked(int, int)));
+    //QObject::connect(this->ui->loadEntriesButton, SIGNAL(clicked()), this, SLOT(onCellDoubleClicked(int, int)));
+
+    this->displayColleges();
+
 }
 
 CollegeList::~CollegeList()
@@ -16,21 +20,63 @@ CollegeList::~CollegeList()
     delete ui;
 }
 
-//void CollegeList::updateColleges(QString databaseName)
-//{
-//    //Makes sure table is empty
-//    this->ui->restList->clearContents();
-//    // Get a reference to the list of colleges FROM DATABASE.
-//    // code to do this
+void CollegeList::displayColleges(SortType sort)
+{
+    QVector<College> displayedColleges;
 
-//    // Resize the table so we have the correct number of rows.
-//    this->ui->collegeTable->setRowCount(this->.length());
+    if(sort == ALPHABETICAL)
+    {
+        for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+        {
+            displayedColleges.push_back(iterator->value);
+        }
+    }
+    else if(sort == STATE)
+    {
+        OrderedMap<QString,College> stateSorting;
 
-//    for(qsizetype i = 0; i < restList.length(); i++)
-//    {
-//        // setItem(row (i), column, data)
-//        this->ui->restList->setItem(i, 0, new QTableWidgetItem(restList[i].name));
-//        this->ui->restList->setItem(i, 1, new QTableWidgetItem(QString::number(restList[i].milesFromCollege, 'f', 2)));
-//        this->ui->restList->setItem(i, 2, new QTableWidgetItem(QVariant(restList[i].menuItems.length()).toString()));
-//    }
-//}
+        //Inserts colleges into another ordered map with the states as part of the key in order to sort it.
+        for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+        {
+            stateSorting.insert(QString(iterator->value.state).replace(" ", "") + iterator->value.name, iterator->value);
+        }
+
+        for(auto iterator = stateSorting.begin(); iterator != stateSorting.end(); iterator++)
+        {
+            displayedColleges.push_back(iterator->value);
+        }
+    }
+
+    //Makes sure table is empty
+    this->ui->collegeTable->clear();
+
+    // Resize the table so we have the correct number of rows.
+    this->ui->collegeTable->setColumnCount(3);
+    this->ui->collegeTable->setHorizontalHeaderItem(0, new QTableWidgetItem("College"));
+    this->ui->collegeTable->setHorizontalHeaderItem(1, new QTableWidgetItem("State"));
+    this->ui->collegeTable->setHorizontalHeaderItem(2, new QTableWidgetItem("Undergrads"));
+    this->ui->collegeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    this->ui->collegeTable->setRowCount(DBColleges::getInstance().collegeMap.size());
+
+    for(int index = 0; index < displayedColleges.size(); index++)
+    {
+        // setItem(row (i), column, data)
+        this->ui->collegeTable->setItem(index, 0, new QTableWidgetItem(displayedColleges.at(index).name));
+        this->ui->collegeTable->setItem(index, 1, new QTableWidgetItem(displayedColleges.at(index).state));
+        this->ui->collegeTable->setItem(index, 2, new QTableWidgetItem(QString::number(displayedColleges.at(index).undergrads)));
+
+    }
+}
+
+void CollegeList::on_sortAlphabeticallyButton_clicked()
+{
+    this->displayColleges(ALPHABETICAL);
+}
+
+
+void CollegeList::on_sortByStateButton_clicked()
+{
+    this->displayColleges(STATE);
+}
+

@@ -3,8 +3,15 @@
 
 #include <QWidget>
 
+enum SortType
+{
+    ALPHABETICAL,
+    STATE
+};
+
 namespace Ui {
 class CollegeList;
+
 }
 
 class CollegeList : public QWidget
@@ -14,6 +21,13 @@ class CollegeList : public QWidget
 public:
     explicit CollegeList(QWidget *parent = nullptr);
     ~CollegeList();
+
+    void displayColleges(SortType sort = ALPHABETICAL);
+
+private slots:
+    void on_sortAlphabeticallyButton_clicked();
+
+    void on_sortByStateButton_clicked();
 
 private:
     Ui::CollegeList *ui;
