@@ -30,11 +30,34 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // change the path to where you store the .csv file (currently included in project)
-    std::string path = "D:/source/repos/Qt_Projects/MAIN_CollegeTouring/CS_Project2_TheApplicants/CollegeTouring/Distances.csv";
-    // test parser
-    DBColleges db;
-    db.readEntries(path);
+
+    //This process only needs to be run once when the program first starts.
+    DBColleges::getInstance().loadFromDatabase(); //Try to load from the database first
+    if(DBColleges::getInstance().collegeMap.empty()) //If the database is empty, run the loadfile function
+    {
+        DBColleges::getInstance().loadFileEntries();
+    }
+
+
+    //Returns the college struct with the key Arizona State University
+    //DBColleges::getInstance().collegeMap.at("Arizona State University");
+
+
+    //Iterates through collegeMap. It can be obtained with DBColleges::getInstance().collegeMap
+    for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+    {
+        qDebug() << iterator->value.name; //Value is the college struct.
+    }
+
+
+    //Returns distance from Arizona State University to Northwestern
+    //DBColleges::getInstance().collegeMap.at("Arizona State University").distances.at("Northwestern");
+
+
+    //These functions save the data stored in collegeMap into the database.
+    DBColleges::getInstance().saveColleges();
+    DBColleges::getInstance().saveDistances();
+
     //printColleges(db.collegeVector);
 
 }
