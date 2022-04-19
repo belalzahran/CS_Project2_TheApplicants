@@ -45,9 +45,13 @@ MainWindow::MainWindow(QWidget *parent)
     //DBColleges::getInstance().collegeMap.at("Arizona State University").distances.at("Northwestern");
 
 
+    //DBColleges::readSouvenirs(path);
+
+
     //These functions save the data stored in collegeMap into the database.
     DBColleges::getInstance().saveColleges();
     DBColleges::getInstance().saveDistances();
+    DBColleges::getInstance().saveSouvenirs();
 
     //printColleges(db.collegeVector);
 
