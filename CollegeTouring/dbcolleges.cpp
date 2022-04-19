@@ -370,7 +370,7 @@ void DBColleges::saveColleges()
     //Clears the entries in COLLEGES table first.
     query.exec("DELETE FROM colleges");
 
-    for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
+    for(auto iterator = this->collegeMap.cbegin(); iterator != this->collegeMap.cend(); iterator++)
     {
         query.exec("INSERT INTO colleges VALUES ( '" +
                    iterator->value.name + "', " +                       //Column1(College) = college name
@@ -386,9 +386,9 @@ void DBColleges::saveDistances()
     //Clears the entries in DISTANCES table first.
     query.exec("DELETE FROM distances");
 
-    for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
+    for(auto iterator = this->collegeMap.cbegin(); iterator != this->collegeMap.cend(); iterator++)
     {
-        for(auto iterator2 = iterator->value.distances.begin(); iterator2 != iterator->value.distances.end(); iterator2++)
+        for(auto iterator2 = iterator->value.distances.cbegin(); iterator2 != iterator->value.distances.cend(); iterator2++)
         {
             query.exec("INSERT INTO distances VALUES ( '" +
                        iterator->value.name + "', " +             //Column1(StartingCollege) = starting college name
@@ -405,7 +405,7 @@ void DBColleges::saveSouvenirs()
     //Clears the entries in SOUVENIRS table first.
     query.exec("DELETE FROM souvenirs");
 
-    for(auto iterator = this->collegeMap.begin(); iterator != this->collegeMap.end(); iterator++)
+    for(auto iterator = this->collegeMap.cbegin(); iterator != this->collegeMap.cend(); iterator++)
     {
         for(int index = 0; index < iterator->value.souvenirs.size(); index++)
         {

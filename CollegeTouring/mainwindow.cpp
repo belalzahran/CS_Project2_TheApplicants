@@ -35,10 +35,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //Iterates through collegeMap. It can be obtained with DBColleges::getInstance().collegeMap
-    for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
-    {
-        //qDebug() << iterator->value.name; //Value is the college struct.
-    }
+    //for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+    //{
+    //    //qDebug() << iterator->value.name; //Value is the college struct.
+    //}
 
 
     //Returns distance from Arizona State University to Northwestern

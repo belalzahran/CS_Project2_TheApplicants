@@ -32,8 +32,9 @@ public:
         ValueType value;
     };
 
-    // Type alias for iterator as defined by Entry*
+    // Type alias for iterator and const_iterator
     using iterator = typename std::vector<Entry>::iterator;
+    using const_iterator = typename std::vector<Entry>::const_iterator;
 
 
     OrderedMap() : array{std::vector<Entry>()}, LessThan{LessThanComparator()}, count{0} {}
@@ -220,6 +221,24 @@ public:
     iterator end()
     {
        return this->array.end();
+    }
+
+    //! A member function that returns an const_iterator to the beginning Entry of the map
+    /*!
+        \return const_iterator
+    */
+    const_iterator cbegin() const
+    {
+        return this->array.cbegin();
+    }
+
+    //! A member function that returns an const_iterator to the beginning Entry of the map
+    /*!
+        \return const_iterator
+    */
+    const_iterator cend() const
+    {
+       return this->array.cend();
     }
 
 protected:
