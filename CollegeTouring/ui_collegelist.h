@@ -44,14 +44,16 @@ public:
         gridLayout = new QGridLayout(CollegeList);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         collegeTable = new QTableWidget(CollegeList);
-        if (collegeTable->columnCount() < 3)
-            collegeTable->setColumnCount(3);
+        if (collegeTable->columnCount() < 4)
+            collegeTable->setColumnCount(4);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         collegeTable->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         collegeTable->setHorizontalHeaderItem(1, __qtablewidgetitem1);
         QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
         collegeTable->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+        collegeTable->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         collegeTable->setObjectName(QString::fromUtf8("collegeTable"));
 
         gridLayout->addWidget(collegeTable, 2, 0, 1, 1);
@@ -107,6 +109,8 @@ public:
         ___qtablewidgetitem1->setText(QCoreApplication::translate("CollegeList", "State", nullptr));
         QTableWidgetItem *___qtablewidgetitem2 = collegeTable->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QCoreApplication::translate("CollegeList", "Undergrads", nullptr));
+        QTableWidgetItem *___qtablewidgetitem3 = collegeTable->horizontalHeaderItem(3);
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("CollegeList", "Distance", nullptr));
         sortAlphabeticallyButton->setText(QCoreApplication::translate("CollegeList", "Alphabetical Order", nullptr));
         sortByStateButton->setText(QCoreApplication::translate("CollegeList", "Sort by State", nullptr));
         pushButton->setText(QCoreApplication::translate("CollegeList", "Saddleback Only", nullptr));

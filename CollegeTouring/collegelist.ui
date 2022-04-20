@@ -31,6 +31,11 @@
        <string>Undergrads</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>Distance</string>
+      </property>
+     </column>
     </widget>
    </item>
    <item row="2" column="1">
