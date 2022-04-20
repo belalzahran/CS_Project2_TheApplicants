@@ -6,7 +6,8 @@
 enum SortType
 {
     ALPHABETICAL,
-    STATE
+    STATE,
+    SPECIFIC
 };
 
 namespace Ui {
@@ -22,12 +23,16 @@ public:
     explicit CollegeList(QWidget *parent = nullptr);
     ~CollegeList();
 
-    void displayColleges(SortType sort = ALPHABETICAL);
+    void displayColleges(SortType sort = ALPHABETICAL, const QString& stateName = "California");
+
+    void updateComboBox();
 
 private slots:
     void on_sortAlphabeticallyButton_clicked();
 
     void on_sortByStateButton_clicked();
+
+    void on_comboBoxState_currentIndexChanged(int index);
 
 private:
     Ui::CollegeList *ui;
