@@ -62,6 +62,16 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
             }
         }
     }
+    else if(sort == SADDLEBACK)
+    {
+        for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
+        {
+            if(iterator->value.distances.contains("Saddleback College"))
+            {
+                displayedColleges.push_back(iterator->value);
+            }
+        }
+    }
 
     //Makes sure table is empty
     this->ui->collegeTable->clear();
@@ -71,6 +81,7 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
     this->ui->collegeTable->setHorizontalHeaderItem(0, new QTableWidgetItem("College"));
     this->ui->collegeTable->setHorizontalHeaderItem(1, new QTableWidgetItem("State"));
     this->ui->collegeTable->setHorizontalHeaderItem(2, new QTableWidgetItem("Undergrads"));
+
     this->ui->collegeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     this->ui->collegeTable->setRowCount(displayedColleges.size());
@@ -136,5 +147,11 @@ void CollegeList::on_comboBoxState_currentIndexChanged(int index)
     {
         this->displayColleges(ALPHABETICAL);
     }
+}
+
+
+void CollegeList::on_pushButton_clicked()
+{
+    this->displayColleges(SADDLEBACK);
 }
 
