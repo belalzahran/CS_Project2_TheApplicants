@@ -62,15 +62,38 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
             }
         }
     }
+    else if(sort == SADDLEBACK)
+    {
+        for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
+        {
+            if(iterator->value.distances.contains("Saddleback College"))
+            {
+                displayedColleges.push_back(iterator->value);
+            }
+        }
+    }
 
     //Makes sure table is empty
     this->ui->collegeTable->clear();
 
     // Resize the table so we have the correct number of rows.
-    this->ui->collegeTable->setColumnCount(3);
+    if(sort == SADDLEBACK)
+    {
+        this->ui->collegeTable->setColumnCount(4);
+    }
+    else
+    {
+        this->ui->collegeTable->setColumnCount(3);
+    }
+
     this->ui->collegeTable->setHorizontalHeaderItem(0, new QTableWidgetItem("College"));
     this->ui->collegeTable->setHorizontalHeaderItem(1, new QTableWidgetItem("State"));
     this->ui->collegeTable->setHorizontalHeaderItem(2, new QTableWidgetItem("Undergrads"));
+    if(sort == SADDLEBACK)
+    {
+        this->ui->collegeTable->setHorizontalHeaderItem(3, new QTableWidgetItem("Distance"));
+    }
+
     this->ui->collegeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     this->ui->collegeTable->setRowCount(displayedColleges.size());
@@ -81,7 +104,10 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
         this->ui->collegeTable->setItem(index, 0, new QTableWidgetItem(displayedColleges.at(index).name));
         this->ui->collegeTable->setItem(index, 1, new QTableWidgetItem(displayedColleges.at(index).state));
         this->ui->collegeTable->setItem(index, 2, new QTableWidgetItem(QString::number(displayedColleges.at(index).undergrads)));
-
+        if(sort == SADDLEBACK)
+        {
+            this->ui->collegeTable->setItem(index, 3, new QTableWidgetItem(QString::number(displayedColleges.at(index).distances.at("Saddleback College"))));
+        }
     }
 }
 
@@ -138,3 +164,8 @@ void CollegeList::on_comboBoxState_currentIndexChanged(int index)
     }
 }
 
+
+void CollegeList::on_pushButton_clicked()
+{
+    this->displayColleges(SADDLEBACK);
+}
