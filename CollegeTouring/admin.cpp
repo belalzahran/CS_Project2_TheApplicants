@@ -15,7 +15,7 @@ admin::~admin()
     delete ui;
 }
 
-
+// fill the combobox w colleges
 void admin::fillCollegeCombo()
 {
 
@@ -29,6 +29,7 @@ void admin::fillCollegeCombo()
 
 }
 
+// fill the souvenir combo box with the respective items
 void admin::fillCollegeSouvenirCombo(College selectedCollege)
 {
         ui->comboBox_2->clear();
@@ -39,6 +40,7 @@ void admin::fillCollegeSouvenirCombo(College selectedCollege)
 }
 
 
+// when the college selected changes
 void admin::on_comboBox_currentTextChanged(const QString &arg1)
 {
     for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
@@ -48,5 +50,27 @@ void admin::on_comboBox_currentTextChanged(const QString &arg1)
     }
 
      fillCollegeSouvenirCombo(selectedCollege);
+}
+
+
+// when add button is clicked
+void admin::on_pushButton_clicked()
+{
+//    SouvenirItem newItem(ui->lineEdit_price->text().toDouble(),ui->lineEdit_name->text());
+
+//    for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
+//    {
+//        if (iterator->value.name == selectedCollege.name)
+//            iterator->value.souvenirs.
+//    }
+
+
+
+}
+
+// when the delete button is clicked
+void admin::on_pushButton_2_clicked()
+{
+
 }
 

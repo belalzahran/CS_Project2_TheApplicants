@@ -26,8 +26,8 @@ public:
     QLabel *label;
     QTabWidget *tabWidget;
     QWidget *tab;
-    QLineEdit *lineEdit;
-    QLineEdit *lineEdit_2;
+    QLineEdit *lineEdit_name;
+    QLineEdit *lineEdit_price;
     QLabel *label_2;
     QLabel *label_3;
     QLabel *label_4;
@@ -36,7 +36,6 @@ public:
     QPushButton *pushButton_2;
     QComboBox *comboBox_2;
     QLabel *label_5;
-    QPushButton *pushButton_3;
     QWidget *tab_2;
 
     void setupUi(QWidget *admin)
@@ -52,12 +51,12 @@ public:
         tabWidget->setGeometry(QRect(20, 50, 581, 401));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
-        lineEdit = new QLineEdit(tab);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
-        lineEdit->setGeometry(QRect(120, 90, 113, 22));
-        lineEdit_2 = new QLineEdit(tab);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
-        lineEdit_2->setGeometry(QRect(120, 120, 113, 22));
+        lineEdit_name = new QLineEdit(tab);
+        lineEdit_name->setObjectName(QString::fromUtf8("lineEdit_name"));
+        lineEdit_name->setGeometry(QRect(120, 90, 113, 22));
+        lineEdit_price = new QLineEdit(tab);
+        lineEdit_price->setObjectName(QString::fromUtf8("lineEdit_price"));
+        lineEdit_price->setGeometry(QRect(120, 120, 113, 22));
         label_2 = new QLabel(tab);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(20, 20, 351, 21));
@@ -82,9 +81,6 @@ public:
         label_5 = new QLabel(tab);
         label_5->setObjectName(QString::fromUtf8("label_5"));
         label_5->setGeometry(QRect(20, 200, 81, 20));
-        pushButton_3 = new QPushButton(tab);
-        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setGeometry(QRect(420, 50, 75, 24));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
@@ -108,7 +104,6 @@ public:
         pushButton->setText(QCoreApplication::translate("admin", "Add", nullptr));
         pushButton_2->setText(QCoreApplication::translate("admin", "Delete", nullptr));
         label_5->setText(QCoreApplication::translate("admin", "Select item: ", nullptr));
-        pushButton_3->setText(QCoreApplication::translate("admin", "select", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("admin", "Souvenirs Settings", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("admin", "Upload", nullptr));
     } // retranslateUi

@@ -14,7 +14,6 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
@@ -23,7 +22,6 @@ QT_BEGIN_NAMESPACE
 class Ui_displaySouvenirs
 {
 public:
-    QPushButton *pushButton;
     QComboBox *comboBox;
     QTableWidget *tableWidget;
     QLabel *label;
@@ -33,9 +31,6 @@ public:
         if (displaySouvenirs->objectName().isEmpty())
             displaySouvenirs->setObjectName(QString::fromUtf8("displaySouvenirs"));
         displaySouvenirs->resize(690, 447);
-        pushButton = new QPushButton(displaySouvenirs);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(120, 260, 75, 24));
         comboBox = new QComboBox(displaySouvenirs);
         comboBox->setObjectName(QString::fromUtf8("comboBox"));
         comboBox->setGeometry(QRect(70, 220, 171, 22));
@@ -66,7 +61,6 @@ public:
     void retranslateUi(QWidget *displaySouvenirs)
     {
         displaySouvenirs->setWindowTitle(QCoreApplication::translate("displaySouvenirs", "Form", nullptr));
-        pushButton->setText(QCoreApplication::translate("displaySouvenirs", "Click Me", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("displaySouvenirs", "Item", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
