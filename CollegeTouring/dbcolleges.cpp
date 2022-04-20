@@ -36,6 +36,7 @@ DBColleges::DBColleges()
     }
 }
 
+
 DBColleges::~DBColleges()
 {
     if(this->database.isOpen())
@@ -47,6 +48,16 @@ DBColleges::~DBColleges()
 }
 
 
+/*!
+ * \brief DBColleges::readLine
+ * \param file - Path to the specified file (must be ifstream)
+ * \param line - Vector of characters to be modified by reading the current line in stream
+ *
+ * Reads a single line in a csv file (Compatible with csv files only) and stores the characters
+ * into a vector of characters (std::string)
+ *
+ * TODO: change vector to regular string since that's just a char vect.
+ */
 void DBColleges::readLine(std::istream& file, std::vector<std::string>& line)
 {
     char ch;    // character we will read in
@@ -156,6 +167,13 @@ void DBColleges::readLine(std::istream& file, std::vector<std::string>& line)
 
 }
 
+
+/*!
+ * \brief DBColleges::readEntries
+ * \param path - Path to csv file to be read
+ *
+ * Reads each line and stores data within corresponding objects.
+ */
 void DBColleges::readEntries(const std::string& path)
 {
     // Temp data to be used for reading from the csv file
@@ -163,7 +181,6 @@ void DBColleges::readEntries(const std::string& path)
     College endCollege;
     QString nameInput;
     QString stateInput;
-    int undergrads;
     std::vector<std::string> line;          // This is the line that has been read in from readLine
 
 
@@ -242,6 +259,12 @@ void DBColleges::readEntries(const std::string& path)
     csvfile.close();
 }
 
+/*!
+ * \brief DBColleges::readSouvenirs
+ * \param path - Path to csv file
+ *
+ * Will read the file and assign data to its corresponding objects.
+ */
 void DBColleges::readSouvenirs(const std::string& path){
 
     std::vector<std::string> line;          // This is the line that has been read in from readLine
