@@ -127,8 +127,8 @@
     <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>270</x>
-       <y>200</y>
+       <x>100</x>
+       <y>290</y>
        <width>75</width>
        <height>24</height>
       </rect>
@@ -140,9 +140,9 @@
     <widget class="QComboBox" name="comboBox_2">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>200</y>
-       <width>141</width>
+       <x>100</x>
+       <y>260</y>
+       <width>151</width>
        <height>22</height>
       </rect>
      </property>
@@ -150,14 +150,63 @@
     <widget class="QLabel" name="label_5">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>200</y>
+       <x>30</x>
+       <y>260</y>
        <width>81</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>Select item: </string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_edit3">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>290</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Edit</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_pricechange">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>260</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_done4">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>260</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Done</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_enterprice6">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>240</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enter new Price:</string>
      </property>
     </widget>
    </widget>

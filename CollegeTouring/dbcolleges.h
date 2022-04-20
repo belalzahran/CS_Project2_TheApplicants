@@ -17,11 +17,16 @@ struct SouvenirItem
     double price;
     QString name;
 
-//    SouvenirItem(double price, QString name)
-//    {
-//        this->price = price;
-//        this->name = name;
-//    }
+    SouvenirItem()
+    {
+        this->price = 0;
+        this->name = "";
+    };
+    SouvenirItem(double price, QString name)
+    {
+        this->price = price;
+        this->name = name;
+    }
 };
 
 struct College
