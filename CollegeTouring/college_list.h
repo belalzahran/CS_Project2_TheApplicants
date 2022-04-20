@@ -7,7 +7,8 @@ enum SortType
 {
     ALPHABETICAL,
     STATE,
-    SPECIFIC
+    SPECIFIC,
+    SADDLEBACK
 };
 
 namespace Ui {
@@ -33,6 +34,8 @@ private slots:
     void on_sortByStateButton_clicked();
 
     void on_comboBoxState_currentIndexChanged(int index);
+
+    void on_pushButton_clicked();
 
 private:
     Ui::CollegeList *ui;

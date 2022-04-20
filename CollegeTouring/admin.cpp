@@ -69,8 +69,8 @@ void admin::on_pushButton_clicked()
 }
 
 // when the delete button is clicked
-void admin::on_pushButton_2_clicked()
-{
-
-}
+//void admin::on_pushButton_2_clicked()
+//{
+//
+//}
 
