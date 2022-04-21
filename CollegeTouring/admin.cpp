@@ -52,6 +52,8 @@ void admin::on_comboBox_currentTextChanged(const QString &arg1)
     }
 
      fillCollegeSouvenirCombo(selectedCollege);
+     ui->doubleSpinBox->hide();
+     ui->pushButton_3done->hide();
 }
 
 
@@ -59,24 +61,24 @@ void admin::on_comboBox_currentTextChanged(const QString &arg1)
 void admin::on_pushButton_clicked()
 {
 
-    if (ui->lineEdit_price->text() == "" && ui->lineEdit_name->text() == "")
+    if (ui->doubleSpinBox_2->value() == 0 && ui->lineEdit_name->text() == "")
     {
         QMessageBox::warning(this, "New Souvenir Item","No name or price entered");
 
     }
-    else if  (ui->lineEdit_price->text() == "" && ui->lineEdit_name->text() != "")
+    else if  (ui->doubleSpinBox_2->value() == 0 && ui->lineEdit_name->text() != "")
     {
         QMessageBox::warning(this, "New Souvenir Item","No price entered.");
 
     }
-    else if  (ui->lineEdit_price->text() != "" && ui->lineEdit_name->text() == "")
+    else if  (ui->doubleSpinBox_2->value() != 0 && ui->lineEdit_name->text() == "")
     {
         QMessageBox::warning(this, "New Souvenir Item","No name entered");
 
     }
     else
     {
-        SouvenirItem newItem(ui->lineEdit_price->text().toDouble(),ui->lineEdit_name->text());
+        SouvenirItem newItem(ui->doubleSpinBox_2->value(),ui->lineEdit_name->text());
 
        for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
        {
@@ -85,7 +87,7 @@ void admin::on_pushButton_clicked()
        }
 
        ui->lineEdit_name->clear();
-       ui->lineEdit_price->clear();
+       ui->doubleSpinBox_2->clear();
 
        on_comboBox_currentTextChanged(ui->comboBox->currentText());
 
@@ -124,7 +126,8 @@ void admin::on_pushButton_2_clicked()
     on_comboBox_currentTextChanged(ui->comboBox->currentText());
     QMessageBox::information(this, "Delete Souvenir Item","Succesfully deleted " + selectedSouvenir.name + "!");
 
-
+    ui->doubleSpinBox->hide();
+    ui->pushButton_3done->hide();
 }
 
 
@@ -182,5 +185,11 @@ void admin::on_pushButton_3done_clicked()
     QMessageBox::information(this, "Change Souvenir Price","Succesfully changed " + ui->comboBox_2->currentText() + " price to $" + QString::number(ui->doubleSpinBox->value()));
 
 
+}
+
+
+void admin::on_pushButton_return3_clicked()
+{
+    this->close();
 }
 

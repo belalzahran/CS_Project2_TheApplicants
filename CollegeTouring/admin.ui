@@ -40,7 +40,7 @@
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>Souvenirs Settings</string>
+     <string>Manage Souvenirs</string>
     </attribute>
     <widget class="QLineEdit" name="lineEdit_name">
      <property name="geometry">
@@ -49,16 +49,6 @@
        <y>110</y>
        <width>113</width>
        <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_price">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>150</y>
-       <width>113</width>
-       <height>20</height>
       </rect>
      </property>
     </widget>
@@ -104,10 +94,10 @@
     <widget class="QPushButton" name="pushButton">
      <property name="geometry">
       <rect>
-       <x>280</x>
+       <x>270</x>
        <y>110</y>
-       <width>75</width>
-       <height>24</height>
+       <width>81</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -127,10 +117,10 @@
     <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>250</y>
+       <x>130</x>
+       <y>290</y>
        <width>75</width>
-       <height>24</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -140,20 +130,20 @@
     <widget class="QComboBox" name="comboBox_2">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>130</x>
        <y>250</y>
-       <width>151</width>
-       <height>22</height>
+       <width>161</width>
+       <height>31</height>
       </rect>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_edit3">
      <property name="geometry">
       <rect>
-       <x>280</x>
-       <y>250</y>
-       <width>75</width>
-       <height>23</height>
+       <x>210</x>
+       <y>290</y>
+       <width>81</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -189,7 +179,7 @@
     <widget class="QDoubleSpinBox" name="doubleSpinBox">
      <property name="geometry">
       <rect>
-       <x>370</x>
+       <x>330</x>
        <y>250</y>
        <width>62</width>
        <height>22</height>
@@ -202,14 +192,30 @@
     <widget class="QPushButton" name="pushButton_3done">
      <property name="geometry">
       <rect>
-       <x>440</x>
+       <x>400</x>
        <y>250</y>
-       <width>75</width>
+       <width>71</width>
        <height>24</height>
       </rect>
      </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
      <property name="text">
       <string>Done</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>150</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
      </property>
     </widget>
    </widget>
@@ -218,6 +224,19 @@
      <string>Upload</string>
     </attribute>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_return3">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>10</y>
+     <width>75</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Return</string>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -7,6 +7,7 @@
 #include <QApplication>
 #include <QDebug>
 #include "login.h"
+#include "displaysouvenirs.h"
 //void printColleges(QVector<College>& collegeVector)
 //{
 //    for (int i = 0; i < collegeVector.size(); i++)
@@ -77,7 +78,4 @@ void MainWindow::on_pushButton_2_clicked()
 
 }
 
-void MainWindow::on_tabWidget_currentChanged(int index)
-{
 
-}

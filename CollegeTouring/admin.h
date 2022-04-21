@@ -31,6 +31,8 @@ private slots:
 
     void on_pushButton_3done_clicked();
 
+    void on_pushButton_return3_clicked();
+
 private:
     Ui::admin *ui;
     College selectedCollege;
