@@ -23,10 +23,12 @@ HEADERS += \
     college_list.h \
     dbcolleges.h \
     displaysouvenirs.h \
+    graph.h \
     login.h \
     orderedmap.h \
     mainwindow.h \
-    tripplanner.h
+    tripplanner.h \
+    vertex.h
 
 FORMS += \
     admin.ui \

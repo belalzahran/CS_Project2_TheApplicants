@@ -10,7 +10,7 @@
 #include <fstream>
 #include <string>
 #include "orderedmap.h"
-
+#include "graph.h"
 
 struct SouvenirItem
 {
@@ -29,6 +29,7 @@ struct College
     QString name;
     QString state;
     int undergrads;
+
 
     //The key is the ending college name, and the value is the actual distance
     OrderedMap<QString,double> distances;
@@ -75,6 +76,8 @@ public:
 
     OrderedMap<QString,College> collegeMap;     // list of colleges that are parsed in
 
+    Graph collegesGraph;
+
 
     /*!
      * \brief readLine
@@ -94,6 +97,14 @@ public:
 
     void loadSouvenirEntries();
     void loadCollegeEntries();
+
+
+    /*!
+     * \brief populateGraph
+     *
+     * Will populate the graph with edges based on the collegeMap
+     */
+    void populateGraph();
 
 
     /*!

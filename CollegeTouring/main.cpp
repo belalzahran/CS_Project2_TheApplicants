@@ -15,6 +15,9 @@ int main(int argc, char *argv[])
         qDebug() << "Prompting for Souvenirs.csv file";
         DBColleges::getInstance().loadSouvenirEntries();//Be sure to select Souvenirs.csv
     }
+    DBColleges::getInstance().populateGraph(); //Populates the graph based on the collegeMap
+
+    DBColleges::getInstance().collegesGraph.minimumSpanningTree(0);
 
     MainWindow w;
     w.show();
