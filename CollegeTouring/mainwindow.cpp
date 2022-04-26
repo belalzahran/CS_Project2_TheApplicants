@@ -3,6 +3,10 @@
 #include "dbcolleges.h"
 #include <iomanip>
 #include "admin.h"
+#include <QMessageBox>
+#include <QApplication>
+#include <QDebug>
+#include "login.h"
 //void printColleges(QVector<College>& collegeVector)
 //{
 //    for (int i = 0; i < collegeVector.size(); i++)
@@ -66,6 +70,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    login* login1 = new login;
+    login1->setAttribute(Qt::WA_DeleteOnClose);
+    login1->setWindowTitle("Admistrative Login");
+    login1->show();
+
 }
 
 void MainWindow::on_tabWidget_currentChanged(int index)

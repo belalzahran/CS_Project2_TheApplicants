@@ -19,6 +19,7 @@ struct DefaultLessThanComparator
 //! Templated OrderedMap class
 /*! Implemented using an ordered table. */
 template<typename KeyType, typename ValueType, typename LessThanComparator = DefaultLessThanComparator<KeyType>>
+
 class OrderedMap
 {
 public:

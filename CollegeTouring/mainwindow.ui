@@ -18,7 +18,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <property name="movable">
        <bool>false</bool>
@@ -54,7 +54,7 @@
         </property>
        </widget>
       </widget>
-      <widget class="CollegeList" name="">
+      <widget class="CollegeList" name="collegeList">
        <attribute name="title">
         <string>College List</string>
        </attribute>
@@ -79,7 +79,7 @@
      <x>0</x>
      <y>0</y>
      <width>746</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

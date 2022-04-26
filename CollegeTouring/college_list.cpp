@@ -21,6 +21,7 @@ CollegeList::~CollegeList()
     delete ui;
 }
 
+
 void CollegeList::displayColleges(SortType sort, const QString& stateName)
 {
     QVector<College> displayedColleges;
@@ -91,7 +92,7 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
     this->ui->collegeTable->setHorizontalHeaderItem(2, new QTableWidgetItem("Undergrads"));
     if(sort == SADDLEBACK)
     {
-        this->ui->collegeTable->setHorizontalHeaderItem(3, new QTableWidgetItem("Distance"));
+        this->ui->collegeTable->setHorizontalHeaderItem(3, new QTableWidgetItem("Distance to Saddleback"));
     }
 
     this->ui->collegeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -110,6 +111,7 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
         }
     }
 }
+
 
 void CollegeList::updateComboBox()
 {
@@ -165,8 +167,7 @@ void CollegeList::on_comboBoxState_currentIndexChanged(int index)
 }
 
 
-void CollegeList::on_pushButton_clicked()
+void CollegeList::on_sortBySaddleback_clicked()
 {
     this->displayColleges(SADDLEBACK);
 }
-

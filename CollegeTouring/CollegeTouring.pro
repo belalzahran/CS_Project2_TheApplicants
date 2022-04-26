@@ -13,6 +13,7 @@ SOURCES += \
     college_list.cpp \
     dbcolleges.cpp \
     displaysouvenirs.cpp \
+    login.cpp \
     main.cpp \
     mainwindow.cpp \
     tripplanner.cpp
@@ -22,14 +23,18 @@ HEADERS += \
     college_list.h \
     dbcolleges.h \
     displaysouvenirs.h \
+    graph.h \
+    login.h \
     orderedmap.h \
     mainwindow.h \
-    tripplanner.h
+    tripplanner.h \
+    vertex.h
 
 FORMS += \
     admin.ui \
     collegelist.ui \
     displaysouvenirs.ui \
+    login.ui \
     mainwindow.ui \
     tripplanner.ui
 

@@ -36,6 +36,7 @@ DBColleges::DBColleges()
     }
 }
 
+
 DBColleges::~DBColleges()
 {
     if(this->database.isOpen())
@@ -47,6 +48,16 @@ DBColleges::~DBColleges()
 }
 
 
+/*!
+ * \brief DBColleges::readLine
+ * \param file - Path to the specified file (must be ifstream)
+ * \param line - Vector of characters to be modified by reading the current line in stream
+ *
+ * Reads a single line in a csv file (Compatible with csv files only) and stores the characters
+ * into a vector of characters (std::string)
+ *
+ * TODO: change vector to regular string since that's just a char vect.
+ */
 void DBColleges::readLine(std::istream& file, std::vector<std::string>& line)
 {
     char ch;    // character we will read in
@@ -156,6 +167,13 @@ void DBColleges::readLine(std::istream& file, std::vector<std::string>& line)
 
 }
 
+
+/*!
+ * \brief DBColleges::readEntries
+ * \param path - Path to csv file to be read
+ *
+ * Reads each line and stores data within corresponding objects.
+ */
 void DBColleges::readEntries(const std::string& path)
 {
     // Temp data to be used for reading from the csv file
@@ -163,7 +181,6 @@ void DBColleges::readEntries(const std::string& path)
     College endCollege;
     QString nameInput;
     QString stateInput;
-    int undergrads;
     std::vector<std::string> line;          // This is the line that has been read in from readLine
 
 
@@ -242,6 +259,12 @@ void DBColleges::readEntries(const std::string& path)
     csvfile.close();
 }
 
+/*!
+ * \brief DBColleges::readSouvenirs
+ * \param path - Path to csv file
+ *
+ * Will read the file and assign data to its corresponding objects.
+ */
 void DBColleges::readSouvenirs(const std::string& path){
 
     std::vector<std::string> line;          // This is the line that has been read in from readLine
@@ -318,6 +341,47 @@ void DBColleges::loadSouvenirEntries()
             DBColleges::readSouvenirs(path);
     }
 }
+
+
+void DBColleges::populateGraph()
+{
+    if(!this->collegeMap.empty())
+    {
+        OrderedMap<QString,int> temporaryId;
+        int currentId = 0;
+
+        //Assigns ids (indices) to the corresponding college names
+        for(auto iterator = this->collegeMap.cbegin(); iterator != collegeMap.cend(); iterator++)
+        {
+            temporaryId.insert(iterator->value.name,currentId);
+            currentId++;
+        }
+
+        //Inserts all of the edges of each college into the graph
+        this->collegesGraph = Graph(this->collegeMap.size()); //Initalizes graph to have a size of the college map
+
+        for(auto iterator = this->collegeMap.cbegin(); iterator != collegeMap.cend(); iterator++)
+        {
+            Vertex startingVertex(temporaryId[iterator->value.name], iterator->value.name.toStdString());
+
+
+            for(auto iterator2 = iterator->value.distances.cbegin(); iterator2 != iterator->value.distances.cend(); iterator2++)
+            {
+                Vertex endingVertex(temporaryId[iterator2->key], iterator2->key.toStdString());
+
+                //Adds the edge into collegesGraph
+                this->collegesGraph.addEdge(startingVertex, endingVertex, iterator2->value);
+            }
+        }
+
+        qDebug() << "Populated graph with colleges";
+    }
+    else
+    {
+        qDebug() << "Failed to populate graph because collegeMap is empty";
+    }
+}
+
 
 void DBColleges::loadFromDatabase()
 {
