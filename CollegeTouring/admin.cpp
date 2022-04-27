@@ -8,6 +8,8 @@ admin::admin(QWidget *parent) :
 {
     ui->setupUi(this);
     fillCollegeCombo();
+    ui->doubleSpinBox->hide();
+    ui->pushButton_3done->hide();
 }
 
 admin::~admin()
@@ -50,27 +52,144 @@ void admin::on_comboBox_currentTextChanged(const QString &arg1)
     }
 
      fillCollegeSouvenirCombo(selectedCollege);
+     ui->doubleSpinBox->hide();
+     ui->pushButton_3done->hide();
 }
 
 
 // when add button is clicked
 void admin::on_pushButton_clicked()
 {
-//    SouvenirItem newItem(ui->lineEdit_price->text().toDouble(),ui->lineEdit_name->text());
 
-//    for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
-//    {
-//        if (iterator->value.name == selectedCollege.name)
-//            iterator->value.souvenirs.
-//    }
+    if (ui->doubleSpinBox_2->value() == 0 && ui->lineEdit_name->text() == "")
+    {
+        QMessageBox::warning(this, "New Souvenir Item","No name or price entered");
 
+    }
+    else if  (ui->doubleSpinBox_2->value() == 0 && ui->lineEdit_name->text() != "")
+    {
+        QMessageBox::warning(this, "New Souvenir Item","No price entered.");
+
+    }
+    else if  (ui->doubleSpinBox_2->value() != 0 && ui->lineEdit_name->text() == "")
+    {
+        QMessageBox::warning(this, "New Souvenir Item","No name entered");
+
+    }
+    else
+    {
+        SouvenirItem newItem(ui->doubleSpinBox_2->value(),ui->lineEdit_name->text());
+
+       for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+       {
+           if (iterator->value.name == selectedCollege.name)
+               iterator->value.souvenirs.push_back(newItem);
+       }
+
+       ui->lineEdit_name->clear();
+       ui->doubleSpinBox_2->clear();
+
+       on_comboBox_currentTextChanged(ui->comboBox->currentText());
+
+       QMessageBox::information(this, "New Souvenir Item","Succesfully added " + newItem.name + "!");
+
+
+    }
 
 
 }
 
 // when the delete button is clicked
-//void admin::on_pushButton_2_clicked()
-//{
-//
-//}
+
+
+void admin::on_pushButton_2_clicked()
+{
+
+    //QString selectedSouvenir;
+    for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+    {
+        if (iterator->value.name == selectedCollege.name)
+        {
+            for (int i = 0; i < iterator->value.souvenirs.size(); i++)
+            {
+                if (iterator->value.souvenirs.at(i).name == ui->comboBox_2->currentText())
+                {
+                    selectedSouvenir = iterator->value.souvenirs.at(i);
+                    iterator->value.souvenirs.erase(iterator->value.souvenirs.begin() + i);
+                }
+
+            }
+        }
+    }
+
+
+    on_comboBox_currentTextChanged(ui->comboBox->currentText());
+    QMessageBox::information(this, "Delete Souvenir Item","Succesfully deleted " + selectedSouvenir.name + "!");
+
+    ui->doubleSpinBox->hide();
+    ui->pushButton_3done->hide();
+}
+
+
+void admin::on_pushButton_edit3_clicked()
+{
+
+    for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+    {
+        if (iterator->value.name == selectedCollege.name)
+        {
+            for (int i = 0; i < iterator->value.souvenirs.size(); i++)
+            {
+                if (iterator->value.souvenirs.at(i).name == ui->comboBox_2->currentText())
+                {
+                    selectedSouvenir = iterator->value.souvenirs.at(i);
+                }
+
+            }
+        }
+    }
+
+    ui->doubleSpinBox->show();
+    ui->pushButton_3done->show();
+    ui->doubleSpinBox->setValue(selectedSouvenir.price);
+}
+
+
+
+
+void admin::on_pushButton_3done_clicked()
+{
+
+    SouvenirItem newS;
+    newS.name = selectedSouvenir.name;
+    newS.price = ui->doubleSpinBox->value();
+    for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
+    {
+        if (iterator->value.name == selectedCollege.name)
+        {
+            for (int i = 0; i < iterator->value.souvenirs.size(); i++)
+            {
+                if (iterator->value.souvenirs.at(i).name == ui->comboBox_2->currentText())
+                {
+                    iterator->value.souvenirs.erase(iterator->value.souvenirs.begin() + i);
+                }
+
+            }
+
+            iterator->value.souvenirs.push_back(newS);
+        }
+    }
+
+    ui->doubleSpinBox->hide();
+    ui->pushButton_3done->hide();
+    QMessageBox::information(this, "Change Souvenir Price","Succesfully changed " + ui->comboBox_2->currentText() + " price to $" + QString::number(ui->doubleSpinBox->value()));
+
+
+}
+
+
+void admin::on_pushButton_return3_clicked()
+{
+    this->close();
+}
 

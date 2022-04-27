@@ -40,23 +40,13 @@
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>Souvenirs Settings</string>
+     <string>Manage Souvenirs</string>
     </attribute>
     <widget class="QLineEdit" name="lineEdit_name">
      <property name="geometry">
       <rect>
-       <x>120</x>
-       <y>90</y>
-       <width>113</width>
-       <height>22</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="lineEdit_price">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>120</y>
+       <x>130</x>
+       <y>110</y>
        <width>113</width>
        <height>22</height>
       </rect>
@@ -78,8 +68,8 @@
     <widget class="QLabel" name="label_3">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>90</y>
+       <x>60</x>
+       <y>110</y>
        <width>71</width>
        <height>20</height>
       </rect>
@@ -91,8 +81,8 @@
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>120</y>
+       <x>90</x>
+       <y>150</y>
        <width>49</width>
        <height>16</height>
       </rect>
@@ -105,9 +95,9 @@
      <property name="geometry">
       <rect>
        <x>270</x>
-       <y>100</y>
-       <width>75</width>
-       <height>24</height>
+       <y>110</y>
+       <width>81</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -127,10 +117,10 @@
     <widget class="QPushButton" name="pushButton_2">
      <property name="geometry">
       <rect>
-       <x>270</x>
-       <y>200</y>
+       <x>130</x>
+       <y>290</y>
        <width>75</width>
-       <height>24</height>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
@@ -140,24 +130,92 @@
     <widget class="QComboBox" name="comboBox_2">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>200</y>
-       <width>141</width>
-       <height>22</height>
+       <x>130</x>
+       <y>250</y>
+       <width>161</width>
+       <height>31</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_edit3">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>290</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Edit Price</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_5">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>200</y>
-       <width>81</width>
-       <height>20</height>
+       <y>60</y>
+       <width>141</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="text">
-      <string>Select item: </string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;Add a new Item:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>190</y>
+       <width>241</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:700;&quot;&gt;...or manage existing inventory:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="doubleSpinBox">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>250</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_3done">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>250</y>
+       <width>71</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="text">
+      <string>Done</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>150</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <double>1000.000000000000000</double>
      </property>
     </widget>
    </widget>
@@ -166,6 +224,19 @@
      <string>Upload</string>
     </attribute>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton_return3">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>10</y>
+     <width>75</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Return</string>
+   </property>
   </widget>
  </widget>
  <resources/>

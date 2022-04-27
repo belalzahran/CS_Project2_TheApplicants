@@ -25,9 +25,18 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_edit3_clicked();
+
+    void on_pushButton_3done_clicked();
+
+    void on_pushButton_return3_clicked();
+
 private:
     Ui::admin *ui;
     College selectedCollege;
+    SouvenirItem selectedSouvenir;
 };
 
 #endif // ADMIN_H
