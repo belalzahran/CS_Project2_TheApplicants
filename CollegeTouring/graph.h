@@ -41,10 +41,10 @@ public:
         adjList = new list<pair<Vertex,int>>[v];
     };
 
-    ~Graph()
-    {
-        delete adjList;
-    }
+//    ~Graph()
+//    {
+//        delete adjList;
+//    }
 
     // function to add edges to the adjacency list
     void addEdge(Vertex a, Vertex b, int weight)
@@ -63,15 +63,21 @@ public:
     }
 
 
-    // function to prepare the call for shortest path algorithm
-    void PrepShort(int current)
+    /*!
+     * \brief graphDijkstras
+     * \param current - ID of source vertex
+     *
+     * TODO:
+     * Change function to adhere to the current graph and whatever changes we make
+     * Change function so that it takes in a source and a destination as an arg
+     */
+    void graphDijkstras(int source)
     {
         // current = source vertex
 
         // setting the entire visited list to false
         vector<bool> visited(v, false);
-
-        dfs* shortestDistFromStart = new dfs[v];
+        vector<dfs> shortestDistFromStart(v);
 
         // fill array w default values
         for(int i = 0; i < v; i++)
@@ -79,33 +85,33 @@ public:
             shortestDistFromStart[i].distance = 100000;
         }
 
-        visited[current] = true;
-        shortestDistFromStart[current].distance = 0;
-
-        // calling shortest path function
-        shortestPath(current, visited, shortestDistFromStart);
-
-        // print out the shortest paths
-        qDebug() << "SHORTEST PATHS TO DALLAS...\n";
-        for (int i = 0; i < v; i++) {
-            if (i != 6)
-                printPath(i, shortestDistFromStart);
-        }
-    }
-
-
-    // shortest path function
-    int shortestPath(int current, vector<bool>& visited,  dfs *shortestDistFromStart) {
-
-        // cout << "\n\nNOW VISITING " << vertices[current] << endl;
         bool allvisited = true;
         for (int i = 0; i < v; i++) {
             if (!visited[i])
                 allvisited = false;
         }
 
+        visited[source] = true;
+        shortestDistFromStart[source].distance = 0;
+
+        // calling shortest path function
+        shortestPath(source, visited, shortestDistFromStart);
+
+        // print out the shortest paths
+        qDebug() << "SHORTEST PATHS...\n";
+        for (int i = 0; i < v; i++) {
+            if (i != source)
+                printPath(source, i, shortestDistFromStart);
+        }
+    }
+
+
+    // shortest path function - Holds the actual Dijkstra's algorithm
+    // Will populate the shortest path from source to ALL other destinations
+    int shortestPath(int current, vector<bool>& visited,  vector<dfs>& shortestDistFromStart) {
+
         // BASE CASE
-        if (allvisited) {
+        if (allvisited(visited)) {
             //cout << "DONE";
             return -1;
         }
@@ -222,8 +228,8 @@ public:
     {
         qDebug() << "\n";
         qDebug() << "\n=================\nMST Representation of the given graph\n=================\n";
-        qDebug() << "Total Weight: " << getWeight(mstSet) << endl;
-        qDebug() << "Root is: " << QString::fromStdString(getVertexFromId(root).GetName()) << endl;
+        qDebug() << "Total Weight: " << getWeight(mstSet) << "\n";
+        qDebug() << "Root is: " << QString::fromStdString(getVertexFromId(root).GetName()) << "\n";
         qDebug() << "Edges:\n";
         for (int i = 0; i < mstSet.size(); i++)
         {
@@ -247,13 +253,13 @@ public:
 
 
     // function to print the shortest path for an id
-    void printPath(int id,  dfs *shortestDistFromStart)
+    void printPath(int sourceid, int id,  vector<dfs>& shortestDistFromStart)
     {
-        qDebug() << "\n" << QString::fromStdString(getVertexFromId(id).GetName()) << " to Dallas is " <<
+        qDebug() << "\n" << QString::fromStdString(getVertexFromId(id).GetName()) << " to Source is " <<
         shortestDistFromStart[id].distance << " miles: " << QString::fromStdString(getVertexFromId(id).GetName()) <<
         "->";
         int parentId = shortestDistFromStart[id].preV;
-        while (parentId != 6)
+        while (parentId != sourceid)
         {
             qDebug() << QString::fromStdString(getVertexFromId(parentId).GetName()) << "->";
             id = parentId;

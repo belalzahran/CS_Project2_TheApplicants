@@ -343,6 +343,7 @@ void DBColleges::loadSouvenirEntries()
 }
 
 
+// Populates the graph by creating vertices and edges from an existing map
 void DBColleges::populateGraph()
 {
     if(!this->collegeMap.empty())
