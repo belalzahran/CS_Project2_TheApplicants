@@ -342,6 +342,48 @@ void DBColleges::loadSouvenirEntries()
     }
 }
 
+
+// Populates the graph by creating vertices and edges from an existing map
+void DBColleges::populateGraph()
+{
+    if(!this->collegeMap.empty())
+    {
+        OrderedMap<QString,int> temporaryId;
+        int currentId = 0;
+
+        //Assigns ids (indices) to the corresponding college names
+        for(auto iterator = this->collegeMap.cbegin(); iterator != collegeMap.cend(); iterator++)
+        {
+            temporaryId.insert(iterator->value.name,currentId);
+            currentId++;
+        }
+
+        //Inserts all of the edges of each college into the graph
+        this->collegesGraph = Graph(this->collegeMap.size()); //Initalizes graph to have a size of the college map
+
+        for(auto iterator = this->collegeMap.cbegin(); iterator != collegeMap.cend(); iterator++)
+        {
+            Vertex startingVertex(temporaryId[iterator->value.name], iterator->value.name.toStdString());
+
+
+            for(auto iterator2 = iterator->value.distances.cbegin(); iterator2 != iterator->value.distances.cend(); iterator2++)
+            {
+                Vertex endingVertex(temporaryId[iterator2->key], iterator2->key.toStdString());
+
+                //Adds the edge into collegesGraph
+                this->collegesGraph.addEdge(startingVertex, endingVertex, iterator2->value);
+            }
+        }
+
+        qDebug() << "Populated graph with colleges";
+    }
+    else
+    {
+        qDebug() << "Failed to populate graph because collegeMap is empty";
+    }
+}
+
+
 void DBColleges::loadFromDatabase()
 {
     QSqlQuery collegesQuery(this->database);
