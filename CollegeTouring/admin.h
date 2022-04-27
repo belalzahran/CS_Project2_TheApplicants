@@ -8,21 +8,48 @@ namespace Ui {
 class admin;
 }
 
+/*! @class admin
+ *  @extends public QWidget
+ *
+ */
 class admin : public QWidget
 {
     Q_OBJECT
 
 public:
+    /*! @fn explicit admin(QWidget *parent = nullptr)
+     *  @param QWidget *parent = nullptr
+     *
+     */
     explicit admin(QWidget *parent = nullptr);
+
+    /*! @fn ~admin()
+     *
+     */
     ~admin();
 
 
 private slots:
+
+    /*! @fn void fillCollegeCombo()
+     *
+     */
     void fillCollegeCombo();
+
+    /*! @fn void fillCollegeSouvenirCombo(College selectedCollege)
+     *  @param College selectedCollege
+     *
+     */
     void fillCollegeSouvenirCombo(College selectedCollege);
 
+    /*! @fn void on_comboBox_currentTextChanged(const QString &arg1)
+     *  @param const QString &arg1
+     */
     void on_comboBox_currentTextChanged(const QString &arg1);
 
+    /*! @fn
+     *
+     */
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
@@ -34,7 +61,15 @@ private slots:
     void on_pushButton_return3_clicked();
 
 private:
+
+    /*! @var Ui::admin *ui
+     *
+     */
     Ui::admin *ui;
+
+    /*! @var College selectedCollege
+     *
+     */
     College selectedCollege;
     SouvenirItem selectedSouvenir;
 };

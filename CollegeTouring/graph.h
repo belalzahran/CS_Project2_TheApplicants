@@ -13,13 +13,38 @@
 #include "vertex.h"
 
 using namespace std;
+
+/*! @class Graph
+ *
+ */
 class Graph{
 private:
-    int v; // number of nodes in graph
-    list<pair<Vertex,int>> *adjList; // adjacency list
+
+    // number of nodes in graph
+    /*! @var int v
+     *  number of nodes in graph
+     */
+    int v;
+
+    // adjacency list
+    /*! @var list<pair<Vertex,int>> *adjList
+     *  adjacency list
+     */
+    list<pair<Vertex,int>> *adjList;
+
+    // vector of all vertices
+    /*! @var vector<Vertex> vertices
+     *
+     */
     vector<Vertex> vertices;
 
+
     // struct for distance and previous node for shortest path
+    /*! @struct dfs
+     *  @var int distance
+     *  @var int preV
+     *  This struct is within the scope of the Graph class
+     */
     struct dfs{
         int distance;
         int preV;
@@ -28,6 +53,9 @@ private:
 
 public:
 
+    /*! @fn Graph()
+     *
+     */
     Graph()
     {
         this->v = 0;
@@ -35,18 +63,30 @@ public:
     }
 
     // constructor
+    /*! @fn Graph(int v)
+     *  @param int v
+     */
     Graph(int v)
     {
         this->v = v;
         adjList = new list<pair<Vertex,int>>[v];
     };
 
+//    /*! @fn ~Graph()
+//     *
+//     */
 //    ~Graph()
 //    {
 //        delete adjList;
 //    }
 
     // function to add edges to the adjacency list
+    /*! @fn void addEdge(Vertex a, Vertex b, int weight)
+     *  @param Vertex a
+     *  @param Vertex b
+     *  @param int weight
+     *  function to add edges to the adjacency list
+     */
     void addEdge(Vertex a, Vertex b, int weight)
     {
         // The vertex's ID will match up with the index of the list
@@ -63,7 +103,7 @@ public:
     }
 
 
-    /*!
+    /*! @fn void graphDijkstras(int current)
      * \brief graphDijkstras
      * \param current - ID of source vertex
      *
@@ -108,6 +148,12 @@ public:
 
     // shortest path function - Holds the actual Dijkstra's algorithm
     // Will populate the shortest path from source to ALL other destinations
+    /*! @fn int shortestPath(int current, vector<bool>& visited,  dfs *shortestDistFromStart)
+     *  @param int current
+     *  @param vector<bool>& visited
+     *  @param dfs *shortestDistFromStart
+     *  shortest path function
+     */
     int shortestPath(int current, vector<bool>& visited,  vector<dfs>& shortestDistFromStart) {
 
         // BASE CASE
@@ -158,6 +204,9 @@ public:
     }
 
 
+    /*! @fn void minimumSpanningTree(int source)
+     *  @param int source
+     */
     void minimumSpanningTree(int source)
     {
         // setting the entire visited list to false
@@ -224,6 +273,10 @@ public:
     }
 
 
+    /*! @fn void printMST(int root, vector<dfs>& mstSet)
+     *  @param int root
+     *  @param vector<dfs>& mstSet
+     */
     void printMST(int root, vector<dfs>& mstSet)
     {
         qDebug() << "\n";
@@ -241,6 +294,10 @@ public:
     }
 
 
+    /*! @fn bool allvisited(vector<bool>& visited)
+     *  @param vector<bool>& visited
+     *
+     */
     bool allvisited(vector<bool>& visited)
     {
         bool allvisited = true;
@@ -253,6 +310,12 @@ public:
 
 
     // function to print the shortest path for an id
+    /*! @fn void printPath(int sourceid, int id,  vector<dfs>& shortestDistFromStart)
+     *  @param int sourceid
+     *  @param int id
+     *  @param vector<dfs>& shortestDistFromStart
+     *  function to print the shortest path for an id
+     */
     void printPath(int sourceid, int id,  vector<dfs>& shortestDistFromStart)
     {
         qDebug() << "\n" << QString::fromStdString(getVertexFromId(id).GetName()) << " to Source is " <<
@@ -271,6 +334,10 @@ public:
 
     // ACCESSORS
     // function to get the shortest incident (adjacent?) distance
+    /*! @fn int getShortestIncidentDistance(int currentVertexId)
+     *  @param int currentVertexId
+     *
+     */
     int getShortestIncidentDistance(int currentVertexId)
     {
         int least = 100000;
@@ -284,7 +351,7 @@ public:
     }
 
 
-    /*!
+    /*! @fn int getShortestUnvisitedIncidentDistanceId(int currentVertexId, vector<bool>& visited)
      *
      * @param currentVertexId - ID of the vertex we are currently looking at (source)
      * @param visited - List of previously visited vertices
@@ -309,6 +376,11 @@ public:
 
     // Used for the MST, will get min weighted vertex adjacent to all vertices in the current
     // MST
+    /*! @fn int getMinID(vector<int>& key, vector<bool>& visited)
+     *  @param vector<int>& key
+     *  @param vector<bool>& visited
+     *  Used for the MST, will get min weighted vertex adjacent to all vertices in the current
+     */
     int getMinID(vector<int>& key, vector<bool>& visited)
     {
         int resultId = -1;
@@ -325,6 +397,9 @@ public:
 
 
     // Used to get the total weight of the MST
+    /*! @fn int getWeight(vector<dfs>& mstSet)
+     *  @param vector<dfs>& mstSet
+     */
     int getWeight(vector<dfs>& mstSet)
     {
         int sum = 0;
@@ -340,6 +415,11 @@ public:
 
 
     // function to check whether all the adjacent vertices have been visited
+    /*! @fn bool allIncidentsVisited(int id, vector<bool>& visited)
+     *  @param int id
+     *  @param vector<bool>& visited
+     *
+     */
     bool allIncidentsVisited(int id, vector<bool>& visited)
     {
         bool result = true;
@@ -357,6 +437,10 @@ public:
 
 
     // function to get the shortest adjacent distances' id
+    /*! @fn int getShortestIncidentDistanceId(int currentVertexId)
+     *  @param int currentVertexId
+     *  function to get the shortest adjacent distances' id
+     */
     int getShortestIncidentDistanceId(int currentVertexId)
     {
         int least = 100000;
@@ -374,6 +458,11 @@ public:
 
 
     // function to get the shortest incident distance id excluding a specific id
+    /*! @fn int getShortestIncidentDistanceIdExcluding(int currentVertexId , int excludedId)
+     *  @param int currentVertexId
+     *  @param int excludedId
+     *  function to get the shortest incident distance id excluding a specific id
+     */
     int getShortestIncidentDistanceIdExcluding(int currentVertexId , int
     excludedId)
     {
@@ -391,7 +480,12 @@ public:
     }
 
 
-    // functino to get the shortest incident distance excluding a specific id
+    // function to get the shortest incident distance excluding a specific id
+    /*! @fn int getShortestIncidentDistanceExcluding(int currentVertexId , int excludedId)
+     *  @param int currentVertexId
+     *  @param int excludedId
+     *  function to get the shortest incident distance excluding a specific id
+     */
     int getShortestIncidentDistanceExcluding(int currentVertexId , int
     excludedId)
     {
@@ -416,7 +510,12 @@ public:
 //        qDebug() << endl;
 //    }
 
+
     //Function that returns the vertex of a given id.
+    /*! @fn Vertex getVertexFromId(int id) const
+     *  @param int id
+     *  Function that returns the vertex of a given id.
+     */
     Vertex getVertexFromId(int id) const
     {
         return this->vertices[id];

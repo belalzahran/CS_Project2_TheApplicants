@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     //DBColleges::getInstance().collegesGraph.minimumSpanningTree(0);
     DBColleges::getInstance().collegesGraph.graphDijkstras(4);
 
-   // MainWindow w;
-   // w.show();
+    MainWindow w;
+    w.show();
     return a.exec();
 }
