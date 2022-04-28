@@ -2,6 +2,7 @@
 #define TRIPPLANNER_H
 
 #include <QWidget>
+#include "dbcolleges.h"
 
 namespace Ui {
 class TripPlanner;
@@ -25,6 +26,18 @@ public:
      *
      */
     ~TripPlanner();
+
+    /*! @fn void updateGraphComboBox()
+     *
+     */
+    void updateGraphComboBox();
+
+private slots:
+
+    /*! @fn void on_MSTpushButton_clicked()
+     *
+     */
+    void on_MSTpushButton_clicked();
 
 private:
 
