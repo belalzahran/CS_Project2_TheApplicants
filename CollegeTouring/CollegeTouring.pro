@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     admin.cpp \
     college_list.cpp \
+    customtrip.cpp \
     dbcolleges.cpp \
     displaysouvenirs.cpp \
     login.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     admin.h \
     college_list.h \
+    customtrip.h \
     dbcolleges.h \
     displaysouvenirs.h \
     graph.h \
@@ -33,6 +35,7 @@ HEADERS += \
 FORMS += \
     admin.ui \
     collegelist.ui \
+    customtrip.ui \
     displaysouvenirs.ui \
     login.ui \
     mainwindow.ui \

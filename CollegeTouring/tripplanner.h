@@ -26,6 +26,9 @@ public:
      */
     ~TripPlanner();
 
+private slots:
+    void on_CustomTrippushButton_clicked();
+
 private:
 
     /*! @var Ui::TripPlanner *ui
