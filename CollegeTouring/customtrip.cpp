@@ -130,3 +130,9 @@ void customtrip::on_pushButton_clicked()
 
 
 
+
+void customtrip::on_pushButton_4_clicked()
+{
+    this->close();
+}
+
