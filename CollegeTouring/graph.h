@@ -9,10 +9,18 @@
 #include <iterator>
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <QDebug>
 #include "vertex.h"
 
 using namespace std;
+/*!
+ * using priorityQueue
+ * A type alias for the priority queue containing pairs of
+ * weight:edgePosition. edgePositions are integers referencing the
+ * position in the vector where the edge is contained.
+ */
+using priorityQueue = std::priority_queue<std::pair<double,int>,std::vector<std::pair<double,int>>,WeightedEdgePairComparator>;
 
 /*! @class Graph
  *
@@ -20,11 +28,7 @@ using namespace std;
 class Graph{
 private:
 
-    // number of nodes in graph
-    /*! @var int v
-     *  number of nodes in graph
-     */
-    int v;
+    int v;  // # of nodes in the list
 
     // adjacency list
     /*! @var list<pair<Vertex,int>> *adjList
@@ -34,22 +38,21 @@ private:
 
     // vector of all vertices
     /*! @var vector<Vertex> vertices
-     *
      */
     vector<Vertex> vertices;
 
 
     // struct for distance and previous node for shortest path
-    /*! @struct dfs
+    /*! @struct dfs - "distance from start"
      *  @var int distance
      *  @var int preV
      *  This struct is within the scope of the Graph class
      */
     struct dfs{
-        int distance;
-        int preV;
+        int distance;   // Weight of the edge
+        int preV;       // Parent node to the current Vertex
+        // Current vertex ID = idx of a vector of these
     };
-
 
 public:
 
@@ -60,6 +63,19 @@ public:
     {
         this->v = 0;
         this->adjList = new list<pair<Vertex,int>>[0];
+    }
+
+    /*!
+     * \brief Graph - Copy Constructor
+     * \param otherGraph
+     *
+     * Creates new Graph object and copies the other graph's values into its own.
+     */
+    Graph(const Graph& otherGraph)
+    {
+        adjList = otherGraph.adjList;
+        v = otherGraph.v;
+        vertices = otherGraph.vertices;
     }
 
     // constructor
@@ -88,6 +104,7 @@ public:
      *  function to add edges to the adjacency list
      */
     void addEdge(Vertex a, Vertex b, int weight)
+
     {
         // The vertex's ID will match up with the index of the list
         adjList[a.GetId()].push_back(make_pair(b,weight));
@@ -103,18 +120,102 @@ public:
     }
 
 
+    Vertex& At(int vertexIndex)
+    {
+
+    }
+
+    /*!
+     * \brief PerformDFS
+     * \param vertexIndex
+     *
+     * This function will perform a Depth-First search on the graph,
+     * printing the visited vertices and outputting the discovery/back
+     * edges.
+     */
+    void PerformDFS(int vertexIndex) const
+    {
+        // Copy constructs a graph object because the RecursiveDFS function modifies
+        // the adjacency list structure.
+        Graph graphCopy(*this);
+
+        // Due to the nature of the algorithm, these variables are necessary to keep
+        // track of the distance traveled on discovery edges + backtracked on discovery edges.
+         double distanceTraveled = 0;
+         unsigned int visitedCount = 0;
+
+         // Init. all idx to be false
+         vector<bool> visited(v, false);
+    }
+
+    /*!
+     * \brief RecursiveDFS
+     * \param graph
+     * \param vertexIndex
+     * \param distance
+     * \param visitCount
+     *
+     * This function implements the DFS algorithm found in the chapter 13
+     * slides. distance and visitCount are passed by reference.
+     */
+    void RecursiveDFS(Graph& graph, vector<bool>& visited, int vertexIndex, double& distance, unsigned int& visitCount) const
+    {
+        // Output each visited vertex in order of DISCOVERY
+        qDebug() << "Visiting: " << QString::fromStdString(graph.vertices[vertexIndex].GetName());
+        visited[vertexIndex] = true;
+
+        // While not all of the adjacent nodes of the current Vertex have been visited
+        while (graph.getShortestUnvisitedIncidentDistanceId(vertexIndex, visited) != -1)
+        {
+            //Gets lowest weight edge that has not been visited yet
+            int closestID = graph.getShortestUnvisitedIncidentDistanceId(vertexIndex, visited);
+
+            if (graph.vertices[closestID].getLabel() == UNEXPLORED)
+            {
+//                // // If the edge
+//                if(graph.edges[edgeIndex].label == UNEXPLORED)
+//                    {
+
+//                    int oppositeVertex = graph.edges[edgeIndex].Opposite(vertexIndex);
+//                    //If vertex at the opposite end is unexplored, explore it.
+//                        if(graph.At(oppositeVertex).label == UNEXPLORED)
+//                        {
+//                            graph.edges[edgeIndex].label = DISCOVERY;
+//                            distance += graph.edges[edgeIndex].weight;
+//                            RecursiveDFS(graph,oppositeVertex,distance,visitCount);
+//                        }
+
+//                        //Adds BACKTRACKED weight to the total distance
+//                        if(graph.edges[edgeIndex].label == BACK && visitCount <
+//                            graph.vertices.size())
+//                        {
+//                            distance += graph.edges[edgeIndex].weight;
+//                        }
+//                }
+//                else
+//                {
+//                    graph.edges[edgeIndex].label = BACK;
+//                }
+
+//                graph.IncidentEdges(vertexIndex).pop();
+            }
+        }
+
+    }
+
+
     /*! @fn void graphDijkstras(int current)
      * \brief graphDijkstras
-     * \param current - ID of source vertex
+     * \param source - ID of source vertex
+     * \param destination - ID of destination vertex
      *
      * TODO:
      * Change function to adhere to the current graph and whatever changes we make
-     * Change function so that it takes in a source and a destination as an arg
+     * Add function to somewhere in tripplanner that will update the table with
+     * the colleges in order to make the most efficient trip
      */
-    void graphDijkstras(int source)
+    void graphDijkstras(int source, int destination)
     {
-        // current = source vertex
-
         // setting the entire visited list to false
         vector<bool> visited(v, false);
         vector<dfs> shortestDistFromStart(v);
@@ -123,12 +224,6 @@ public:
         for(int i = 0; i < v; i++)
         {
             shortestDistFromStart[i].distance = 100000;
-        }
-
-        bool allvisited = true;
-        for (int i = 0; i < v; i++) {
-            if (!visited[i])
-                allvisited = false;
         }
 
         visited[source] = true;
@@ -411,7 +506,6 @@ public:
         }
         return sum;
     }
-
 
 
     // function to check whether all the adjacent vertices have been visited
