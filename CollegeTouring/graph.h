@@ -155,7 +155,13 @@ public:
          // backtracking
          stack<int> prevIndexes;
 
-         this->RecursiveDFS(graphCopy, prevIndexes, visited, vertexIndex, distanceTraveled);
+         // Source vertex
+         int sourceVertex = vertexIndex;
+
+         // Default backtrack vertexID
+         int backtrackID = -1;
+
+         this->RecursiveDFS(graphCopy, prevIndexes, visited, sourceVertex, vertexIndex, backtrackID, distanceTraveled);
     }
 
     /*!
@@ -168,36 +174,38 @@ public:
      * This function implements the DFS algorithm found in the chapter 13
      * slides. distance and visitCount are passed by reference.
      */
-    void RecursiveDFS(Graph& graph, stack<int>& prevIndexes, vector<bool>& visited, int vertexIndex, double& distance) const
+    void RecursiveDFS(Graph& graph, stack<int>& prevIndexes, vector<bool>& visited, int sourceVertex, int vertexIndex, int& backtrackID, double& distance) const
     {
-        int backtrackID = -1;
-        while (!graph.allvisited(visited)){
+        //int source = sourceVertex;
+        while (backtrackID != sourceVertex){
 
             // Output each visited vertex in order of DISCOVERY
             qDebug() << "Visiting: " << QString::fromStdString(graph.vertices[vertexIndex].GetName());
             visited[vertexIndex] = true;
 
-            prevIndexes.push(vertexIndex);  // Push ID onto the stack for backtracking
+
 
             //Get lowest weight edge adj. to the current node that has not been visited yet
             int closestID = graph.getShortestUnvisitedIncidentDistanceId(vertexIndex, visited);
 
             if (closestID != -1)
             {
-                //visited[closestID] = true;   // and mark this as explored
+                prevIndexes.push(vertexIndex);  // Push ID onto the stack for backtracking
 
                 // Get the weight from vertexIndex to closestID
                  distance += graph.getDistance(vertexIndex, closestID);
 
                 // Now use this vertex and visit its closest adjacent node
-                RecursiveDFS(graph, prevIndexes, visited, closestID, distance);
+                RecursiveDFS(graph, prevIndexes, visited, sourceVertex, closestID, backtrackID, distance);
             }
             else    // Else if all adj nodes of this one have been visited, backtrack
             {
                 backtrackID = prevIndexes.top();
                 prevIndexes.pop();
+
+                qDebug() << "Backtrack to: " << QString::fromStdString(graph.vertices[backtrackID].GetName());
                 // Now use this vertex and visit its closest adjacent node
-                RecursiveDFS(graph, prevIndexes, visited, backtrackID, distance);
+                RecursiveDFS(graph, prevIndexes, visited, sourceVertex, backtrackID, backtrackID, distance);
             }
         }
 
@@ -464,16 +472,14 @@ public:
     double getDistance(int pointa, int pointb)
     {
         double nomatch = -1;
-        for (auto x : adjList[pointa])
+        for (auto x = adjList[pointa].begin(); x != adjList[pointa].end(); x++)
         {
-            if (x.first.GetId() == pointb)
+            if (x->first.GetId() == pointb)
             {
-                return x.second;    // Return the weight between the two vertices
-            }
-            else{
-                return nomatch;
+                return x->second;    // Return the weight between the two vertices
             }
         }
+        return nomatch;
     }
 
     /*! @fn int getShortestUnvisitedIncidentDistanceId(int currentVertexId, vector<bool>& visited)
