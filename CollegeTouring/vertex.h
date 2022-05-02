@@ -129,11 +129,10 @@ public:
  *********************************************************************/
  struct WeightedEdgePairComparator
  {
- bool operator() (const std::pair<double,int>& lPair, const
-std::pair<double,int>& rPair)
- {
- return lPair.first > rPair.first;
- }
+    bool operator() (const std::pair<double,int>& lPair, const std::pair<double,int>& rPair)
+    {
+        return lPair.first > rPair.first;
+    }
  };
 
 #endif //VERTEX_H
