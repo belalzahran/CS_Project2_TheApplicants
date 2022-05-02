@@ -645,6 +645,23 @@ public:
     {
         return this->vertices[id];
     }
+
+    //Function that returns the id of a college in the graph.
+    /*! @fn int getIdFromName(int id) const
+     *  @param string collegeName
+     *  Function that returns the id of the college in the graph. -1 if dne
+     */
+    int getIdFromName(string collegeName)
+    {
+        for(unsigned int index = 0; index < vertices.size(); index++)
+        {
+            if(vertices.at(index).GetName() == collegeName)
+            {
+                return index;
+            }
+        }
+        return -1;
+    }
 };
 
 #endif // GRAPH_H

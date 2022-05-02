@@ -2,6 +2,7 @@
 #define TRIPPLANNER_H
 
 #include <QWidget>
+#include "customtrip.h"
 #include "dbcolleges.h"
 
 namespace Ui {
@@ -38,6 +39,21 @@ private slots:
      *
      */
     void on_MSTpushButton_clicked();
+
+    /*! @fn void on_CustomTrippushButton_clicked()
+     *
+     */
+    void on_CustomTrippushButton_clicked();
+
+    /*! @fn void on_DFSpushButton_clicked()
+     *
+     */
+    void on_DFSpushButton_clicked();
+
+    /*! @fn void on_BFSpushButton_clicked()
+     *
+     */
+    void on_BFSpushButton_clicked();
 
 private:
 

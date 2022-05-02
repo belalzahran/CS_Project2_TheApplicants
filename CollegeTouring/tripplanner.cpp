@@ -14,6 +14,14 @@ TripPlanner::~TripPlanner()
     delete ui;
 }
 
+void TripPlanner::on_CustomTrippushButton_clicked()
+{
+    customtrip* custom = new customtrip;
+    custom->setAttribute(Qt::WA_DeleteOnClose);
+    custom->setWindowTitle("Plan Custom Trip");
+    custom->show();
+}
+
 void TripPlanner::updateGraphComboBox()
 {
     //Clear the combo box
@@ -28,9 +36,28 @@ void TripPlanner::updateGraphComboBox()
 
 void TripPlanner::on_MSTpushButton_clicked()
 {
-    QString currentCollegeName = this->ui->college_comboBox->currentText();
-    qDebug() << currentCollegeName;
+    DBColleges::getInstance().collegesGraph.minimumSpanningTree(0);
+}
 
-    //TODO: External window opens up displaying the results of the MST.
+
+void TripPlanner::on_DFSpushButton_clicked()
+{
+    QString currentCollegeName = this->ui->college_comboBox->currentText();
+    int collegeId = DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString());
+
+    if(collegeId != -1)
+    {
+        DBColleges::getInstance().collegesGraph.PerformDFS(collegeId);
+    }
+    else
+    {
+        qDebug() << "TripPlanner::on_DFSpushButton_clicked Invalid college";
+    }
+}
+
+
+void TripPlanner::on_BFSpushButton_clicked()
+{
+
 }
 
