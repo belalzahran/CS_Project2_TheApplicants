@@ -219,7 +219,7 @@ void DBColleges::readEntries(const std::string& path)
                 nameInput = QString::fromStdString(line.at(i));    // Insert end college name
                 i++;    // i = 2
 
-                this->collegeMap[newCollege.name].distances.insert(nameInput,std::stoi(line.at(i)));
+                this->collegeMap[newCollege.name].distances.insert(nameInput,std::stod(line.at(i)));
                 i++;    // i = 3
             }
         }
@@ -241,7 +241,7 @@ void DBColleges::readEntries(const std::string& path)
                 nameInput = QString::fromStdString(line.at(i));    // Should be second entry
                 i++;    // i = 2
 
-                newCollege.distances.insert(nameInput,std::stoi(line.at(i)));
+                newCollege.distances.insert(nameInput,std::stod(line.at(i)));
                 i++;    // i = 3
 
                 stateInput = QString::fromStdString(line.at(i));    // Fourth entry
