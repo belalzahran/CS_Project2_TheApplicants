@@ -49,7 +49,7 @@ private:
      *  struct for distance and previous node for shortest path
      */
     struct dfs{
-        int distance;   // Weight of the edge
+        double distance;   // Weight of the edge
         int preV;       // Parent node to the current Vertex
         // Current vertex ID = idx of a vector of these
     };
@@ -100,7 +100,7 @@ public:
      *  @param int weight
      *  function to add edges to the adjacency list
      */
-    void addEdge(Vertex a, Vertex b, int weight)
+    void addEdge(Vertex a, Vertex b, double weight)
 
     {
         // The vertex's ID will match up with the index of the list
@@ -348,7 +348,7 @@ public:
         {
             closest = getMinID(key, visited);
             visited[closest] = true;
-            int closestdistance = 100000;
+            double closestdistance = 100000;
 
             // somehow get the parent and distance from the parent of closest:
 
@@ -455,9 +455,9 @@ public:
      *  @param int currentVertexId
      *
      */
-    int getShortestIncidentDistance(int currentVertexId)
+    double getShortestIncidentDistance(int currentVertexId)
     {
-        int least = 100000;
+        double least = 100000;
         for (auto x = adjList[currentVertexId].begin(); x !=
         adjList[currentVertexId].end(); x++)
         {
@@ -490,10 +490,10 @@ public:
      *
      * function to get the shortest unvisited incident (adjacent?) distance
      */
-    int getShortestUnvisitedIncidentDistanceId(int currentVertexId, vector<bool>& visited)
+    double getShortestUnvisitedIncidentDistanceId(int currentVertexId, vector<bool>& visited)
     {
         int resultId = -1;
-        int least = 100000;
+        double least = 100000;
         for (auto x = adjList[currentVertexId].begin(); x !=
         adjList[currentVertexId].end(); x++)
         {
@@ -512,9 +512,9 @@ public:
      *  @param int currentVertexId
      *  function to get the shortest adjacent distances' id
      */
-    int getShortestIncidentDistanceId(int currentVertexId)
+    double getShortestIncidentDistanceId(int currentVertexId)
     {
-        int least = 100000;
+        double least = 100000;
         int leastId = 0;
         for (auto x = adjList[currentVertexId].begin(); x !=
         adjList[currentVertexId].end(); x++)
@@ -537,7 +537,7 @@ public:
     int getMinID(vector<int>& key, vector<bool>& visited)
     {
         int resultId = -1;
-        int min = 100000;
+        double min = 100000;
         for (int x = 0; x < v; x++){
             if(key[x] < min && !visited[x])
             {
@@ -553,9 +553,9 @@ public:
     /*! @fn int getWeight(vector<dfs>& mstSet)
      *  @param vector<dfs>& mstSet
      */
-    int getWeight(vector<dfs>& mstSet)
+    double getWeight(vector<dfs>& mstSet)
     {
-        int sum = 0;
+        double sum = 0;
         for (int i = 0; i < mstSet.size(); i++)
         {
             if (mstSet[i].preV != -1){
@@ -594,10 +594,10 @@ public:
      *  @param int excludedId
      *  function to get the shortest incident distance id excluding a specific id
      */
-    int getShortestIncidentDistanceIdExcluding(int currentVertexId , int
+    double getShortestIncidentDistanceIdExcluding(int currentVertexId , int
     excludedId)
     {
-        int least = 100000;
+        double least = 100000;
         int leastId = 0;
         for (auto x = adjList[currentVertexId].begin(); x !=
         adjList[currentVertexId].end(); x++)
@@ -617,10 +617,10 @@ public:
      *  @param int excludedId
      *  function to get the shortest incident distance excluding a specific id
      */
-    int getShortestIncidentDistanceExcluding(int currentVertexId , int
+    double getShortestIncidentDistanceExcluding(int currentVertexId , int
     excludedId)
     {
-        int least = 100000;
+        double least = 100000;
         for (auto x = adjList[currentVertexId].begin(); x !=
         adjList[currentVertexId].end(); x++)
         {

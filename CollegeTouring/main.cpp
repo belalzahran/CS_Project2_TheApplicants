@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
         DBColleges::getInstance().loadCollegeEntries(); //Be sure to select Distances.csv
         qDebug() << "Prompting for Souvenirs.csv file";
         DBColleges::getInstance().loadSouvenirEntries();//Be sure to select Souvenirs.csv
+
+        DBColleges::getInstance().saveToDatabase();
     }
     DBColleges::getInstance().populateGraph(); //Populates the graph based on the collegeMap
 
