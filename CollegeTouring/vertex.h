@@ -81,6 +81,11 @@ public:
     {
         return label;
     }
+
+    void setID(int id)
+    {
+        this->id = id;
+    }
 };
 
 

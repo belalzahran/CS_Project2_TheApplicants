@@ -278,9 +278,7 @@ public:
                 if (shortestDistFromStart[x->first.GetId()].distance == 100000)
                 {
                     // set the distance to start
-                    shortestDistFromStart[x->first.GetId()].distance =
-                            x->second +
-                            shortestDistFromStart[current].distance;
+                    shortestDistFromStart[x->first.GetId()].distance = x->second + shortestDistFromStart[current].distance;
                     shortestDistFromStart[x->first.GetId()].preV = current;
                     //cout << "this";
                 }
@@ -288,9 +286,7 @@ public:
                 // check to see if new path is shorter then previous
                 else if (shortestDistFromStart[current].distance + x->second < shortestDistFromStart[x->first.GetId()].distance)
                 {
-                    shortestDistFromStart[x->first.GetId()].distance =
-                            x->second +
-                            shortestDistFromStart[current].distance;
+                    shortestDistFromStart[x->first.GetId()].distance = x->second + shortestDistFromStart[current].distance;
                     shortestDistFromStart[x->first.GetId()].preV = current;
                     //cout << "that";
                 }
@@ -299,14 +295,73 @@ public:
         //cout << "\t\tSETTING " << vertices[current] << " VISITED\n";
         visited[current] = true;
         int nextId = getShortestUnvisitedIncidentDistanceId(current, visited);
+//        shortestPath(nextId, visited, shortestDistFromStart);
         //cout << nextId;
         if (nextId != -1)
             shortestPath(nextId, visited, shortestDistFromStart);
-        else if (current == 10){
-            shortestPath(9, visited, shortestDistFromStart);
+        else
+        {
+            shortestPath(current, visited, shortestDistFromStart);
         }
-        else if (current == 7)
-            shortestPath(4, visited, shortestDistFromStart);
+    }
+
+
+    typedef pair<double, int> vtx;
+    double sierrasDijkstras(int source, int destination)
+    {
+        // Priority queue with distance (double) as key, and previous vertex (int)
+        // Min heap order pqueue
+        std::priority_queue<vtx, vector<vtx>, greater<vtx>> pq;
+
+        // Create a vector for distances and init all to 100000 (inf)
+        vector<int> dist(this->v, 100000);
+
+        // Insert source into pq and set distance to 0
+        dist[source] = 0;
+        pq.push(make_pair(0, source));
+
+        // Loop until pq becomes empty
+        while (!pq.empty()){
+
+            // Extract min distance vertex from pq, let this be u
+            int u = pq.top().second;
+            pq.pop();
+
+            qDebug() << "\nVisiting: " << QString::fromStdString(vertices[u].GetName()) << "\n";
+            for (auto x = adjList[u].begin(); x != adjList[u].end(); x++)
+            {
+                int v = x->first.GetId();
+                int weight = x->second;
+
+                qDebug() << "Weight to " << QString::fromStdString(x->first.GetName()) << " == " << weight << "\n";
+
+                // If there is a shorter path from v through u
+                if (dist[v] > dist[u] + weight)
+                {
+                    qDebug() << "Found shorter path! \n";
+                    // Update the distance of V
+                    dist[v] = dist[u] + weight;
+                    qDebug() << "New Weight from " << QString::fromStdString(vertices[u].GetName()) << " to " <<  QString::fromStdString(vertices[v].GetName())
+                             << " == " << dist[v] << "\n";
+                    pq.push(make_pair(dist[v], v));
+                }
+            }
+        }
+
+        // Print shortest distances stored in dist[]
+            qDebug() << "\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n";
+            for (int i = 0; i < this->v; ++i)
+            {
+                QString name = QString::fromStdString(vertices[i].GetName());
+                qDebug() << name << " ------> " << dist [i];
+            }
+
+            qDebug() << "\n\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n"
+                     << "To Destination: " << QString::fromStdString(vertices[destination].GetName()) << "\n"
+                     << " is  ------> " << dist[destination];
+
+
+            return dist[destination];
     }
 
 
