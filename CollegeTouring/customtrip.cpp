@@ -136,3 +136,53 @@ void customtrip::on_pushButton_4_clicked()
     this->close();
 }
 
+
+void customtrip::on_mostEfficientpushButton_clicked()
+{
+    std::vector<College> newColleges = this->selectedColleges;
+    QString currentCollegeName = newColleges[0].name;
+    this->selectedColleges.clear();
+
+    //Searches for optimial route from the initial college
+    while(!newColleges.empty())
+    {
+        //Switches index0 to closest college to the current.
+        for(unsigned int index = 1; index < newColleges.size(); index++)
+        {
+               //Replace with dijkstras for distances comparison
+            if(newColleges[index].distances[currentCollegeName] < newColleges[0].distances[currentCollegeName])
+            {
+                //Swap index with 0
+                College prev = newColleges[index];
+                newColleges[index] = newColleges[0];
+                newColleges[0] = prev;
+            }
+        }
+
+        //Switch current college the closest one, and push it to the selectedColleges vector
+        //Repeats until every college has been added back to the visitedColleges vector
+        currentCollegeName = newColleges[0].name;
+        this->selectedColleges.push_back(newColleges[0]);
+        newColleges.erase(newColleges.begin());
+    }
+
+    updateTable();
+    fillComboBox(this->selectedColleges);
+
+    this->on_tripOrderpushButton_clicked();
+}
+
+
+void customtrip::on_tripOrderpushButton_clicked()
+{
+    double totalMileage = 0;
+
+    for(unsigned int index = 0; index < this->selectedColleges.size() - 1; index++)
+    {
+                        //Replace this with djikstras
+        totalMileage += this->selectedColleges[index].distances[this->selectedColleges[index + 1].name];
+    }
+
+    this->ui->distanceDisplaylineEdit->setText(QString::number(totalMileage) + " mi");
+}
+

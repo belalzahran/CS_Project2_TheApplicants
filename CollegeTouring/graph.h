@@ -138,7 +138,7 @@ public:
      * printing the visited vertices and outputting the discovery/back
      * edges.
      */
-    void PerformDFS(int vertexIndex) const
+    double PerformDFS(int vertexIndex) const
     {
         // Copy constructs a graph object because the RecursiveDFS function modifies
         // the adjacency list structure.
@@ -162,6 +162,7 @@ public:
          int backtrackID = -1;
 
          this->RecursiveDFS(graphCopy, prevIndexes, visited, sourceVertex, vertexIndex, backtrackID, distanceTraveled);
+         return distanceTraveled;
     }
 
     /*!
@@ -312,7 +313,7 @@ public:
     /*! @fn void minimumSpanningTree(int source)
      *  @param int source
      */
-    void minimumSpanningTree(int source)
+    double minimumSpanningTree(int source)
     {
         // setting the entire visited list to false
         vector<bool> visited(v, false);
@@ -374,7 +375,8 @@ public:
                 }
             }
         }
-        printMST(source, mstSet);
+        //printMST(source, mstSet);
+        return getWeight(mstSet);
     }
 
 

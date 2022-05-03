@@ -1,5 +1,6 @@
 #include "tripplanner.h"
 #include "ui_tripplanner.h"
+#include <QMessageBox>
 
 TripPlanner::TripPlanner(QWidget *parent) :
     QWidget(parent),
@@ -36,7 +37,12 @@ void TripPlanner::updateGraphComboBox()
 
 void TripPlanner::on_MSTpushButton_clicked()
 {
-    DBColleges::getInstance().collegesGraph.minimumSpanningTree(0);
+    double totalMileage = DBColleges::getInstance().collegesGraph.minimumSpanningTree(0);
+
+    QMessageBox msgBox;
+    msgBox.setText("Minimum Spanning Tree");
+    msgBox.setInformativeText("Total Mileage: " + QString::number(totalMileage) + " miles");
+    msgBox.exec();
 }
 
 
@@ -47,7 +53,12 @@ void TripPlanner::on_DFSpushButton_clicked()
 
     if(collegeId != -1)
     {
-        DBColleges::getInstance().collegesGraph.PerformDFS(collegeId);
+        double totalMileage = DBColleges::getInstance().collegesGraph.PerformDFS(collegeId);
+
+        QMessageBox msgBox;
+        msgBox.setText("DFS starting from " + currentCollegeName);
+        msgBox.setInformativeText("Total Mileage: " + QString::number(totalMileage) + " miles");
+        msgBox.exec();
     }
     else
     {
