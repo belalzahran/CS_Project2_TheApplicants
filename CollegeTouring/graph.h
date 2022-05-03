@@ -162,6 +162,7 @@ public:
          int backtrackID = -1;
 
          this->RecursiveDFS(graphCopy, prevIndexes, visited, sourceVertex, vertexIndex, backtrackID, distanceTraveled);
+         qDebug() << "Total Distance of DFS: " << distanceTraveled;
          return distanceTraveled;
     }
 
@@ -210,7 +211,6 @@ public:
             }
         }
 
-        qDebug() << "Total Distance of DFS: " << distance;
     }
 
 
@@ -314,7 +314,7 @@ public:
         std::priority_queue<vtx, vector<vtx>, greater<vtx>> pq;
 
         // Create a vector for distances and init all to 100000 (inf)
-        vector<int> dist(this->v, 100000);
+        vector<double> dist(this->v, 100000);
 
         // Insert source into pq and set distance to 0
         dist[source] = 0;
@@ -327,38 +327,38 @@ public:
             int u = pq.top().second;
             pq.pop();
 
-            qDebug() << "\nVisiting: " << QString::fromStdString(vertices[u].GetName()) << "\n";
+            //qDebug() << "\nVisiting: " << QString::fromStdString(vertices[u].GetName()) << "\n";
             for (auto x = adjList[u].begin(); x != adjList[u].end(); x++)
             {
                 int v = x->first.GetId();
-                int weight = x->second;
+                double weight = x->second;
 
-                qDebug() << "Weight to " << QString::fromStdString(x->first.GetName()) << " == " << weight << "\n";
+                //qDebug() << "Weight to " << QString::fromStdString(x->first.GetName()) << " == " << weight << "\n";
 
                 // If there is a shorter path from v through u
                 if (dist[v] > dist[u] + weight)
                 {
-                    qDebug() << "Found shorter path! \n";
+                    //qDebug() << "Found shorter path! \n";
                     // Update the distance of V
                     dist[v] = dist[u] + weight;
-                    qDebug() << "New Weight from " << QString::fromStdString(vertices[u].GetName()) << " to " <<  QString::fromStdString(vertices[v].GetName())
-                             << " == " << dist[v] << "\n";
+                    //qDebug() << "New Weight from " << QString::fromStdString(vertices[u].GetName()) << " to " <<  QString::fromStdString(vertices[v].GetName())
+                    //         << " == " << dist[v] << "\n";
                     pq.push(make_pair(dist[v], v));
                 }
             }
         }
 
         // Print shortest distances stored in dist[]
-            qDebug() << "\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n";
-            for (int i = 0; i < this->v; ++i)
-            {
-                QString name = QString::fromStdString(vertices[i].GetName());
-                qDebug() << name << " ------> " << dist [i];
-            }
+//            qDebug() << "\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n";
+//            for (int i = 0; i < this->v; ++i)
+//            {
+//                QString name = QString::fromStdString(vertices[i].GetName());
+//                qDebug() << name << " ------> " << dist [i];
+//            }
 
-            qDebug() << "\n\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n"
-                     << "To Destination: " << QString::fromStdString(vertices[destination].GetName()) << "\n"
-                     << " is  ------> " << dist[destination];
+//            qDebug() << "\n\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n"
+//                     << "To Destination: " << QString::fromStdString(vertices[destination].GetName()) << "\n"
+//                     << " is  ------> " << dist[destination];
 
 
             return dist[destination];

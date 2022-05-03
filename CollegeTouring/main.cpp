@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
     //DBColleges::getInstance().collegesGraph.minimumSpanningTree(0);
    // DBColleges::getInstance().collegesGraph.graphDijkstras(4, 6);
     //DBColleges::getInstance().collegesGraph.PerformDFS(6);
-    DBColleges::getInstance().collegesGraph.sierrasDijkstras(4, 6);
+    //DBColleges::getInstance().collegesGraph.sierrasDijkstras(4, 6);
 
-//    MainWindow w;
-//    w.show();
+    MainWindow w;
+    w.show();
     return a.exec();
 }

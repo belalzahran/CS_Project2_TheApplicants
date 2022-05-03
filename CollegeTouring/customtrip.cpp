@@ -149,8 +149,15 @@ void customtrip::on_mostEfficientpushButton_clicked()
         //Switches index0 to closest college to the current.
         for(unsigned int index = 1; index < newColleges.size(); index++)
         {
-               //Replace with dijkstras for distances comparison
-            if(newColleges[index].distances[currentCollegeName] < newColleges[0].distances[currentCollegeName])
+            double currentDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                        DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+                        DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[index].name.toStdString())
+                        );
+            double bestDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                        DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+                        DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[0].name.toStdString())
+                         );
+            if(currentDist < bestDist)
             {
                 //Swap index with 0
                 College prev = newColleges[index];
@@ -179,8 +186,10 @@ void customtrip::on_tripOrderpushButton_clicked()
 
     for(unsigned int index = 0; index < this->selectedColleges.size() - 1; index++)
     {
-                        //Replace this with djikstras
-        totalMileage += this->selectedColleges[index].distances[this->selectedColleges[index + 1].name];
+        totalMileage += DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                        DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index].name.toStdString()),
+                        DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index + 1].name.toStdString())
+                        );
     }
 
     this->ui->distanceDisplaylineEdit->setText(QString::number(totalMileage) + " mi");
