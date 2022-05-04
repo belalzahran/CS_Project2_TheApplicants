@@ -22,14 +22,6 @@ public:
 
 private slots:
 
-    struct purchasedSouvenirs
-    {
-
-
-
-    };
-
-
     void on_pushButton_addCollege_clicked();
 
     void on_pushButton_return_clicked();
@@ -43,6 +35,7 @@ private slots:
     void on_pushButton_next_clicked();
 
     void on_pushButton_confirm_clicked();
+    //void prepSouveniersBoughtVector();
 
 private:
     Ui::customtrip *ui;
