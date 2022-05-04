@@ -128,7 +128,7 @@ public:
      * printing the visited vertices and outputting the discovery/back
      * edges.
      */
-    void PerformDFS(int vertexIndex) const
+    double PerformDFS(int vertexIndex) const
     {
         // Copy constructs a graph object because the RecursiveDFS function modifies
         // the adjacency list structure.
@@ -152,6 +152,8 @@ public:
          int backtrackID = -1;
 
          this->RecursiveDFS(graphCopy, prevIndexes, visited, sourceVertex, vertexIndex, backtrackID, distanceTraveled);
+         qDebug() << "Total Distance of DFS: " << distanceTraveled;
+         return distanceTraveled;
     }
 
     /*!
@@ -204,6 +206,45 @@ public:
     }
 
 
+    double BFS(int source)
+    {
+        double distance = 0;
+        // Init. all idx to be false
+        vector<bool> visited(v, false);
+        int u = source;
+
+        // start at root, visit adjacent nodes in order of shortest distance
+        while (!this->allvisited(visited))
+        {
+            visited[u] = true;
+
+            qDebug() << "\nVisiting: " << QString::fromStdString(this->vertices[u].GetName());
+
+
+            // Get next shortest distance from current node
+            int v = this->getShortestUnvisitedIncidentDistanceId(source, visited);
+
+            // If all adj nodes of the current node have not been visited
+            if (v != -1){
+
+                // Add this to total distance
+                distance += this->getDistance(source, v);
+
+                u = v;
+
+            }
+            else{
+                // If all adjacent nodes of the current nodes HAVE been visited, set the source node to the closest
+                // node to current and check the adj. nodes of the new source.
+                source = this->getShortestIncidentDistance(u);
+                // Set the source node to the shortest node from current and repeat
+            }
+
+        }
+
+        qDebug() << "\nTotal Distance of BFS ----->" << distance;
+        return distance;
+    }
 
     /*! @fn void graphDijkstras(int current)
      * \brief graphDijkstras
@@ -304,7 +345,7 @@ public:
         std::priority_queue<vtx, vector<vtx>, greater<vtx>> pq;
 
         // Create a vector for distances and init all to 100000 (inf)
-        vector<int> dist(this->v, 100000);
+        vector<double> dist(this->v, 100000);
 
         // Insert source into pq and set distance to 0
         dist[source] = 0;
@@ -316,39 +357,40 @@ public:
             // Extract min distance vertex from pq, let this be u
             int u = pq.top().second;
             pq.pop();
-
 //            qDebug() << "\nVisiting: " << QString::fromStdString(vertices[u].GetName()) << "\n";
+
             for (auto x = adjList[u].begin(); x != adjList[u].end(); x++)
             {
                 int v = x->first.GetId();
-                int weight = x->second;
+                double weight = x->second;
 
-//                qDebug() << "Weight to " << QString::fromStdString(x->first.GetName()) << " == " << weight << "\n";
+
+                //qDebug() << "Weight to " << QString::fromStdString(x->first.GetName()) << " == " << weight << "\n";
 
                 // If there is a shorter path from v through u
                 if (dist[v] > dist[u] + weight)
                 {
-//                    qDebug() << "Found shorter path! \n";
+                    //qDebug() << "Found shorter path! \n";
                     // Update the distance of V
                     dist[v] = dist[u] + weight;
-//                    qDebug() << "New Weight from " << QString::fromStdString(vertices[u].GetName()) << " to " <<  QString::fromStdString(vertices[v].GetName())
-//                             << " == " << dist[v] << "\n";
+                    //qDebug() << "New Weight from " << QString::fromStdString(vertices[u].GetName()) << " to " <<  QString::fromStdString(vertices[v].GetName())
+                    //         << " == " << dist[v] << "\n";
                     pq.push(make_pair(dist[v], v));
                 }
             }
         }
 
         // Print shortest distances stored in dist[]
-            qDebug() << "\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n";
-            for (int i = 0; i < this->v; ++i)
-            {
-                QString name = QString::fromStdString(vertices[i].GetName());
-                qDebug() << name << " ------> " << dist [i];
-            }
+//            qDebug() << "\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n";
+//            for (int i = 0; i < this->v; ++i)
+//            {
+//                QString name = QString::fromStdString(vertices[i].GetName());
+//                qDebug() << name << " ------> " << dist [i];
+//            }
 
-            qDebug() << "\n\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n"
-                     << "To Destination: " << QString::fromStdString(vertices[destination].GetName()) << "\n"
-                     << " is  ------> " << dist[destination];
+//            qDebug() << "\n\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n"
+//                     << "To Destination: " << QString::fromStdString(vertices[destination].GetName()) << "\n"
+//                     << " is  ------> " << dist[destination];
 
 
             return dist[destination];
@@ -390,6 +432,7 @@ public:
         }
 
         int closest = 0;
+
         // a) Pick a vertex u which is not there in visited[u.id] and has minimum key value. (distance = key)
         // Pick the vertex with minimum key value and not already included in MST (not in mstSET or visited).
         for (int n = 0; n < v - 1; n++)
@@ -413,7 +456,6 @@ public:
                         key[idx->first.GetId()] = idx->second;
                         if (idx->first.GetId() == closest && idx->second < closestdistance)
                         {
-                            // problem: will only take the most recent version so 11 houston closest is atlanta 9
                             closestdistance = idx->second;
                             mstSet[closest].distance = idx->second;
                             mstSet[closest].preV = x;
@@ -422,7 +464,8 @@ public:
                 }
             }
         }
-        printMST(source, mstSet);
+
+        //printMST(source, mstSet);
         return getWeight(mstSet);
     }
 
@@ -490,16 +533,6 @@ public:
 
     // ACCESSORS
 
-    /********************************************************************
-   * IncidentEdges
-    * This function will return a priority queue of the incident edges
-    * associated with the specified vertex position.
-   * => returns priorityQueue - container of weight:edgePosition pairs
-   *********************************************************************/
-//    priorityQueue& IncidentEdges(int vertexIndex)
-//    {
-//        return adjList[vertexIndex];
-//    }
 
     // function to get the shortest incident (adjacent?) distance
     /*! @fn int getShortestIncidentDistance(int currentVertexId)
