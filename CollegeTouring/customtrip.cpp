@@ -245,7 +245,6 @@ void customtrip::updateDistance()
                             DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index + 1].name.toStdString())
                             );
         }
-        //ui-
 //    this->ui->label->setText(QString::number(totalMileage));
 }
 
