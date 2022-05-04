@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tabWidget->setCurrentIndex(0);
+
 
     //Returns the college struct with the key Arizona State University
     //DBColleges::getInstance().collegeMap.at("Arizona State University");
