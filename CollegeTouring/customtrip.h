@@ -36,6 +36,7 @@ private slots:
 
     void on_pushButton_confirm_clicked();
     //void prepSouveniersBoughtVector();
+    void updateDistance();
 
 private:
     Ui::customtrip *ui;
