@@ -26,6 +26,10 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_4_clicked();
 
+    void on_mostEfficientpushButton_clicked();
+
+    void on_tripOrderpushButton_clicked();
+
 private:
     Ui::customtrip *ui;
     std::vector<College> selectedColleges;
