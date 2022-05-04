@@ -93,6 +93,8 @@ void admin::on_pushButton_clicked()
 
        QMessageBox::information(this, "New Souvenir Item","Succesfully added " + newItem.name + "!");
 
+       DBColleges::getInstance().saveSouvenirs();
+
 
     }
 
@@ -125,6 +127,8 @@ void admin::on_pushButton_2_clicked()
 
     on_comboBox_currentTextChanged(ui->comboBox->currentText());
     QMessageBox::information(this, "Delete Souvenir Item","Succesfully deleted " + selectedSouvenir.name + "!");
+
+    DBColleges::getInstance().saveSouvenirs();
 
     ui->doubleSpinBox->hide();
     ui->pushButton_3done->hide();
@@ -184,7 +188,7 @@ void admin::on_pushButton_3done_clicked()
     ui->pushButton_3done->hide();
     QMessageBox::information(this, "Change Souvenir Price","Succesfully changed " + ui->comboBox_2->currentText() + " price to $" + QString::number(ui->doubleSpinBox->value()));
 
-
+    DBColleges::getInstance().saveSouvenirs();
 }
 
 
