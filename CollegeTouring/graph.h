@@ -15,14 +15,6 @@
 #include "vertex.h"
 
 using namespace std;
-/*!
- * using priorityQueue
- * A type alias for the priority queue containing pairs of
- * weight:edgePosition. edgePositions are integers referencing the
- * position in the vector where the edge is contained.
- */
-using priorityQueue = std::priority_queue<std::pair<double,int>,std::vector<std::pair<double,int>>, WeightedEdgePairComparator>;
-
 
 /*! @class Graph
  *
@@ -54,7 +46,6 @@ private:
         // Current vertex ID = idx of a vector of these
     };
 
-    std::vector<priorityQueue> edgeList;
 
 public:
 
@@ -79,7 +70,6 @@ public:
         adjList = otherGraph.adjList;
         v = otherGraph.v;
         vertices = otherGraph.vertices;
-        edgeList = otherGraph.edgeList;
     }
 
     // constructor
@@ -176,7 +166,7 @@ public:
      * This function implements the DFS algorithm found in the chapter 13
      * slides. distance and visitCount are passed by reference.
      */
-    void RecursiveDFS(Graph& graph, stack<int>& prevIndexes, vector<bool>& visited, int sourceVertex, int vertexIndex, int& backtrackID, double& distance) const
+    double RecursiveDFS(Graph& graph, stack<int>& prevIndexes, vector<bool>& visited, int sourceVertex, int vertexIndex, int& backtrackID, double& distance) const
     {
         //int source = sourceVertex;
         while (backtrackID != sourceVertex){
@@ -211,6 +201,8 @@ public:
             }
         }
 
+        qDebug() << "Total Distance of DFS: " << distance;
+        return distance;
     }
 
 
@@ -335,6 +327,7 @@ public:
 
                 //qDebug() << "Weight to " << QString::fromStdString(x->first.GetName()) << " == " << weight << "\n";
 
+
                 // If there is a shorter path from v through u
                 if (dist[v] > dist[u] + weight)
                 {
@@ -343,6 +336,11 @@ public:
                     dist[v] = dist[u] + weight;
                     //qDebug() << "New Weight from " << QString::fromStdString(vertices[u].GetName()) << " to " <<  QString::fromStdString(vertices[v].GetName())
                     //         << " == " << dist[v] << "\n";
+//                    qDebug() << "Found shorter path! \n";
+                    // Update the distance of V
+                    dist[v] = dist[u] + weight;
+//                    qDebug() << "New Weight from " << QString::fromStdString(vertices[u].GetName()) << " to " <<  QString::fromStdString(vertices[v].GetName())
+//                             << " == " << dist[v] << "\n";
                     pq.push(make_pair(dist[v], v));
                 }
             }
@@ -367,6 +365,8 @@ public:
 
     /*! @fn void minimumSpanningTree(int source)
      *  @param int source
+     *
+     *  @return double - weight of MST
      */
     double minimumSpanningTree(int source)
     {
@@ -477,6 +477,8 @@ public:
      *  @param int id
      *  @param vector<dfs>& shortestDistFromStart
      *  function to print the shortest path for an id
+     *
+     *  This is used for graphDijkstras and is incompatable with other functions
      */
     void printPath(int sourceid, int id,  vector<dfs>& shortestDistFromStart)
     {
@@ -687,16 +689,6 @@ public:
         }
         return least;
     }
-
-
-    // function to print adjacent vertices
-    //void printAdjacent(int v)
-    //{
-    //    cout << vertices.at(v) << "->";
-//        for (auto neighbor : adjList[v])
-//            qDebug() << QString::fromStdString(neighbor.first.GetName()) << " " << neighbor.second << " ";
-//        qDebug() << endl;
-//    }
 
 
     //Function that returns the vertex of a given id.
