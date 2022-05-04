@@ -83,7 +83,7 @@ void TripPlanner::on_BFSpushButton_clicked()
     }
     else
     {
-        qDebug() << "TripPlanner::on_DFSpushButton_clicked Invalid college";
+        qDebug() << "TripPlanner::on_BFSpushButton_clicked Invalid college";
     }
 }
 
