@@ -69,6 +69,21 @@ void TripPlanner::on_DFSpushButton_clicked()
 
 void TripPlanner::on_BFSpushButton_clicked()
 {
+    QString currentCollegeName = this->ui->college_comboBox->currentText();
+    int collegeId = DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString());
 
+    if(collegeId != -1)
+    {
+        double totalMileage = DBColleges::getInstance().collegesGraph.BFS(collegeId);
+
+        QMessageBox msgBox;
+        msgBox.setText("BFS starting from " + currentCollegeName);
+        msgBox.setInformativeText("Total Mileage: " + QString::number(totalMileage) + " miles");
+        msgBox.exec();
+    }
+    else
+    {
+        qDebug() << "TripPlanner::on_DFSpushButton_clicked Invalid college";
+    }
 }
 
