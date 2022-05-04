@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 //    DBColleges::getInstance().collegesGraph.sierrasDijkstras(4, 6);
     DBColleges::getInstance().collegesGraph.BFS(0);
 
-//    MainWindow w;
-//    w.show();
+    MainWindow w;
+    w.show();
     return a.exec();
 }

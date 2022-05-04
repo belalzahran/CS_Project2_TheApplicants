@@ -357,6 +357,7 @@ public:
             // Extract min distance vertex from pq, let this be u
             int u = pq.top().second;
             pq.pop();
+
 //            qDebug() << "\nVisiting: " << QString::fromStdString(vertices[u].GetName()) << "\n";
 
             for (auto x = adjList[u].begin(); x != adjList[u].end(); x++)
@@ -364,8 +365,8 @@ public:
                 int v = x->first.GetId();
                 double weight = x->second;
 
-
                 //qDebug() << "Weight to " << QString::fromStdString(x->first.GetName()) << " == " << weight << "\n";
+
 
                 // If there is a shorter path from v through u
                 if (dist[v] > dist[u] + weight)
@@ -464,7 +465,6 @@ public:
                 }
             }
         }
-
         //printMST(source, mstSet);
         return getWeight(mstSet);
     }
