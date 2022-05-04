@@ -21,6 +21,15 @@ public:
     ~customtrip();
 
 private slots:
+
+    struct purchasedSouvenirs
+    {
+
+
+
+    };
+
+
     void on_pushButton_addCollege_clicked();
 
     void on_pushButton_return_clicked();
@@ -41,6 +50,7 @@ private:
     vector<float> amountSpentAtCollege;
     int collNum = 0;
     float totalSpent = 0;
+    vector <vector <int>> souvenirsBought;
 
 
 };

@@ -163,6 +163,7 @@ void customtrip::on_pushButton_start_clicked()
             ui->label_collegeName->show();
             ui->label_4_souvenir->show();
             ui->label_5_quantity->show();
+            amountSpentAtCollege.push_back(0);
 
 
             if (ui->checkBoxuserOrder->isChecked())
@@ -206,12 +207,11 @@ void customtrip::fillSouvenirCombo()
 void customtrip::on_pushButton_next_clicked()
 {
     QString receipt;
-     if (amountSpentAtCollege.size() < collNum + 1)
-         amountSpentAtCollege.push_back(0);
 
     if (collNum + 1 < selectedColleges.size())
     {
         collNum++;
+        amountSpentAtCollege.push_back(0);
         fillSouvenirCombo();
         changeCollegeLabel();
     }
@@ -235,9 +235,10 @@ void customtrip::on_pushButton_confirm_clicked()
 {
     if (ui->spinBox->value() > 0)
     {
-        amountSpentAtCollege.push_back(selectedColleges.at(collNum).souvenirs.at(ui->comboBox_purchase->currentIndex()).price * ui->spinBox->value());
-        ui->spinBox->setValue(0);
+        amountSpentAtCollege.at(collNum) += (selectedColleges.at(collNum).souvenirs.at(ui->comboBox_purchase->currentIndex()).price * ui->spinBox->value());
         QMessageBox::information(this, "Purchased", ui->spinBox->text() + " " + ui->comboBox_purchase->currentText() + "s purchased!");
+        ui->spinBox->setValue(0);
+
     }
 }
 
