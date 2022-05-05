@@ -222,7 +222,6 @@
    <property name="font">
     <font>
      <pointsize>10</pointsize>
-     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -321,6 +320,58 @@
     <string>Quantity:</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label_distances">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>270</y>
+     <width>211</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_addAll">
+   <property name="geometry">
+    <rect>
+     <x>550</x>
+     <y>100</y>
+     <width>75</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Add All</string>
+   </property>
+  </widget>
+  <zorder>pushButton_addAll</zorder>
+  <zorder>label</zorder>
+  <zorder>tableWidget</zorder>
+  <zorder>comboBoxCollege</zorder>
+  <zorder>label_2</zorder>
+  <zorder>pushButton_clearTable</zorder>
+  <zorder>pushButton_addCollege</zorder>
+  <zorder>pushButton_return</zorder>
+  <zorder>spinBox</zorder>
+  <zorder>pushButton_next</zorder>
+  <zorder>comboBox_purchase</zorder>
+  <zorder>label_collegeName</zorder>
+  <zorder>pushButton_confirm</zorder>
+  <zorder>checkBoxuserOrder</zorder>
+  <zorder>checkBox_2efficient</zorder>
+  <zorder>label_3</zorder>
+  <zorder>pushButton_start</zorder>
+  <zorder>label_4_souvenir</zorder>
+  <zorder>label_5_quantity</zorder>
+  <zorder>label_distances</zorder>
  </widget>
  <resources/>
  <connections/>

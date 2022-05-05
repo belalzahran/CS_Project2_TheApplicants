@@ -136,16 +136,23 @@ void customtrip::on_pushButton_clearTable_clicked()
 {
     ui->tableWidget->clear();
 
-    //QMessageBox::information(this,"asdf", "selected college size is " + QString::number(selectedColleges.size()));
-
     selectedColleges.clear();
 
-
-    //QMessageBox::information(this,"asdf", "selected college size is " + QString::number(selectedColleges.size()));
-
-
-
     fillComboBox(selectedColleges);
+
+    ui->spinBox->hide();
+    ui->comboBox_purchase->hide();
+    ui->pushButton_confirm->hide();
+    ui->pushButton_next->hide();
+    ui->label_collegeName->hide();
+    ui->label_4_souvenir->hide();
+    ui->label_5_quantity->hide();
+    ui->label_distances->hide();
+    ui->checkBox_2efficient->setChecked(false);
+    ui->checkBoxuserOrder->setChecked(false);
+
+
+
 }
 
 
@@ -170,6 +177,9 @@ void customtrip::on_pushButton_start_clicked()
             ui->label_4_souvenir->show();
             ui->label_5_quantity->show();
             amountSpentAtCollege.push_back(0);
+            ui->label_distances->show();
+
+
 
 
             if (ui->checkBoxuserOrder->isChecked())
@@ -178,7 +188,7 @@ void customtrip::on_pushButton_start_clicked()
                 changeCollegeLabel();
                 this->updateDistance();
             }
-            if (ui->checkBox_2efficient)
+            if (ui->checkBox_2efficient->isChecked())
             {
                 std::vector<College> newColleges = this->selectedColleges;
                    QString currentCollegeName = newColleges[0].name;
@@ -245,7 +255,7 @@ void customtrip::updateDistance()
                             DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index + 1].name.toStdString())
                             );
         }
-//    this->ui->label->setText(QString::number(totalMileage));
+        this->ui->label_distances->setText("Total Trip Distance: " + QString::number(totalMileage)+ " miles");
 }
 
 void customtrip::changeCollegeLabel()
@@ -301,5 +311,27 @@ void customtrip::on_pushButton_confirm_clicked()
         ui->spinBox->setValue(0);
 
     }
+}
+
+
+void customtrip::on_pushButton_addAll_clicked()
+{
+
+    if (ui->comboBoxCollege->count() > 0)
+    {
+        for (int i = 0; i < ui->comboBoxCollege->count(); i++)
+        {
+            selectedColleges.push_back(getCollegeFromString(ui->comboBoxCollege->itemText(i)));
+        }
+
+        updateTable();
+        fillComboBox(selectedColleges);
+    }
+    else
+    {
+        QMessageBox::warning(this,"Error","There are no more colleges left to add!");
+    }
+
+
 }
 

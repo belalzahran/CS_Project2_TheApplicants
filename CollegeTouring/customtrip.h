@@ -38,6 +38,8 @@ private slots:
     //void prepSouveniersBoughtVector();
     void updateDistance();
 
+    void on_pushButton_addAll_clicked();
+
 private:
     Ui::customtrip *ui;
     std::vector<College> selectedColleges;
