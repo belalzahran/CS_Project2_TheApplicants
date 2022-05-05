@@ -56,9 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //These functions save the data stored in collegeMap into the database.
-    DBColleges::getInstance().saveColleges();
-    DBColleges::getInstance().saveDistances();
-    DBColleges::getInstance().saveSouvenirs();
+    //DBColleges::getInstance().saveColleges();
+    //DBColleges::getInstance().saveDistances();
+    //DBColleges::getInstance().saveSouvenirs();
 
     //printColleges(db.collegeVector);
 

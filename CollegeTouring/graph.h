@@ -172,7 +172,7 @@ public:
         while (backtrackID != sourceVertex){
 
             // Output each visited vertex in order of DISCOVERY
-            qDebug() << "Visiting: " << QString::fromStdString(graph.vertices[vertexIndex].GetName());
+            //qDebug() << "Visiting: " << QString::fromStdString(graph.vertices[vertexIndex].GetName());
             visited[vertexIndex] = true;
 
 
@@ -195,13 +195,13 @@ public:
                 backtrackID = prevIndexes.top();
                 prevIndexes.pop();
 
-                qDebug() << "Backtrack to: " << QString::fromStdString(graph.vertices[backtrackID].GetName());
+                //qDebug() << "Backtrack to: " << QString::fromStdString(graph.vertices[backtrackID].GetName());
                 // Now use this vertex and visit its closest adjacent node
                 RecursiveDFS(graph, prevIndexes, visited, sourceVertex, backtrackID, backtrackID, distance);
             }
         }
 
-        qDebug() << "Total Distance of DFS: " << distance;
+        //qDebug() << "Total Distance of DFS: " << distance;
         return distance;
     }
 
@@ -218,7 +218,7 @@ public:
         {
             visited[u] = true;
 
-            qDebug() << "\nVisiting: " << QString::fromStdString(this->vertices[u].GetName());
+            //qDebug() << "\nVisiting: " << QString::fromStdString(this->vertices[u].GetName());
 
 
             // Get next shortest distance from current node
@@ -242,7 +242,7 @@ public:
 
         }
 
-        qDebug() << "\nTotal Distance of BFS ----->" << distance;
+        //qDebug() << "\nTotal Distance of BFS ----->" << distance;
         return distance;
     }
 
