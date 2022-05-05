@@ -21,10 +21,22 @@ public:
     ~customtrip();
 
 private slots:
-    void on_pushButton_clear_clicked();
 
-    void on_pushButton_clicked();
-    void on_pushButton_4_clicked();
+    void on_pushButton_addCollege_clicked();
+
+    void on_pushButton_return_clicked();
+
+    void on_pushButton_clearTable_clicked();
+
+    void on_pushButton_start_clicked();
+    void fillSouvenirCombo();
+    void changeCollegeLabel();
+
+    void on_pushButton_next_clicked();
+
+    void on_pushButton_confirm_clicked();
+    //void prepSouveniersBoughtVector();
+    void updateDistance();
 
     void on_mostEfficientpushButton_clicked();
 
@@ -33,6 +45,12 @@ private slots:
 private:
     Ui::customtrip *ui;
     std::vector<College> selectedColleges;
+    vector<float> amountSpentAtCollege;
+    int collNum = 0;
+    float totalSpent = 0;
+    vector <vector <int>> souvenirsBought;
+
+
 };
 
 #endif // CUSTOMTRIP_H

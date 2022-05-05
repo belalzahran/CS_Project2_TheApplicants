@@ -1,7 +1,14 @@
 #include "customtrip.h"
 #include "ui_customtrip.h"
 #include "dbcolleges.h"
+#include "purchase.h"
+#include "graph.h"
 #include <QMessageBox>
+
+
+
+// add select all button
+
 
 customtrip::customtrip(QWidget *parent) :
     QWidget(parent),
@@ -10,6 +17,13 @@ customtrip::customtrip(QWidget *parent) :
     ui->setupUi(this);
     fillComboBox(selectedColleges);
     setTable();
+    ui->spinBox->hide();
+    ui->comboBox_purchase->hide();
+    ui->pushButton_confirm->hide();
+    ui->pushButton_next->hide();
+    ui->label_collegeName->hide();
+    ui->label_4_souvenir->hide();
+    ui->label_5_quantity->hide();
 }
 
 customtrip::~customtrip()
@@ -96,26 +110,7 @@ void customtrip::updateTable()
 
 }
 
-void customtrip::on_pushButton_clear_clicked()
-{
-
-    ui->tableWidget->clear();
-
-    //QMessageBox::information(this,"asdf", "selected college size is " + QString::number(selectedColleges.size()));
-
-    selectedColleges.clear();
-
-
-    //QMessageBox::information(this,"asdf", "selected college size is " + QString::number(selectedColleges.size()));
-
-
-
-    fillComboBox(selectedColleges);
-
-}
-
-
-void customtrip::on_pushButton_clicked()
+void customtrip::on_pushButton_addCollege_clicked()
 {
     if (ui->comboBoxCollege->currentText().size() != 0)
     {
@@ -129,69 +124,182 @@ void customtrip::on_pushButton_clicked()
 }
 
 
-
-
-void customtrip::on_pushButton_4_clicked()
+void customtrip::on_pushButton_return_clicked()
 {
     this->close();
 }
 
 
-void customtrip::on_mostEfficientpushButton_clicked()
+
+
+void customtrip::on_pushButton_clearTable_clicked()
 {
-    std::vector<College> newColleges = this->selectedColleges;
-    QString currentCollegeName = newColleges[0].name;
-    this->selectedColleges.clear();
+    ui->tableWidget->clear();
 
-    //Searches for optimial route from the initial college
-    while(!newColleges.empty())
-    {
-        //Switches index0 to closest college to the current.
-        for(unsigned int index = 1; index < newColleges.size(); index++)
-        {
-            double currentDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-                        DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
-                        DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[index].name.toStdString())
-                        );
-            double bestDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-                        DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
-                        DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[0].name.toStdString())
-                         );
-            if(currentDist < bestDist)
-            {
-                //Swap index with 0
-                College prev = newColleges[index];
-                newColleges[index] = newColleges[0];
-                newColleges[0] = prev;
-            }
-        }
+    //QMessageBox::information(this,"asdf", "selected college size is " + QString::number(selectedColleges.size()));
 
-        //Switch current college the closest one, and push it to the selectedColleges vector
-        //Repeats until every college has been added back to the visitedColleges vector
-        currentCollegeName = newColleges[0].name;
-        this->selectedColleges.push_back(newColleges[0]);
-        newColleges.erase(newColleges.begin());
-    }
+    selectedColleges.clear();
 
-    updateTable();
-    fillComboBox(this->selectedColleges);
 
-    this->on_tripOrderpushButton_clicked();
+    //QMessageBox::information(this,"asdf", "selected college size is " + QString::number(selectedColleges.size()));
+
+
+
+    fillComboBox(selectedColleges);
 }
 
 
-void customtrip::on_tripOrderpushButton_clicked()
+void customtrip::on_pushButton_start_clicked()
+{
+    if (ui->checkBoxuserOrder->isChecked() || ui->checkBox_2efficient->isChecked())
+    {
+
+        if(ui->checkBoxuserOrder->isChecked() && ui->checkBox_2efficient->isChecked())
+        {
+            QMessageBox::warning(this,"Error","Please uncheck one box!");
+
+        }
+        else
+        {
+
+            ui->spinBox->show();
+            ui->comboBox_purchase->show();
+            ui->pushButton_confirm->show();
+            ui->pushButton_next->show();
+            ui->label_collegeName->show();
+            ui->label_4_souvenir->show();
+            ui->label_5_quantity->show();
+            amountSpentAtCollege.push_back(0);
+
+
+            if (ui->checkBoxuserOrder->isChecked())
+            {
+                fillSouvenirCombo();
+                changeCollegeLabel();
+                this->updateDistance();
+            }
+            if (ui->checkBox_2efficient)
+            {
+                std::vector<College> newColleges = this->selectedColleges;
+                   QString currentCollegeName = newColleges[0].name;
+                   this->selectedColleges.clear();
+
+                   //Searches for optimial route from the initial college
+                   while(!newColleges.empty())
+                   {
+                       //Switches index0 to closest college to the current.
+                       for(unsigned int index = 1; index < newColleges.size(); index++)
+                       {
+                           double currentDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                                       DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+                                       DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[index].name.toStdString())
+                                       );
+                           double bestDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                                       DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+                                       DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[0].name.toStdString())
+                                        );
+                           if(currentDist < bestDist)
+                           {
+                               //Swap index with 0
+                               College prev = newColleges[index];
+                               newColleges[index] = newColleges[0];
+                               newColleges[0] = prev;
+                           }
+                       }
+
+                       //Switch current college the closest one, and push it to the selectedColleges vector
+                       //Repeats until every college has been added back to the visitedColleges vector
+                       currentCollegeName = newColleges[0].name;
+                       this->selectedColleges.push_back(newColleges[0]);
+                       newColleges.erase(newColleges.begin());
+                   }
+
+                   updateTable();
+                   fillComboBox(this->selectedColleges);
+                   fillSouvenirCombo();
+                   changeCollegeLabel();
+
+                   this->updateDistance();
+
+            }
+        }
+
+
+
+    }
+    else
+    {
+        QMessageBox::warning(this,"Error","Please check one box!");
+    }
+
+}
+
+void customtrip::updateDistance()
 {
     double totalMileage = 0;
 
-    for(unsigned int index = 0; index < this->selectedColleges.size() - 1; index++)
+        for(unsigned int index = 0; index < this->selectedColleges.size() - 1; index++)
+        {
+            totalMileage += DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                            DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index].name.toStdString()),
+                            DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index + 1].name.toStdString())
+                            );
+        }
+//    this->ui->label->setText(QString::number(totalMileage));
+}
+
+void customtrip::changeCollegeLabel()
+{
+    ui->label_collegeName->setText(selectedColleges.at(collNum).name);
+}
+
+void customtrip::fillSouvenirCombo()
+{
+    ui->comboBox_purchase->clear();
+
+    for (int i = 0; i < selectedColleges.at(collNum).souvenirs.size(); i++)
     {
-        totalMileage += DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-                        DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index].name.toStdString()),
-                        DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index + 1].name.toStdString())
-                        );
+        ui->comboBox_purchase->addItem(selectedColleges.at(collNum).souvenirs.at(i).name);
     }
 
-    this->ui->distanceDisplaylineEdit->setText(QString::number(totalMileage) + " mi");
+}
+
+
+void customtrip::on_pushButton_next_clicked()
+{
+    QString receipt;
+
+    if (collNum + 1 < selectedColleges.size())
+    {
+        collNum++;
+        amountSpentAtCollege.push_back(0);
+        fillSouvenirCombo();
+        changeCollegeLabel();
+    }
+    else
+    {
+        for (int i = 0; i < amountSpentAtCollege.size(); i++)
+        {
+            totalSpent += amountSpentAtCollege.at(i);
+            if (amountSpentAtCollege.at(i) != 0)
+                receipt += selectedColleges.at(i).name + "....$" + QString::number(amountSpentAtCollege.at(i)) + "\n";
+        }
+        receipt += "Total Spent: $" + QString::number(totalSpent) + "\n";
+
+        QMessageBox::information(this,"Receipt", receipt);
+        this->close();
+    }
+}
+
+
+void customtrip::on_pushButton_confirm_clicked()
+{
+    if (ui->spinBox->value() > 0)
+    {
+        amountSpentAtCollege.at(collNum) += (selectedColleges.at(collNum).souvenirs.at(ui->comboBox_purchase->currentIndex()).price * ui->spinBox->value());
+        QMessageBox::information(this, "Purchased", ui->spinBox->text() + " " + ui->comboBox_purchase->currentText() + "s purchased!");
+        ui->spinBox->setValue(0);
+
+    }
 }
 
