@@ -36,6 +36,9 @@ customtrip::~customtrip()
 void customtrip::setTable()
 {
     ui->tableWidget->setColumnWidth(0,250);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
 
     QStringList headerLabels;
     headerLabels.push_back("Colleges");
@@ -149,8 +152,6 @@ void customtrip::on_pushButton_clearTable_clicked()
     ui->label_5_quantity->hide();
     ui->label_distances->hide();
     ui->checkBox_2efficient->setChecked(false);
-    ui->checkBoxuserOrder->setChecked(false);
-
 
 
 }
@@ -158,89 +159,70 @@ void customtrip::on_pushButton_clearTable_clicked()
 
 void customtrip::on_pushButton_start_clicked()
 {
-    if (ui->checkBoxuserOrder->isChecked() || ui->checkBox_2efficient->isChecked())
+
+    ui->spinBox->show();
+    ui->comboBox_purchase->show();
+    ui->pushButton_confirm->show();
+    ui->pushButton_next->show();
+    ui->label_collegeName->show();
+    ui->label_4_souvenir->show();
+    ui->label_5_quantity->show();
+    amountSpentAtCollege.push_back(0);
+    ui->label_distances->show();
+
+    if (ui->checkBox_2efficient->isChecked())
     {
+        std::vector<College> newColleges = this->selectedColleges;
+           QString currentCollegeName = newColleges[0].name;
+           this->selectedColleges.clear();
 
-        if(ui->checkBoxuserOrder->isChecked() && ui->checkBox_2efficient->isChecked())
-        {
-            QMessageBox::warning(this,"Error","Please uncheck one box!");
-
-        }
-        else
-        {
-
-            ui->spinBox->show();
-            ui->comboBox_purchase->show();
-            ui->pushButton_confirm->show();
-            ui->pushButton_next->show();
-            ui->label_collegeName->show();
-            ui->label_4_souvenir->show();
-            ui->label_5_quantity->show();
-            amountSpentAtCollege.push_back(0);
-            ui->label_distances->show();
-
-
-
-
-            if (ui->checkBoxuserOrder->isChecked())
-            {
-                fillSouvenirCombo();
-                changeCollegeLabel();
-                this->updateDistance();
-            }
-            if (ui->checkBox_2efficient->isChecked())
-            {
-                std::vector<College> newColleges = this->selectedColleges;
-                   QString currentCollegeName = newColleges[0].name;
-                   this->selectedColleges.clear();
-
-                   //Searches for optimial route from the initial college
-                   while(!newColleges.empty())
+           //Searches for optimial route from the initial college
+           while(!newColleges.empty())
+           {
+               //Switches index0 to closest college to the current.
+               for(unsigned int index = 1; index < newColleges.size(); index++)
+               {
+                   double currentDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                               DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+                               DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[index].name.toStdString())
+                               );
+                   double bestDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                               DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+                               DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[0].name.toStdString())
+                                );
+                   if(currentDist < bestDist)
                    {
-                       //Switches index0 to closest college to the current.
-                       for(unsigned int index = 1; index < newColleges.size(); index++)
-                       {
-                           double currentDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-                                       DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
-                                       DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[index].name.toStdString())
-                                       );
-                           double bestDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-                                       DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
-                                       DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[0].name.toStdString())
-                                        );
-                           if(currentDist < bestDist)
-                           {
-                               //Swap index with 0
-                               College prev = newColleges[index];
-                               newColleges[index] = newColleges[0];
-                               newColleges[0] = prev;
-                           }
-                       }
-
-                       //Switch current college the closest one, and push it to the selectedColleges vector
-                       //Repeats until every college has been added back to the visitedColleges vector
-                       currentCollegeName = newColleges[0].name;
-                       this->selectedColleges.push_back(newColleges[0]);
-                       newColleges.erase(newColleges.begin());
+                       //Swap index with 0
+                       College prev = newColleges[index];
+                       newColleges[index] = newColleges[0];
+                       newColleges[0] = prev;
                    }
+               }
 
-                   updateTable();
-                   fillComboBox(this->selectedColleges);
-                   fillSouvenirCombo();
-                   changeCollegeLabel();
+               //Switch current college the closest one, and push it to the selectedColleges vector
+               //Repeats until every college has been added back to the visitedColleges vector
+               currentCollegeName = newColleges[0].name;
+               this->selectedColleges.push_back(newColleges[0]);
+               newColleges.erase(newColleges.begin());
+           }
 
-                   this->updateDistance();
+           updateTable();
+           fillComboBox(this->selectedColleges);
+           fillSouvenirCombo();
+           changeCollegeLabel();
 
-            }
-        }
-
-
+           this->updateDistance();
 
     }
     else
     {
-        QMessageBox::warning(this,"Error","Please check one box!");
+
+        fillSouvenirCombo();
+        changeCollegeLabel();
+        this->updateDistance();
     }
+
+
 
 }
 

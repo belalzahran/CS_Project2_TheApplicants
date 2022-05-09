@@ -8,6 +8,9 @@
 #include <QDebug>
 #include "login.h"
 #include "displaysouvenirs.h"
+#include "college_list.h"
+#include "tripplanner.h"
+#include "displaysouvenir.h"
 //void printColleges(QVector<College>& collegeVector)
 //{
 //    for (int i = 0; i < collegeVector.size(); i++)
@@ -35,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->tabWidget->setCurrentIndex(0);
+
 
 
     //Returns the college struct with the key Arizona State University
@@ -79,5 +83,65 @@ void MainWindow::on_pushButton_2_clicked()
     login1->show();
 
 }
+
+
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+
+}
+
+
+void MainWindow::on_tabWidget_tabCloseRequested(int index)
+{
+    if (index != 0)
+        ui->tabWidget->removeTab(index);
+}
+
+
+bool MainWindow::TabAlreadyExists(QString name)
+{
+
+    for (int i = 0; i  < ui->tabWidget->count(); i++)
+    {
+        if (name == ui->tabWidget->tabText(i))
+            return true;
+    }
+    return false;
+
+}
+
+
+
+void MainWindow::on_pushButton_SouvenirList_clicked()
+{
+    if (!TabAlreadyExists("Display Souvenirs  "))
+    {
+        displaySouvenirs* dispS = new displaySouvenirs;
+        ui->tabWidget->addTab(dispS, "Display Souvenirs  ");
+    }
+}
+
+
+void MainWindow::on_pushButton_tripPlan_clicked()
+{
+    if (!TabAlreadyExists("Trip Planner  "))
+    {
+        TripPlanner* tripP = new TripPlanner;
+        ui->tabWidget->addTab(tripP, "Trip Planner");
+    }
+}
+
+
+void MainWindow::on_pushButtonCollegeLst_clicked()
+{
+    if (!TabAlreadyExists("College List  "))
+    {
+        CollegeList* col1 = new CollegeList;
+        ui->tabWidget->addTab(col1, "College List  ");
+    }
+}
+
+
 
 

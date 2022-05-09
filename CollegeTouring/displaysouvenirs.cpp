@@ -29,6 +29,8 @@ void displaySouvenirs::setTable(QString collegeName)
 {
     College selectedCollege;
 
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // loop through the colleges to find the selected college
     for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)

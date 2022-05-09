@@ -732,6 +732,15 @@
            </color>
           </brush>
          </colorrole>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="NoBrush">
+           <color alpha="128">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
         </active>
         <inactive>
          <colorrole role="WindowText">
@@ -863,6 +872,15 @@
          <colorrole role="ToolTipText">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="NoBrush">
+           <color alpha="128">
             <red>0</red>
             <green>0</green>
             <blue>0</blue>
@@ -1006,18 +1024,30 @@
            </color>
           </brush>
          </colorrole>
+         <colorrole role="PlaceholderText">
+          <brush brushstyle="NoBrush">
+           <color alpha="128">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
         </disabled>
        </palette>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>3</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
       </property>
       <property name="movable">
        <bool>false</bool>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Main Menu</string>
+        <string>Main Menu  </string>
        </attribute>
        <widget class="QPushButton" name="pushButton_2">
         <property name="geometry">
@@ -1045,20 +1075,59 @@
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:28pt; font-weight:700;&quot;&gt;College Tours&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
+       <widget class="QPushButton" name="pushButtonCollegeLst">
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>270</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>College List</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_tripPlan">
+        <property name="geometry">
+         <rect>
+          <x>410</x>
+          <y>270</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Trip Planner</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_SouvenirList">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>270</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Souvenir List</string>
+        </property>
+       </widget>
       </widget>
       <widget class="CollegeList" name="collegeList">
        <attribute name="title">
-        <string>College List</string>
+        <string>College List  </string>
        </attribute>
       </widget>
       <widget class="displaySouvenirs" name="tab_3">
        <attribute name="title">
-        <string>Souvenir List</string>
+        <string>Souvenir List  </string>
        </attribute>
       </widget>
       <widget class="TripPlanner" name="tab_2">
        <attribute name="title">
-        <string>Trip Planner</string>
+        <string>Trip Planner  </string>
        </attribute>
       </widget>
      </widget>
@@ -1071,7 +1140,7 @@
      <x>0</x>
      <y>0</y>
      <width>746</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

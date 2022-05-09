@@ -130,12 +130,12 @@
     <rect>
      <x>20</x>
      <y>50</y>
-     <width>391</width>
+     <width>401</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:700;&quot;&gt;Select the colleges you would like to visit then click Add:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt; font-weight:696;&quot;&gt;Select the colleges you would like to visit:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_clearTable">
@@ -222,6 +222,7 @@
    <property name="font">
     <font>
      <pointsize>10</pointsize>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -242,49 +243,23 @@
     <string>Confirm</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBoxuserOrder">
-   <property name="geometry">
-    <rect>
-     <x>340</x>
-     <y>230</y>
-     <width>76</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>User Order</string>
-   </property>
-  </widget>
   <widget class="QCheckBox" name="checkBox_2efficient">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>350</x>
      <y>230</y>
      <width>101</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Most Efficient</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>330</x>
-     <y>200</y>
-     <width>311</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;When finished, check one of the boxes and click start:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>Most Efficient?</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_start">
    <property name="geometry">
     <rect>
-     <x>540</x>
+     <x>450</x>
      <y>230</y>
      <width>75</width>
      <height>24</height>
@@ -332,6 +307,7 @@
    <property name="font">
     <font>
      <pointsize>10</pointsize>
+     <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
@@ -365,9 +341,7 @@
   <zorder>comboBox_purchase</zorder>
   <zorder>label_collegeName</zorder>
   <zorder>pushButton_confirm</zorder>
-  <zorder>checkBoxuserOrder</zorder>
   <zorder>checkBox_2efficient</zorder>
-  <zorder>label_3</zorder>
   <zorder>pushButton_start</zorder>
   <zorder>label_4_souvenir</zorder>
   <zorder>label_5_quantity</zorder>
