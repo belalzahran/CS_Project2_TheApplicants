@@ -308,7 +308,12 @@ void DBColleges::readSouvenirs(const std::string& path){
                 priceInput = line.at(i);    // Read item price
                 newsouvenir.name = nameInput;
                 newsouvenir.price = std::stod(priceInput);
-                this->collegeMap[currentCollege].souvenirs.push_back(newsouvenir);
+
+                if(this->collegeMap.contains(currentCollege))
+                {
+                    this->collegeMap[currentCollege].souvenirs.push_back(newsouvenir);
+                }
+
                 i++;    // i = 3
             }   // If line.at(0) reads a college, then we will start reading in the souvenirs.
         }

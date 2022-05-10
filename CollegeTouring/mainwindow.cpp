@@ -48,6 +48,10 @@ void MainWindow::adminClicked()
         QObject::connect(this->ui->adminTab, SIGNAL(updateCollegesClicked()),
                          this->ui->souvenirList, SLOT(fillComboxBox()));
 
+        // Updates combo box for graph related operations
+        QObject::connect(this->ui->adminTab, SIGNAL(updateCollegesClicked()),
+                         this->ui->tripPlanner, SLOT(updateComboBox()));
+
     }
     else
     {

@@ -55,6 +55,10 @@ private slots:
      */
     void on_BFSpushButton_clicked();
 
+public slots:
+    // Will clear the combo box and reload it
+    void updateComboBox();
+
 private:
 
     /*! @var Ui::TripPlanner *ui

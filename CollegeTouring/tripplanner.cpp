@@ -87,3 +87,7 @@ void TripPlanner::on_BFSpushButton_clicked()
     }
 }
 
+void TripPlanner::updateComboBox()
+{
+    this->updateGraphComboBox();
+}

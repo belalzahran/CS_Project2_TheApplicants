@@ -173,45 +173,45 @@ void customtrip::on_pushButton_start_clicked()
     if (ui->checkBox_2efficient->isChecked())
     {
         std::vector<College> newColleges = this->selectedColleges;
-           QString currentCollegeName = newColleges[0].name;
-           this->selectedColleges.clear();
+        QString currentCollegeName = newColleges[0].name;
+        this->selectedColleges.clear();
 
-           //Searches for optimial route from the initial college
-           while(!newColleges.empty())
-           {
-               //Switches index0 to closest college to the current.
-               for(unsigned int index = 1; index < newColleges.size(); index++)
-               {
-                   double currentDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-                               DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
-                               DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[index].name.toStdString())
-                               );
-                   double bestDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-                               DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
-                               DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[0].name.toStdString())
-                                );
-                   if(currentDist < bestDist)
-                   {
-                       //Swap index with 0
-                       College prev = newColleges[index];
-                       newColleges[index] = newColleges[0];
-                       newColleges[0] = prev;
-                   }
-               }
+        //Searches for optimial route from the initial college
+        while(!newColleges.empty())
+        {
+            //Switches index0 to closest college to the current.
+            for(unsigned int index = 1; index < newColleges.size(); index++)
+            {
+//                double currentDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+//                            DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+//                            DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[index].name.toStdString())
+//                            );
+//                double bestDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+//                            DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+//                            DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[0].name.toStdString())
+//                        );
+                if(newColleges[index].distances[currentCollegeName] < newColleges[0].distances[currentCollegeName] /*currentDist < bestDist*/)
+                {
+                    //Swap index with 0
+                    College prev = newColleges[index];
+                    newColleges[index] = newColleges[0];
+                    newColleges[0] = prev;
+                }
+            }
 
-               //Switch current college the closest one, and push it to the selectedColleges vector
-               //Repeats until every college has been added back to the visitedColleges vector
-               currentCollegeName = newColleges[0].name;
-               this->selectedColleges.push_back(newColleges[0]);
-               newColleges.erase(newColleges.begin());
-           }
+            //Switch current college the closest one, and push it to the selectedColleges vector
+            //Repeats until every college has been added back to the visitedColleges vector
+            currentCollegeName = newColleges[0].name;
+            this->selectedColleges.push_back(newColleges[0]);
+            newColleges.erase(newColleges.begin());
+        }
 
-           updateTable();
-           fillComboBox(this->selectedColleges);
-           fillSouvenirCombo();
-           changeCollegeLabel();
+        updateTable();
+        fillComboBox(this->selectedColleges);
+        fillSouvenirCombo();
+        changeCollegeLabel();
 
-           this->updateDistance();
+        this->updateDistance();
 
     }
     else
@@ -230,14 +230,15 @@ void customtrip::updateDistance()
 {
     double totalMileage = 0;
 
-        for(unsigned int index = 0; index < this->selectedColleges.size() - 1; index++)
-        {
-            totalMileage += DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-                            DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index].name.toStdString()),
-                            DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index + 1].name.toStdString())
-                            );
-        }
-        this->ui->label_distances->setText("Total Trip Distance: " + QString::number(totalMileage)+ " miles");
+    //Uses djikstras for in between colleges.
+    for(unsigned int index = 0; index < this->selectedColleges.size() - 1; index++)
+    {
+        totalMileage += DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                    DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index].name.toStdString()),
+                    DBColleges::getInstance().collegesGraph.getIdFromName(this->selectedColleges[index + 1].name.toStdString())
+                );
+    }
+    this->ui->label_distances->setText("Total Trip Distance: " + QString::number(totalMileage)+ " miles");
 }
 
 void customtrip::changeCollegeLabel()
