@@ -211,7 +211,7 @@ void DBColleges::readEntries(const std::string& path)
         this->readLine(csvfile, line);
         nameInput = QString::fromStdString(line.at(0)); // convert the string into a Qstring
 
-        if (nameInput == newCollege.name){
+        if (this->collegeMap.contains(nameInput)){  //If college is already included in map
             while (i < 3)   // If we're only reading in the next distance, we're only reading in [1], and [2] of the line
             {
                 i++;    // i = 1, skip the first entry since we already are on the new college still
@@ -489,4 +489,49 @@ void DBColleges::saveToDatabase()
     DBColleges::saveColleges();
     DBColleges::saveDistances();
     DBColleges::saveSouvenirs();
+}
+
+// === PUBLIC SLOTS ===
+void DBColleges::loadNewColleges(){
+
+    this->loadFromDatabase(); //Try to load from the database first
+
+    if(this->collegeMap.empty()) //If the database is empty, run the loadfile function
+    {
+        qDebug() << "Database is empty. Prompting for Distances.csv file";
+        this->loadCollegeEntries(); //Be sure to select Distances.csv
+        qDebug() << "Database is empty. Prompting for Souvenirs.csv file";
+        this->loadSouvenirEntries(); //Be sure to select Souvenirs.csv
+    }
+    else{   // Otherwise let's just add our new entries
+
+        qDebug() << "Prompting for newColleges.csv file";
+        this->loadCollegeEntries(); //Be sure to select newColleges.csv
+
+    }
+    this->saveToDatabase();
+    qDebug() << "Successfully added new colleges.";
+    this->populateGraph(); //Populates the graph based on the collegeMap
+}
+
+void DBColleges::loadNewSouvenirs(){
+    this->loadFromDatabase(); //Try to load from the database first
+
+    if(this->collegeMap.empty()) //If the database is empty, run the loadfile function
+    {
+
+        qDebug() << "Database is empty. Prompting for Distances.csv file";
+        this->loadCollegeEntries(); //Be sure to select Distances.csv
+        qDebug() << "Database is empty. Prompting for Souvenirs.csv file";
+        this->loadSouvenirEntries(); //Be sure to select Souvenirs.csv
+
+    }
+    else{   // Otherwise let's just add our new entries
+
+        qDebug() << "Database is empty. Prompting for Souvenirs.csv file";
+        this->loadSouvenirEntries(); //Be sure to select Souvenirs.csv
+
+    }
+    this->saveToDatabase();
+    qDebug() << "Successfully added new souvenirs.";
 }

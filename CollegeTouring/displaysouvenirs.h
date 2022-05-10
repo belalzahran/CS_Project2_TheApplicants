@@ -27,17 +27,18 @@ public:
      */
     ~displaySouvenirs();
 
+public slots:
+    /*! @fn void fillComboxBox()
+     *
+     */
+    void fillComboxBox();
+
 private slots:
 
     /*! @fn void on_comboBox_currentTextChanged(const QString &arg1)
      *  @param const QString &arg1
      */
     void on_comboBox_currentTextChanged(const QString &arg1);
-
-    /*! @fn void fillComboxBox()
-     *
-     */
-    void fillComboxBox();
 
     /*! @fn void setTable(QString collegeName)
      *  @param QString collegeName

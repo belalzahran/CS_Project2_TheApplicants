@@ -28,13 +28,7 @@ public:
 
 private slots:
 
-    /*! @fn
-     *
-     */
-    void on_pushButton_2_clicked();
-
-
-
+    void adminClicked();
 
 
 private:

@@ -48,4 +48,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     Distances.csv \
-    Souvenirs.csv
+    Souvenirs.csv \
+    newColleges.csv \
+    newSouvenirs.csv

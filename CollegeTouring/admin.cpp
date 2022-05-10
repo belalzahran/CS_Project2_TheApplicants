@@ -10,6 +10,16 @@ admin::admin(QWidget *parent) :
     fillCollegeCombo();
     ui->doubleSpinBox->hide();
     ui->pushButton_3done->hide();
+
+    // This will emit a signal that mainwindow can pick up when the addColleges button is
+    // clicked.
+    QObject::connect(this->ui->pushButton_addColleges, SIGNAL(clicked()),
+                     this, SLOT(sendUpdateColleges()));
+
+    // This will emit a signal that mainwindow can pick up when the addSouvenirs button is
+    // clicked.
+    QObject::connect(this->ui->pushButton_addSouvenirs, SIGNAL(clicked()),
+                     this, SLOT(sendUpdateSouvenirs()));
 }
 
 admin::~admin()
@@ -17,10 +27,22 @@ admin::~admin()
     delete ui;
 }
 
+
+void admin::sendUpdateColleges(){
+
+    DBColleges::getInstance().loadNewColleges();
+    this->fillCollegeCombo();
+    emit this->updateCollegesClicked();
+}
+
+void admin::sendUpdateSouvenirs(){
+    DBColleges::getInstance().loadNewSouvenirs();
+    emit this->updateSouvenirsClicked();
+}
+
 // fill the combobox w colleges
 void admin::fillCollegeCombo()
 {
-
     ui->comboBox->clear();
 
     for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
@@ -55,7 +77,6 @@ void admin::on_comboBox_currentTextChanged(const QString &arg1)
      ui->doubleSpinBox->hide();
      ui->pushButton_3done->hide();
 }
-
 
 // when add button is clicked
 void admin::on_pushButton_clicked()
@@ -102,8 +123,6 @@ void admin::on_pushButton_clicked()
 }
 
 // when the delete button is clicked
-
-
 void admin::on_pushButton_2_clicked()
 {
 
@@ -134,7 +153,6 @@ void admin::on_pushButton_2_clicked()
     ui->pushButton_3done->hide();
 }
 
-
 void admin::on_pushButton_edit3_clicked()
 {
 
@@ -157,9 +175,6 @@ void admin::on_pushButton_edit3_clicked()
     ui->pushButton_3done->show();
     ui->doubleSpinBox->setValue(selectedSouvenir.price);
 }
-
-
-
 
 void admin::on_pushButton_3done_clicked()
 {

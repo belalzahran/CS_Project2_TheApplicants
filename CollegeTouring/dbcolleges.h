@@ -199,6 +199,13 @@ public:
      */
     void saveToDatabase();
 
+    public slots:
+
+    void loadNewColleges();
+
+    void loadNewSouvenirs();
+
+
 };
 
 #endif // DBCOLLEGES_H

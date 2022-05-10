@@ -31,11 +31,6 @@ public:
 
 private slots:
 
-    /*! @fn void fillCollegeCombo()
-     *
-     */
-    void fillCollegeCombo();
-
     /*! @fn void fillCollegeSouvenirCombo(College selectedCollege)
      *  @param College selectedCollege
      *
@@ -47,6 +42,15 @@ private slots:
      */
     void on_comboBox_currentTextChanged(const QString &arg1);
 
+    // Prompts the user to select an input file for new colleges to add,
+    // sends signal to be picked up by mainwindow to update collegeList and other tabs.
+    void sendUpdateColleges();
+
+
+    // Prompts the user to select an input file for new souvenirs to add,
+    // sends signal to be picked up by mainwindow to update collegeList and other tabs.
+    void sendUpdateSouvenirs();
+
     /*! @fn
      *
      */
@@ -57,6 +61,16 @@ private slots:
     void on_pushButton_edit3_clicked();
 
     void on_pushButton_3done_clicked();
+
+public slots:
+    /*! @fn void fillCollegeCombo()
+     *
+     */
+    void fillCollegeCombo();
+
+signals:
+    void updateCollegesClicked();
+    void updateSouvenirsClicked();
 
 private:
 

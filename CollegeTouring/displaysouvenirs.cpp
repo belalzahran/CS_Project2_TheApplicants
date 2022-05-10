@@ -20,8 +20,6 @@ void displaySouvenirs::on_comboBox_currentTextChanged(const QString &arg1)
     ui->label->setText(arg1);
 
     setTable(arg1);
-
-
 }
 
 
@@ -122,17 +120,13 @@ void displaySouvenirs::setTable(QString collegeName)
 }
 
 
-// Idea: when trip planning, pass a data struct of colleges only in the trip from tripplanner so that
-// the user cannot select or make purchases for colleges not included in the trip.
-// This can be done by connecting a signal to this slot through the mainwindow.
 void displaySouvenirs::fillComboxBox()
 {
+    this->ui->comboBox->clear(); // clear this first so duplicates are not made
 
     for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
     {
         ui->comboBox->addItem(iterator->value.name);
 
     }
-
-
 }

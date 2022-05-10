@@ -7,13 +7,7 @@ CollegeList::CollegeList(QWidget *parent) :
     ui(new Ui::CollegeList)
 {
     ui->setupUi(this);
-
-
-    //QObject::connect(this->ui->loadEntriesButton, SIGNAL(clicked()), this, SLOT(onCellDoubleClicked(int, int)));
-
-    this->displayColleges(); //Populates the table with the colleges currently in the map
-    this->updateComboBox();  //Populates the combo box with the states of the colleges in the map
-
+    this->updateCollegeList();
 }
 
 CollegeList::~CollegeList()
@@ -140,6 +134,14 @@ void CollegeList::updateComboBox()
     }
 
     this->ui->comboBoxState->blockSignals(false); //unblocks signal
+}
+
+
+void CollegeList::updateCollegeList(){
+
+    this->ui->collegeTable->clearContents(); // Clear anything we already have in the table
+    this->displayColleges(); //Populates the table with the colleges currently in the map
+    this->updateComboBox();  //Populates the combo box with the states of the colleges in the map
 }
 
 void CollegeList::on_sortAlphabeticallyButton_clicked()

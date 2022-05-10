@@ -11,25 +11,6 @@
 #include "college_list.h"
 #include "tripplanner.h"
 #include "displaysouvenir.h"
-//void printColleges(QVector<College>& collegeVector)
-//{
-//    for (int i = 0; i < collegeVector.size(); i++)
-//    {
-//        qDebug() << "Item " << i+1 << "Name:" << collegeVector.at(i).name << "\n";
-//        qDebug() << "Undergrads: " << collegeVector.at(i).undergrads << "\n";
-//        qDebug() << "State: " << collegeVector.at(i).state << "\n";
-
-//        qDebug() << "Ending Colleges:\n";
-
-//        // Print out ending colleges and their corresponding distances
-//        for (int j = 0; j < collegeVector.at(i).endingColleges.size(); j++)
-//        {
-//            qDebug() << collegeVector.at(i).endingColleges.at(j) << " Distance: " << collegeVector.at(i).distances.at(j) << "\n";
-//        }
-
-//        qDebug() << "\n ==================================\n";
-//    }
-//}
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -39,34 +20,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
     ui->tabWidget->setCurrentIndex(0);
     ui->tabWidget->setTabEnabled(4,false);
-
-
-
-    //Returns the college struct with the key Arizona State University
-    //DBColleges::getInstance().collegeMap.at("Arizona State University");
-
-
-    //Iterates through collegeMap. It can be obtained with DBColleges::getInstance().collegeMap
-    //for(auto iterator = DBColleges::getInstance().collegeMap.begin(); iterator != DBColleges::getInstance().collegeMap.end(); iterator++)
-    //{
-    //    //qDebug() << iterator->value.name; //Value is the college struct.
-    //}
-
-
-    //Returns distance from Arizona State University to Northwestern
-    //DBColleges::getInstance().collegeMap.at("Arizona State University").distances.at("Northwestern");
-
-
-    //DBColleges::readSouvenirs(path);
-
-
-    //These functions save the data stored in collegeMap into the database.
-    //DBColleges::getInstance().saveColleges();
-    //DBColleges::getInstance().saveDistances();
-    //DBColleges::getInstance().saveSouvenirs();
-
-    //printColleges(db.collegeVector);
-
+    QObject::connect(this->ui->pushButton_2, SIGNAL(clicked()),
+                     this, SLOT(adminClicked()));
 }
 
 MainWindow::~MainWindow()
@@ -76,7 +31,7 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::adminClicked()
 {
 
     login win;
@@ -85,13 +40,19 @@ void MainWindow::on_pushButton_2_clicked()
         ui->tabWidget->setCurrentIndex(4);
         ui->tabWidget->setTabEnabled(4,true);
 
+        // Update college list with new Colleges
+        QObject::connect(this->ui->adminTab, SIGNAL(updateCollegesClicked()),
+                         this->ui->collegeList, SLOT(updateCollegeList()));
+
+        // Update list in souvenirs to reflect changes
+        QObject::connect(this->ui->adminTab, SIGNAL(updateCollegesClicked()),
+                         this->ui->souvenirList, SLOT(fillComboxBox()));
+
     }
     else
     {
 
     }
-
-
 
 }
 

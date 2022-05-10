@@ -19,11 +19,6 @@ int main(int argc, char *argv[])
     }
     DBColleges::getInstance().populateGraph(); //Populates the graph based on the collegeMap
 
-    //DBColleges::getInstance().collegesGraph.minimumSpanningTree(0);
-   // DBColleges::getInstance().collegesGraph.graphDijkstras(4, 6);
-//    DBColleges::getInstance().collegesGraph.PerformDFS(6);
-//    DBColleges::getInstance().collegesGraph.sierrasDijkstras(4, 6);
-    //DBColleges::getInstance().collegesGraph.BFS(0);
 
     MainWindow w;
     w.show();

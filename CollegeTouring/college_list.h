@@ -74,6 +74,11 @@ private slots:
      */
     void on_sortBySaddleback_clicked();
 
+
+public slots:
+    // Will clear the current table, load values from DB and reload all values
+    // into the table.
+    void updateCollegeList();
 private:
 
     /*! @var Ui::CollegeList *ui

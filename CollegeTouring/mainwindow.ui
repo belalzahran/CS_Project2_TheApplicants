@@ -467,7 +467,7 @@
        </palette>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>2</number>
       </property>
       <property name="tabsClosable">
        <bool>false</bool>
@@ -511,17 +511,17 @@
         <string>College List  </string>
        </attribute>
       </widget>
-      <widget class="displaySouvenirs" name="tab_3">
+      <widget class="displaySouvenirs" name="souvenirList">
        <attribute name="title">
         <string>Souvenir List  </string>
        </attribute>
       </widget>
-      <widget class="TripPlanner" name="tab_2">
+      <widget class="TripPlanner" name="tripPlanner">
        <attribute name="title">
         <string>Trip Planner  </string>
        </attribute>
       </widget>
-      <widget class="admin" name="tab_5">
+      <widget class="admin" name="adminTab">
        <attribute name="title">
         <string>Admin</string>
        </attribute>
@@ -536,7 +536,7 @@
      <x>0</x>
      <y>0</y>
      <width>746</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
