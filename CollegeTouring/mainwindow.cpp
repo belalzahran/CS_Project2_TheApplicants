@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->tabWidget->setCurrentIndex(0);
+    ui->tabWidget->setTabEnabled(4,false);
 
 
 
@@ -77,71 +78,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    login* login1 = new login;
-    login1->setAttribute(Qt::WA_DeleteOnClose);
-    login1->setWindowTitle("Admistrative Login");
-    login1->show();
 
-}
-
-
-
-void MainWindow::on_tabWidget_currentChanged(int index)
-{
-
-}
-
-
-void MainWindow::on_tabWidget_tabCloseRequested(int index)
-{
-    if (index != 0)
-        ui->tabWidget->removeTab(index);
-}
-
-
-bool MainWindow::TabAlreadyExists(QString name)
-{
-
-    for (int i = 0; i  < ui->tabWidget->count(); i++)
+    login win;
+    if (win.exec())
     {
-        if (name == ui->tabWidget->tabText(i))
-            return true;
+        ui->tabWidget->setCurrentIndex(4);
+        ui->tabWidget->setTabEnabled(4,true);
+
     }
-    return false;
-
-}
-
-
-
-void MainWindow::on_pushButton_SouvenirList_clicked()
-{
-    if (!TabAlreadyExists("Display Souvenirs  "))
+    else
     {
-        displaySouvenirs* dispS = new displaySouvenirs;
-        ui->tabWidget->addTab(dispS, "Display Souvenirs  ");
+
     }
+
+
+
 }
-
-
-void MainWindow::on_pushButton_tripPlan_clicked()
-{
-    if (!TabAlreadyExists("Trip Planner  "))
-    {
-        TripPlanner* tripP = new TripPlanner;
-        ui->tabWidget->addTab(tripP, "Trip Planner");
-    }
-}
-
-
-void MainWindow::on_pushButtonCollegeLst_clicked()
-{
-    if (!TabAlreadyExists("College List  "))
-    {
-        CollegeList* col1 = new CollegeList;
-        ui->tabWidget->addTab(col1, "College List  ");
-    }
-}
-
 
 
 

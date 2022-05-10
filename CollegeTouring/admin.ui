@@ -225,19 +225,6 @@
     </attribute>
    </widget>
   </widget>
-  <widget class="QPushButton" name="pushButton_return3">
-   <property name="geometry">
-    <rect>
-     <x>530</x>
-     <y>10</y>
-     <width>75</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Return</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>

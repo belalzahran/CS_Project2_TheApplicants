@@ -191,9 +191,3 @@ void admin::on_pushButton_3done_clicked()
     DBColleges::getInstance().saveSouvenirs();
 }
 
-
-void admin::on_pushButton_return3_clicked()
-{
-    this->close();
-}
-

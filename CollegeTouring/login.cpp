@@ -1,13 +1,17 @@
 #include "login.h"
 #include "ui_login.h"
+#include <QCryptographicHash>
+#include <QDebug>
 #include <QMessageBox>
-#include "admin.h"
+
 
 login::login(QWidget *parent) :
-    QWidget(parent),
+    QDialog(parent),
     ui(new Ui::login)
 {
     ui->setupUi(this);
+    QObject::connect(this->ui->buttonBox, SIGNAL(accepted()), this, SLOT(processLogin()));
+        this->ui->entryPassword->setFocus();
 }
 
 login::~login()
@@ -15,22 +19,15 @@ login::~login()
     delete ui;
 }
 
-void login::on_pushButton_clicked()
+
+void login::processLogin()
 {
-
-    password = ui->lineEdit->text();
-    if (password == "")
-    {
-        admin* admin1 = new admin;
-        admin1->setAttribute(Qt::WA_DeleteOnClose);
-        admin1->setWindowTitle("Admistrative Login");
-        admin1->show();
-        this->close();
-    }
-    else
-    {
-        QMessageBox::warning(this, "Incorrect Password","The password is incorrect, try again.");
-
-    }
+       if (ui->entryPassword->text() == "1234567890")
+       {
+           this->accept();
+       }
+       else
+       {
+           QMessageBox::critical(this, "Incorrect Password", "The password entered is incorrect.");
+       }
 }
-

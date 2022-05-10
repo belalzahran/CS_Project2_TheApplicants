@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QString>
+#include <QDialog>
 namespace Ui {
 class login;
 }
@@ -10,7 +11,7 @@ class login;
 /*! @class login
  *  @extends public QWidget
  */
-class login : public QWidget
+class login : public QDialog
 {
     Q_OBJECT
 
@@ -31,7 +32,7 @@ private slots:
     /*! @fn
      *
      */
-    void on_pushButton_clicked();
+    void processLogin();
 
 private:
 
@@ -40,10 +41,6 @@ private:
      */
     Ui::login *ui;
 
-    /*! @var QString password
-     *
-     */
-    QString password;
 };
 
 #endif // LOGIN_H

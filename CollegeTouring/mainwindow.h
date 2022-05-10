@@ -33,16 +33,9 @@ private slots:
      */
     void on_pushButton_2_clicked();
 
-    void on_tabWidget_currentChanged(int index);
 
-    void on_tabWidget_tabCloseRequested(int index);
 
-    void on_pushButton_SouvenirList_clicked();
 
-    void on_pushButton_tripPlan_clicked();
-
-    void on_pushButtonCollegeLst_clicked();
-    bool TabAlreadyExists(QString name);
 
 private:
 
