@@ -182,15 +182,15 @@ void customtrip::on_pushButton_start_clicked()
             //Switches index0 to closest college to the current.
             for(unsigned int index = 1; index < newColleges.size(); index++)
             {
-//                double currentDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-//                            DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
-//                            DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[index].name.toStdString())
-//                            );
-//                double bestDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
-//                            DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
-//                            DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[0].name.toStdString())
-//                        );
-                if(newColleges[index].distances[currentCollegeName] < newColleges[0].distances[currentCollegeName] /*currentDist < bestDist*/)
+                double currentDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                            DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+                            DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[index].name.toStdString())
+                            );
+                double bestDist = DBColleges::getInstance().collegesGraph.sierrasDijkstras(
+                            DBColleges::getInstance().collegesGraph.getIdFromName(currentCollegeName.toStdString()),
+                            DBColleges::getInstance().collegesGraph.getIdFromName(newColleges[0].name.toStdString())
+                        );
+                if(currentDist < bestDist)
                 {
                     //Swap index with 0
                     College prev = newColleges[index];
