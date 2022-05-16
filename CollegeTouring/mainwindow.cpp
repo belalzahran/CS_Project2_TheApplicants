@@ -30,7 +30,13 @@ MainWindow::~MainWindow()
 
 }
 
-
+/*!
+ * \brief MainWindow::adminClicked
+ *
+ * When the admin login button is clicked, prompt the user to enter password
+ * for login. If password is correct, the "Admin" tab will become available
+ * along with its functionalities.
+ */
 void MainWindow::adminClicked()
 {
 

@@ -51,3 +51,6 @@ DISTFILES += \
     Souvenirs.csv \
     newColleges.csv \
     newSouvenirs.csv
+
+RESOURCES += \
+    collegemapimage.qrc

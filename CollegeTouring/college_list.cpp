@@ -15,7 +15,6 @@ CollegeList::~CollegeList()
     delete ui;
 }
 
-
 void CollegeList::displayColleges(SortType sort, const QString& stateName)
 {
     QVector<College> displayedColleges;
@@ -137,6 +136,11 @@ void CollegeList::updateComboBox()
 }
 
 
+/*!
+ * \brief CollegeList::updateCollegeList
+ *
+ * Will update the college display table with any new data.
+ */
 void CollegeList::updateCollegeList(){
 
     this->ui->collegeTable->clearContents(); // Clear anything we already have in the table

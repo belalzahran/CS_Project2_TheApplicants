@@ -497,6 +497,12 @@ void DBColleges::saveToDatabase()
 }
 
 // === PUBLIC SLOTS ===
+/*!
+ * \brief DBColleges::loadNewColleges
+ *
+ * Will prompt the user to upload a .csv file from file explorer with
+ * new entries to enter into the program. Saves new data to database.
+ */
 void DBColleges::loadNewColleges(){
 
     this->loadFromDatabase(); //Try to load from the database first
@@ -519,6 +525,12 @@ void DBColleges::loadNewColleges(){
     this->populateGraph(); //Populates the graph based on the collegeMap
 }
 
+/*!
+ * \brief DBColleges::loadNewSouvenirs
+ *
+ * Will prompt the user to select a .csv file from file explorer to upload
+ * new entries into the program. Saves new data to database.
+ */
 void DBColleges::loadNewSouvenirs(){
     this->loadFromDatabase(); //Try to load from the database first
 

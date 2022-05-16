@@ -206,6 +206,17 @@ public:
     }
 
 
+    /*!
+     * \brief BFS
+     * \param source college
+     * \return total mileage
+     *
+     * Given a starting (source) college, this will perform a Breadth-First-Search
+     * on the current graph. When given the choice, the smallest distance is always
+     * chosen first.
+     *
+     * Returns the total mileage of the BFS.
+     */
     double BFS(int source)
     {
         double distance = 0;
@@ -246,98 +257,18 @@ public:
         return distance;
     }
 
-    /*! @fn void graphDijkstras(int current)
-     * \brief graphDijkstras
-     * \param source - ID of source vertex
-     * \param destination - ID of destination vertex
-     *
-     * TODO:
-     * Change function to adhere to the current graph and whatever changes we make
-     * Add function to somewhere in tripplanner that will update the table with
-     * the colleges in order to make the most efficient trip
-     */
-    void graphDijkstras(int source, int destination)
-    {
-        // setting the entire visited list to false
-        vector<bool> visited(v, false);
-        vector<dfs> shortestDistFromStart(v);
-
-        // fill array w default values
-        for(int i = 0; i < v; i++)
-        {
-            shortestDistFromStart[i].distance = 100000;
-        }
-
-        visited[source] = true;
-        shortestDistFromStart[source].distance = 0;
-
-        // calling shortest path function
-        shortestPath(source, visited, shortestDistFromStart);
-
-        // print out the shortest paths
-        qDebug() << "SHORTEST PATHS...\n";
-        for (int i = 0; i < v; i++) {
-            if (i != source)
-                printPath(source, i, shortestDistFromStart);
-        }
-    }
-
-
-    // shortest path function - Holds the actual Dijkstra's algorithm
-    // Will populate the shortest path from source to ALL other destinations
-    /*! @fn int shortestPath(int current, vector<bool>& visited,  dfs *shortestDistFromStart)
-     *  @param int current
-     *  @param vector<bool>& visited
-     *  @param dfs *shortestDistFromStart
-     *  shortest path function
-     */
-    int shortestPath(int current, vector<bool>& visited,  vector<dfs>& shortestDistFromStart) {
-
-        // BASE CASE
-        if (allvisited(visited)) {
-            //cout << "DONE";
-            return -1;
-        }
-
-
-        // loop through the adjacent nodes
-        for (auto x = adjList[current].begin(); x != adjList[current].end();
-        x++) {
-            // set the new shortest distance
-            if (true) {
-                // check to see if vertex x has default distance from start
-                if (shortestDistFromStart[x->first.GetId()].distance == 100000)
-                {
-                    // set the distance to start
-                    shortestDistFromStart[x->first.GetId()].distance = x->second + shortestDistFromStart[current].distance;
-                    shortestDistFromStart[x->first.GetId()].preV = current;
-                    //cout << "this";
-                }
-
-                // check to see if new path is shorter then previous
-                else if (shortestDistFromStart[current].distance + x->second < shortestDistFromStart[x->first.GetId()].distance)
-                {
-                    shortestDistFromStart[x->first.GetId()].distance = x->second + shortestDistFromStart[current].distance;
-                    shortestDistFromStart[x->first.GetId()].preV = current;
-                    //cout << "that";
-                }
-            }
-        }
-        //cout << "\t\tSETTING " << vertices[current] << " VISITED\n";
-        visited[current] = true;
-        int nextId = getShortestUnvisitedIncidentDistanceId(current, visited);
-//        shortestPath(nextId, visited, shortestDistFromStart);
-        //cout << nextId;
-        if (nextId != -1)
-            shortestPath(nextId, visited, shortestDistFromStart);
-        else
-        {
-            shortestPath(current, visited, shortestDistFromStart);
-        }
-    }
-
-
     typedef pair<double, int> vtx;
+    /*!
+     * \brief sierrasDijkstras
+     * \param source college
+     * \param destination college
+     * \return mileage between source and destination
+     *
+     * Will perform Dijkstra's Algorithm to calculate the shortest distance
+     * between a source college and all other colleges in the graph. Given a
+     * destination college, the function only returns the distance between
+     * the source and the specified destination
+     */
     double sierrasDijkstras(int source, int destination)
     {
         // Priority queue with distance (double) as key, and previous vertex (int)
@@ -381,7 +312,9 @@ public:
             }
         }
 
-        // Print shortest distances stored in dist[]
+
+// ===== Test Code =====
+// Print shortest distances stored in dist[]
 //            qDebug() << "\nDistance from " <<  QString::fromStdString(vertices[source].GetName()) << "\n";
 //            for (int i = 0; i < this->v; ++i)
 //            {
@@ -401,7 +334,9 @@ public:
     /*! @fn void minimumSpanningTree(int source)
      *  @param int source
      *
-     *  @return double - weight of MST
+     *  @return total mileage of MST
+     *
+     *  Performs a total MST of the current graph, returns the mileage.
      */
     double minimumSpanningTree(int source)
     {
@@ -473,6 +408,8 @@ public:
     /*! @fn void printMST(int root, vector<dfs>& mstSet)
      *  @param int root
      *  @param vector<dfs>& mstSet
+     *
+     *  Test code. Prints the MST to the console.
      */
     void printMST(int root, vector<dfs>& mstSet)
     {
@@ -494,6 +431,8 @@ public:
     /*! @fn bool allvisited(vector<bool>& visited)
      *  @param vector<bool>& visited
      *
+     *  Iterates through a given vector. If all values within the vector
+     *  are true, the function returns true. Else, returns false.
      */
     bool allvisited(vector<bool>& visited)
     {
@@ -506,31 +445,6 @@ public:
     }
 
 
-    // function to print the shortest path for an id
-    /*! @fn void printPath(int sourceid, int id,  vector<dfs>& shortestDistFromStart)
-     *  @param int sourceid
-     *  @param int id
-     *  @param vector<dfs>& shortestDistFromStart
-     *  function to print the shortest path for an id
-     *
-     *  This is used for graphDijkstras and is incompatable with other functions
-     */
-    void printPath(int sourceid, int id,  vector<dfs>& shortestDistFromStart)
-    {
-        qDebug() << "\n" << QString::fromStdString(getVertexFromId(id).GetName()) << " to Source is " <<
-        shortestDistFromStart[id].distance << " miles: " << QString::fromStdString(getVertexFromId(id).GetName()) <<
-        "->";
-        int parentId = shortestDistFromStart[id].preV;
-        while (parentId != sourceid)
-        {
-            qDebug() << QString::fromStdString(getVertexFromId(parentId).GetName()) << "->";
-            id = parentId;
-            parentId = shortestDistFromStart[id].preV;
-        }
-        qDebug() << QString::fromStdString(getVertexFromId(parentId).GetName()) << " ";
-    }
-
-
     // ACCESSORS
 
 
@@ -538,6 +452,7 @@ public:
     /*! @fn int getShortestIncidentDistance(int currentVertexId)
      *  @param int currentVertexId
      *
+     *  Returns the shortest adjacent distance to a given vertex.
      */
     double getShortestIncidentDistance(int currentVertexId)
     {
@@ -553,6 +468,14 @@ public:
 
 
     // Will retrieve the distance between two vertices (as long as they are adjacent)
+    /*!
+     * \brief getDistance
+     * \param pointa
+     * \param pointb
+     * \return distance
+     *
+     * Returns the distance between a source vertex and destination vertex.
+     */
     double getDistance(int pointa, int pointb)
     {
         double nomatch = -1;
@@ -572,7 +495,7 @@ public:
      * @param visited - List of previously visited vertices
      * @return - ID of the closest unvisited vertex adjacent to the source vertex
      *
-     * function to get the shortest unvisited incident (adjacent?) distance
+     * Function to get the shortest unvisited incident (adjacent?) distance
      */
     double getShortestUnvisitedIncidentDistanceId(int currentVertexId, vector<bool>& visited)
     {
@@ -594,7 +517,8 @@ public:
     // function to get the shortest adjacent distances' id
     /*! @fn int getShortestIncidentDistanceId(int currentVertexId)
      *  @param int currentVertexId
-     *  function to get the shortest adjacent distances' id
+     *
+     *  Function to get the shortest adjacent distances' id
      */
     double getShortestIncidentDistanceId(int currentVertexId)
     {
@@ -616,6 +540,7 @@ public:
     /*! @fn int getMinID(vector<int>& key, vector<bool>& visited)
      *  @param vector<int>& key
      *  @param vector<bool>& visited
+     *
      *  Used for the MST, will get min weighted vertex adjacent to all vertices in the current MST
      */
     int getMinID(vector<int>& key, vector<bool>& visited)
@@ -636,6 +561,9 @@ public:
     // Used to get the total weight of the MST
     /*! @fn int getWeight(vector<dfs>& mstSet)
      *  @param vector<dfs>& mstSet
+     *
+     *  Used for the MST, sums the weights of the edges included in the MST
+     *  and returns the result.
      */
     double getWeight(vector<dfs>& mstSet)
     {
@@ -655,6 +583,7 @@ public:
      *  @param int id
      *  @param vector<bool>& visited
      *
+     *  Verifies whether all adjacent vertices to a given vertex have been visited.
      */
     bool allIncidentsVisited(int id, vector<bool>& visited)
     {
@@ -676,7 +605,8 @@ public:
     /*! @fn int getShortestIncidentDistanceIdExcluding(int currentVertexId , int excludedId)
      *  @param int currentVertexId
      *  @param int excludedId
-     *  function to get the shortest incident distance id excluding a specific id
+     *
+     *  Function to get the shortest incident distance id excluding a specific id
      */
     double getShortestIncidentDistanceIdExcluding(int currentVertexId , int
     excludedId)
@@ -699,7 +629,8 @@ public:
     /*! @fn int getShortestIncidentDistanceExcluding(int currentVertexId , int excludedId)
      *  @param int currentVertexId
      *  @param int excludedId
-     *  function to get the shortest incident distance excluding a specific id
+     *
+     *  Function to get the shortest incident distance excluding a specific id
      */
     double getShortestIncidentDistanceExcluding(int currentVertexId , int
     excludedId)
