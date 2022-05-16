@@ -38,6 +38,8 @@ public:
     using const_iterator = typename std::vector<Entry>::const_iterator;
 
 
+    //! Default Constructor
+    /*! Constructs a new OrderedMap object. */
     OrderedMap() : array{std::vector<Entry>()}, LessThan{LessThanComparator()}, count{0} {}
 
 
