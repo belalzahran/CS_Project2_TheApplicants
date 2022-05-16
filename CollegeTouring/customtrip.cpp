@@ -35,6 +35,7 @@ customtrip::~customtrip()
 
 void customtrip::setTable()
 {
+    int collegeCount = 0;
     ui->tableWidget->setColumnWidth(0,250);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableWidget->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -43,6 +44,13 @@ void customtrip::setTable()
     QStringList headerLabels;
     headerLabels.push_back("Colleges");
     ui->tableWidget->setHorizontalHeaderLabels(headerLabels);
+
+    for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
+    {
+        collegeCount++;
+    }
+    ui->tableWidget->setRowCount(collegeCount);
+
 }
 
 

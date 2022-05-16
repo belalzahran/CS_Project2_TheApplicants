@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -91,7 +91,7 @@
       <string>Price: </string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="pushButton_addSouvenir">
      <property name="geometry">
       <rect>
        <x>270</x>
@@ -114,7 +114,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="pushButton_deleteSouvenir">
      <property name="geometry">
       <rect>
        <x>130</x>

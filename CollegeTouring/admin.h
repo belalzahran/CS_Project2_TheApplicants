@@ -54,13 +54,14 @@ private slots:
     /*! @fn
      *
      */
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
 
     void on_pushButton_edit3_clicked();
 
     void on_pushButton_3done_clicked();
+
+    void on_pushButton_addSouvenir_clicked();
+
+    void on_pushButton_deleteSouvenir_clicked();
 
 public slots:
     /*! @fn void fillCollegeCombo()
