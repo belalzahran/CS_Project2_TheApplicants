@@ -8,12 +8,27 @@ CollegeList::CollegeList(QWidget *parent) :
 {
     ui->setupUi(this);
     this->updateCollegeList();
+    this->sumUndergrads();
 }
 
 CollegeList::~CollegeList()
 {
     delete ui;
 }
+
+
+void CollegeList::sumUndergrads(){
+    int sum = 0;
+
+    for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
+    {
+        sum += iterator->value.undergrads;
+    }
+
+    QString total = QString::number(sum);
+    this->ui->sumUndergrads->setText(total);
+}
+
 
 void CollegeList::displayColleges(SortType sort, const QString& stateName)
 {
@@ -146,6 +161,7 @@ void CollegeList::updateCollegeList(){
     this->ui->collegeTable->clearContents(); // Clear anything we already have in the table
     this->displayColleges(); //Populates the table with the colleges currently in the map
     this->updateComboBox();  //Populates the combo box with the states of the colleges in the map
+    this->sumUndergrads();     // Sums the total undergrads
 }
 
 void CollegeList::on_sortAlphabeticallyButton_clicked()

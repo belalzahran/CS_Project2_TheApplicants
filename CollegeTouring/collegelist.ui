@@ -70,6 +70,28 @@
       </spacer>
      </item>
      <item>
+      <widget class="QLabel" name="totalUnderGradsLabel">
+       <property name="styleSheet">
+        <string notr="true">font: 700 11pt &quot;Segoe UI&quot;;
+color: rgb(0, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string>Total Undergrads: </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="sumUndergrads">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(0, 0, 0);
+font: 700 10pt &quot;Segoe UI&quot;;</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Specific State</string>

@@ -54,6 +54,14 @@ public:
 
 private slots:
 
+    /*!
+     * \brief sumUndergrads
+     *
+     * Sums the total number of undergrads between all colleges and displays
+     * the number
+     */
+    void sumUndergrads();
+
     /*! @fn void on_sortAlphabeticallyButton_clicked()
      * Sorts the contents of the table alphabetically
      */
