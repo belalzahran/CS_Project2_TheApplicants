@@ -661,6 +661,7 @@ public:
     /*! @fn int getIdFromName(int id) const
      *  @param string collegeName
      *  Function that returns the id of the college in the graph. -1 if dne
+     *  @return index id of the college
      */
     int getIdFromName(string collegeName)
     {

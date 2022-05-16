@@ -68,28 +68,28 @@ private:
 
     // Make the constructor private so this is a singleton.
     /*! @fn DBColleges()
-     *
+     * Default constructor
      */
     DBColleges();
 
     //Should the destructor also be placed in private so that we won't have unwanted destruction?
     /*! @fn ~DBColleges
-     *
+     * Destructor
      */
     ~DBColleges();
 
     //QVector<std::string> line;          // This is the line that has been read in from readLine
 
     /*! @var QSqlDatabase database
-     *
+     * Database connection to current sqlite database.
      */
     QSqlDatabase database; // Will be set during construction
 
 public:
 
-    OrderedMap<QString,College> collegeMap;     // list of colleges that are parsed in
+    OrderedMap<QString,College> collegeMap; /*!< Ordered map containing all of the colleges. */
 
-    Graph collegesGraph;
+    Graph collegesGraph;                    /*!< Graph containing edge distances of the colleges. */
 
 
     //Deletes these operations to not allow the user to use them.
@@ -116,7 +116,7 @@ public:
 
     //I am unsure whether or not the instance should be a static object or pointer, but for now its returning a reference
     /*! @fn static DBColleges% getInstance()
-     *
+     *  \return static instance of DBColleges
      */
     static DBColleges& getInstance()
     {

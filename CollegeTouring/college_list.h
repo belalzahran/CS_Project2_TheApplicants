@@ -48,19 +48,19 @@ public:
     void displayColleges(SortType sort = ALPHABETICAL, const QString& stateName = "California");
 
     /*! @fn void updateComboBox()
-     *
+     * Updates the combo box with all unique states.
      */
     void updateComboBox();
 
 private slots:
 
     /*! @fn void on_sortAlphabeticallyButton_clicked()
-     *
+     * Sorts the contents of the table alphabetically
      */
     void on_sortAlphabeticallyButton_clicked();
 
     /*! @fn void on_sortByStateButton_clicked()
-     *
+     * Sorts the contents of the table by state
      */
     void on_sortByStateButton_clicked();
 
@@ -70,7 +70,7 @@ private slots:
     void on_comboBoxState_currentIndexChanged(int index);
 
     /*! @fn void on_sortBySaddleback_clicked()
-     *
+     *  Displays the distance to saddleback from each college.
      */
     void on_sortBySaddleback_clicked();
 

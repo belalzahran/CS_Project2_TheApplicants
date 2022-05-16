@@ -36,7 +36,7 @@ public:
 private slots:
 
     /*! @fn void on_MSTpushButton_clicked()
-     *
+     *  Performs an MST on the colleges and displays the total mileage.
      */
     void on_MSTpushButton_clicked();
 
@@ -46,17 +46,21 @@ private slots:
     void on_CustomTrippushButton_clicked();
 
     /*! @fn void on_DFSpushButton_clicked()
-     *
+     *  Performs a DFS on the graph using the specified college in the combobox
+     *  and displays the total mileage.
      */
     void on_DFSpushButton_clicked();
 
     /*! @fn void on_BFSpushButton_clicked()
-     *
+     *  Performs a BFS on the graph using the specified college in the combobox
+     *  and displays the total mileage.
      */
     void on_BFSpushButton_clicked();
 
 public slots:
-    // Will clear the combo box and reload it
+    /*! @fn void updateComboBox()
+     *  Updates the combobox with the colleges in DBColleges.
+     */
     void updateComboBox();
 
 private:

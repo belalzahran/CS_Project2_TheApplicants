@@ -16,8 +16,9 @@ struct DefaultLessThanComparator
     }
 };
 
-//! Templated OrderedMap class
-/*! Implemented using an ordered table. */
+/*! \class OrderedMap
+    \brief Implemented using an ordered table.
+*/
 template<typename KeyType, typename ValueType, typename LessThanComparator = DefaultLessThanComparator<KeyType>>
 class OrderedMap
 {
@@ -154,6 +155,7 @@ public:
     //! A member function that checks the map and returns whether or not it contains the key
     /*!
         \param KeyType key
+        \return Boolean whether or not the key exists
     */
     bool contains(const KeyType& key) const
     {
@@ -244,6 +246,11 @@ public:
 protected:
 
     //Performs binary search (O(logn))
+    //! A member function that searches through the vector and returns the index of the searched entry. Returns -1 if not found.
+    /*!
+     *  \param KeyType key
+        \return Search index
+    */
     int search(const KeyType& key) const
     {
         int lowIndex = 0;
@@ -271,9 +278,9 @@ protected:
     }
 
 private:
-    std::vector<Entry> array;
-    LessThanComparator LessThan;
-    int count;
+    std::vector<Entry> array;    /*!< A vector that contains the contents of the map. */
+    LessThanComparator LessThan; /*!< Comparator that allow for key comparisons. */
+    int count;                   /*!< Number of elements in the map. */
 };
 
 #endif //ORDEREDMAP_H
