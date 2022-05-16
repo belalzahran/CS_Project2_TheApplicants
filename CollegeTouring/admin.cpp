@@ -162,7 +162,7 @@ void admin::on_pushButton_addSouvenir_clicked()
        }
 
        ui->lineEdit_name->clear();
-       ui->doubleSpinBox_2->clear();
+       ui->doubleSpinBox_2->setValue(0);
 
        on_comboBox_currentTextChanged(ui->comboBox->currentText());
 
