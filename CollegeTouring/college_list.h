@@ -9,6 +9,7 @@
  *  @var STATE
  *  @var SPECIFIC
  *  @var SADDLEBACK
+ *  @var COLLEGE
  *  this enum exists outside the scope of the class
  */
 enum SortType
@@ -16,7 +17,8 @@ enum SortType
     ALPHABETICAL,
     STATE,
     SPECIFIC,
-    SADDLEBACK
+    SADDLEBACK,
+    COLLEGE
 };
 
 namespace Ui {
@@ -52,6 +54,11 @@ public:
      */
     void updateComboBox();
 
+    /*! @fn void updateCollegeComboBox()
+     * Updates the combo box with all colleges.
+     */
+    void updateCollegeComboBox();
+
 private slots:
 
     /*!
@@ -82,6 +89,10 @@ private slots:
      */
     void on_sortBySaddleback_clicked();
 
+    /*! @fn void on_comboBoxCollege_currentIndexChanged(int index)
+     *  @param int index
+     */
+    void on_comboBoxCollege_currentIndexChanged(int index);
 
 public slots:
     // Will clear the current table, load values from DB and reload all values

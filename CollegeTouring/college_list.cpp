@@ -37,6 +37,7 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
     if(sort == ALPHABETICAL)
     {
         this->updateComboBox();
+        this->updateCollegeComboBox();
 
         for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
         {
@@ -46,6 +47,7 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
     else if(sort == STATE)
     {
         this->updateComboBox();
+        this->updateCollegeComboBox();
 
         OrderedMap<QString,College> stateSorting;
 
@@ -62,6 +64,8 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
     }
     else if(sort == SPECIFIC)
     {
+        this->updateCollegeComboBox();
+
         //Only populate the vector with the colleges that share the same state as the specified parameter
         for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
         {
@@ -73,6 +77,9 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
     }
     else if(sort == SADDLEBACK)
     {
+        this->updateComboBox();
+        this->updateCollegeComboBox();
+
         for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
         {
             if(iterator->value.distances.contains("Saddleback College"))
@@ -80,6 +87,11 @@ void CollegeList::displayColleges(SortType sort, const QString& stateName)
                 displayedColleges.push_back(iterator->value);
             }
         }
+    }
+    else if(sort == COLLEGE)
+    {
+        this->updateComboBox();
+        displayedColleges.push_back(DBColleges::getInstance().collegeMap.at(stateName));
     }
 
     //Makes sure table is empty
@@ -151,6 +163,24 @@ void CollegeList::updateComboBox()
 }
 
 
+void CollegeList::updateCollegeComboBox()
+{
+    //Clear the combo box
+    this->ui->comboBoxCollege->clear();
+
+    //Inserts generic empty college and blocks signal (prevents currentIndexChanged)
+    this->ui->comboBoxCollege->blockSignals(true);
+    this->ui->comboBoxCollege->addItem(" - ");
+
+    for(auto iterator = DBColleges::getInstance().collegeMap.cbegin(); iterator != DBColleges::getInstance().collegeMap.cend(); iterator++)
+    {
+        this->ui->comboBoxCollege->addItem(iterator->value.name, QVariant(iterator->value.name));
+    }
+
+    this->ui->comboBoxCollege->blockSignals(false); //unblocks signal
+}
+
+
 /*!
  * \brief CollegeList::updateCollegeList
  *
@@ -161,6 +191,7 @@ void CollegeList::updateCollegeList(){
     this->ui->collegeTable->clearContents(); // Clear anything we already have in the table
     this->displayColleges(); //Populates the table with the colleges currently in the map
     this->updateComboBox();  //Populates the combo box with the states of the colleges in the map
+    this->updateCollegeComboBox(); //Populates the combo box with the colleges in the map
     this->sumUndergrads();     // Sums the total undergrads
 }
 
@@ -193,3 +224,16 @@ void CollegeList::on_sortBySaddleback_clicked()
 {
     this->displayColleges(SADDLEBACK);
 }
+
+void CollegeList::on_comboBoxCollege_currentIndexChanged(int index)
+{
+    if(index != -1 && index > 0) // Index returns -1 when there is a clear, index0 is an empty college
+    {
+        this->displayColleges(COLLEGE, this->ui->comboBoxCollege->itemData(index).toString());
+    }
+    else if(index == 0)
+    {
+        this->displayColleges(ALPHABETICAL);
+    }
+}
+
