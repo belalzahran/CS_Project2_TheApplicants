@@ -8,6 +8,9 @@
 //default, as defined here, instead. This also assumes that the key
 //has the LessThan (<) relational operator overloaded.
 template<typename KeyType>
+/*! @struct DefaultLessThanComparator
+ *
+ */
 struct DefaultLessThanComparator
 {
     bool operator() (const KeyType& lkey, const KeyType& rkey) const

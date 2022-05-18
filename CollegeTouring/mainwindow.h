@@ -27,7 +27,9 @@ public:
     ~MainWindow();
 
 private slots:
-
+    /*! @fn void adminClicked()
+     *
+     */
     void adminClicked();
 
 

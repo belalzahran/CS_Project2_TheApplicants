@@ -29,7 +29,7 @@ public:
 
 private slots:
 
-    /*! @fn
+    /*! @fn void processLogin()
      *
      */
     void processLogin();

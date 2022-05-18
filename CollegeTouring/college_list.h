@@ -95,8 +95,10 @@ private slots:
     void on_comboBoxCollege_currentIndexChanged(int index);
 
 public slots:
-    // Will clear the current table, load values from DB and reload all values
-    // into the table.
+    /*! @fn void updateCollegeList()
+     *  Will clear the current table, load values from DB and reload all values
+     *  into the table.
+     */
     void updateCollegeList();
 private:
 

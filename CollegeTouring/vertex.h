@@ -22,9 +22,19 @@ enum Labels
  */
 class Vertex{
 private:
-
+    /*! @var int id
+     *
+     */
     int id;
+
+    /*! @var string name
+     *
+     */
     string name;
+
+    /*! @var Labels label
+     *
+     */
     Labels label;
 
 public:

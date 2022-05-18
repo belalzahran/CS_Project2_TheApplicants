@@ -3,6 +3,14 @@
 
 #include <QApplication>
 
+/*! @mainpage The Applicants
+ *  This Program allows students to view colleges, their distances, and their souvenirs and plan trips to colleges.
+ *  @authors Sierra Martin
+ *  @authors Erik Nguyen
+ *  @authors Brandon Bautista
+ *  @authors Belal Zahran
+ */
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

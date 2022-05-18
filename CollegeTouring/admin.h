@@ -42,25 +42,37 @@ private slots:
      */
     void on_comboBox_currentTextChanged(const QString &arg1);
 
-    // Prompts the user to select an input file for new colleges to add,
-    // sends signal to be picked up by mainwindow to update collegeList and other tabs.
+    /*! @fn void sendUpdateColleges()
+     *  Prompts the user to select an input file for new colleges to add,
+     *  sends signal to be picked up by mainwindow to update collegeList and other tabs.
+     */
     void sendUpdateColleges();
 
 
-    // Prompts the user to select an input file for new souvenirs to add,
-    // sends signal to be picked up by mainwindow to update collegeList and other tabs.
+    /*! @fn void sendUpdateSouvenirs()
+     *  Prompts the user to select an input file for new souvenirs to add,
+     *  sends signal to be picked up by mainwindow to update collegeList and other tabs.
+     */
     void sendUpdateSouvenirs();
 
-    /*! @fn
+    /*! @fn void on_pushButton_edit3_clicked()
      *
      */
-
     void on_pushButton_edit3_clicked();
 
+    /*! @fn void on_pushButton_3done_clicked()
+     *
+     */
     void on_pushButton_3done_clicked();
 
+    /*! @fn void on_pushButton_addSouvenir_clicked()
+     *  Adds a souvenir to a college
+     */
     void on_pushButton_addSouvenir_clicked();
 
+    /*! @fn void on_pushButton_deleteSouvenir_clicked()
+     *  Removes a souvenir to a college
+     */
     void on_pushButton_deleteSouvenir_clicked();
 
 public slots:
@@ -70,7 +82,14 @@ public slots:
     void fillCollegeCombo();
 
 signals:
+    /*! @fn void updateCollegesClicked()
+     *
+     */
     void updateCollegesClicked();
+
+    /*! @fn void updateSouvenirsClicked()
+     *
+     */
     void updateSouvenirsClicked();
 
 private:
@@ -84,6 +103,10 @@ private:
      *
      */
     College selectedCollege;
+
+    /*! @var SouvenirItem selectedSouvenir
+     *
+     */
     SouvenirItem selectedSouvenir;
 };
 

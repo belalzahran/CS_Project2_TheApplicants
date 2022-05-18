@@ -1,0 +1,17 @@
+release/admin.o
+release/college_list.o
+release/customtrip.o
+release/dbcolleges.o
+release/displaysouvenirs.o
+release/login.o
+release/main.o
+release/mainwindow.o
+release/tripplanner.o
+release/qrc_collegemapimage.o
+release/moc_admin.o
+release/moc_college_list.o
+release/moc_customtrip.o
+release/moc_displaysouvenirs.o
+release/moc_login.o
+release/moc_mainwindow.o
+release/moc_tripplanner.o

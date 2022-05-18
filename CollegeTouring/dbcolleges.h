@@ -87,8 +87,14 @@ private:
 
 public:
 
+    /*! @var OrderedMap<QString,College> collegeMap
+     *
+     */
     OrderedMap<QString,College> collegeMap; /*!< Ordered map containing all of the colleges. */
 
+    /*! @var Graph collegesGraph
+     *
+     */
     Graph collegesGraph;                    /*!< Graph containing edge distances of the colleges. */
 
 
@@ -201,8 +207,14 @@ public:
 
     public slots:
 
+    /*! @var void loadNewColleges()
+     *
+     */
     void loadNewColleges();
 
+    /*! @var void loadNewSouvenirs()
+     *
+     */
     void loadNewSouvenirs();
 
 
